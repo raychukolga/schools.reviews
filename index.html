@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schools Reviews — Independent School Reviews Worldwide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root {
+  --ink: #1a1814;
+  --terra: #C4633A;
+  --terra-light: #F5EDE8;
+  --cream: #FAF8F5;
+  --white: #ffffff;
+  --gray: #888;
+  --border: #e8e3de;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--cream); }
+
+/* ── NAV ── */
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo { display: flex; flex-direction: column; line-height: 1; }
+.logo-top { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.8px; }
+.logo-line { width: 100%; height: 2px; background: var(--terra); margin: 4px 0 3px; position: relative; }
+.logo-line::after { content:''; position:absolute; right:0; top:-4px; width:7px; height:7px; border-radius:50%; background:var(--terra); }
+.logo-bottom { font-size: 10px; color: var(--gray); letter-spacing: 3.5px; text-transform: uppercase; }
+
+.nav-links { display: flex; align-items: center; gap: 28px; font-size: 13px; color: var(--gray); }
+.nav-links a { text-decoration: none; color: var(--gray); }
+.nav-cta { background: var(--ink); color: var(--white) !important; padding: 9px 20px; border-radius: 8px; font-weight: 500; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px 48px;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 18px;
+}
+.hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--terra); }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.hero h1 em { font-style: italic; color: var(--terra); }
+
+.hero-desc {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 28px;
+}
+
+.hero-stats { display: flex; gap: 28px; }
+.stat { border-left: 2px solid var(--terra); padding-left: 12px; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+.stat-label { font-size: 11px; color: var(--gray); }
+
+.selector-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+.selector-label { font-size: 12px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+.country-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.country-btn { display: flex; align-items: center; gap: 9px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--white); font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; color: var(--ink); }
+.country-btn:hover { border-color: var(--terra); background: var(--terra-light); }
+.country-btn.active { background: var(--terra); color: var(--white); border-color: var(--terra); }
+.flag { font-size: 18px; }
+.more-btn { width: 100%; padding: 10px; border: 1px dashed var(--border); border-radius: 10px; background: transparent; font-size: 13px; color: var(--gray); cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 16px; }
+.explore-btn { width: 100%; padding: 13px; background: var(--ink); color: var(--white); border: none; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.explore-btn:hover { opacity: .88; }
+
+/* ── FILTERS BAR ── */
+.filters-section {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 68px;
+  z-index: 900;
+}
+
+.filters-main {
+  padding: 10px 40px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-label { font-size: 12px; color: var(--gray); font-weight: 500; flex-shrink: 0; margin-right: 2px; }
+
+.chip {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--white);
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .15s;
+  color: var(--ink);
+}
+.chip:hover { border-color: var(--terra); }
+.chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.chip.reviewed { background: var(--terra-light); color: var(--terra); border-color: var(--terra); }
+
+.more-filters-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  transition: all .15s;
+  margin-left: auto;
+}
+.more-filters-btn:hover { border-color: var(--terra); }
+.more-filters-btn.open { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+.chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform .2s;
+}
+.more-filters-btn.open .chevron { transform: rotate(180deg); }
+
+/* EXPANDED FILTERS */
+.filters-expanded {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+  border-top: 0px solid var(--border);
+}
+.filters-expanded.open {
+  max-height: 300px;
+  border-top: 1px solid var(--border);
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 20px 40px;
+}
+
+.filter-group-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+
+.filter-options { display: flex; flex-direction: column; gap: 6px; }
+
+.filter-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.filter-opt input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--terra);
+  cursor: pointer;
+}
+
+.filter-opt label { cursor: pointer; color: var(--ink); }
+
+.filter-range {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.range-input {
+  flex: 1;
+  height: 3px;
+  accent-color: var(--terra);
+  cursor: pointer;
+}
+
+.range-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 50px;
+  text-align: right;
+}
+
+.filters-footer {
+  padding: 12px 40px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.reset-btn { padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--gray); }
+.apply-btn { padding: 8px 20px; border: none; border-radius: 8px; background: var(--terra); color: var(--white); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+/* ── SPLIT ── */
+.split {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  height: calc(100vh - 68px - 49px);
+}
+
+.schools-panel {
+  overflow-y: auto;
+  padding: 20px;
+  border-right: 1px solid var(--border);
+  background: var(--cream);
+}
+
+.panel-header { margin-bottom: 14px; }
+.panel-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin-bottom: 2px; }
+.panel-sub { font-size: 12px; color: var(--gray); }
+
+.school-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 9px; cursor: pointer; transition: all .18s; }
+.school-card:hover { border-color: #ccc; box-shadow: 0 3px 12px rgba(0,0,0,.06); }
+.school-card.highlighted { border-color: var(--terra); box-shadow: 0 0 0 2px rgba(196,99,58,.12); }
+.school-card.reviewed { border-left: 3px solid var(--terra); border-radius: 0 12px 12px 0; }
+
+.card-top { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 9px; }
+.avatar { width: 36px; height: 36px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.card-info { flex: 1; min-width: 0; }
+.card-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-loc { font-size: 11px; color: var(--gray); }
+.review-tag { font-size: 9px; font-weight: 700; color: var(--terra); background: var(--terra-light); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+
+.pills { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 9px; }
+.pill { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 20px; }
+.p-blue { background: #E6F1FB; color: #0C447C; }
+.p-teal { background: #E1F5EE; color: #085041; }
+.p-gray { background: #f0ede8; color: #555; }
+.p-amber { background: #FAEEDA; color: #633806; }
+
+.card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 9px; border-top: 1px solid #f5f0eb; }
+.price { font-size: 13px; font-weight: 600; }
+.price span { font-size: 10px; font-weight: 400; color: var(--gray); }
+.score-row { display: flex; gap: 8px; }
+.score-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; }
+.d-good { background: #639922; }
+.d-mid { background: #EF9F27; }
+.dot-lbl { font-size: 9px; color: var(--gray); }
+
+.map-panel { position: relative; }
+#map { width: 100%; height: 100%; }
+
+.map-legend-box { position: absolute; bottom: 20px; right: 20px; z-index: 999; background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; display: flex; gap: 14px; font-size: 11px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.leg-item { display: flex; align-items: center; gap: 6px; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ── VIDEOS ── */
+.videos-section { background: var(--white); border-bottom: 1px solid var(--border); padding: 40px; }
+.videos-inner { max-width: 1200px; }
+.videos-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+.videos-tag { font-size: 11px; font-weight: 600; color: var(--terra); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px; }
+.videos-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+.videos-all { font-size: 13px; color: var(--terra); text-decoration: none; font-weight: 500; }
+.videos-all:hover { text-decoration: underline; }
+.videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.video-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: all .2s; }
+.video-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+.video-thumb { height: 140px; position: relative; display: flex; align-items: center; justify-content: center; }
+.play-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.video-card:hover .play-btn { background: var(--terra); }
+.video-duration { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,.6); color: white; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 6px; }
+.video-rev-badge { position: absolute; top: 10px; left: 10px; background: var(--terra); color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
+.video-info { padding: 14px; background: var(--white); }
+.video-school { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.video-loc { font-size: 11px; color: var(--gray); margin-bottom: 6px; }
+.video-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+.p-purple { background: #EEEDFE; color: #3C3489; }
+.p-pink { background: #FBEAF0; color: #72243E; }
+
+.verified-card { border-top: 2px solid #2E7D32 !important; }
+.verified-bar { display: none; }
+.verified-tag {
+  font-size: 9px;
+  font-weight: 700;
+  color: #2E7D32;
+  background: #EAF3DE;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.leaflet-popup-content-wrapper { border-radius: 10px !important; font-family: 'DM Sans', sans-serif !important; box-shadow: 0 4px 20px rgba(0,0,0,.1) !important; }
+.leaflet-popup-content { margin: 12px 14px !important; font-size: 13px !important; }
+.popup-name { font-weight: 600; margin-bottom: 3px; }
+.popup-meta { font-size: 11px; color: var(--gray); }
+.popup-badge { display: inline-block; margin-top: 5px; font-size: 10px; font-weight: 600; color: var(--terra); background: var(--terra-light); padding: 2px 7px; border-radius: 4px; }
+
+/* ── MAP TOGGLE BUTTON (mobile) ── */
+.map-toggle-btn {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  cursor: pointer;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  /* Beta banner */
+  .beta-banner { flex-direction: column; gap: 4px; padding: 10px 16px; font-size: 11px; }
+  .beta-sep { display: none; }
+
+  /* Nav */
+  nav { padding: 0 16px; height: 56px; }
+  .logo-top { font-size: 18px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-cta { padding: 7px 14px; font-size: 12px; }
+
+  /* Hero */
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 32px 16px 28px;
+    gap: 28px;
+  }
+  .hero h1 { font-size: 34px; letter-spacing: -0.5px; }
+  .hero-desc { font-size: 14px; }
+  .hero-stats { gap: 20px; }
+  .stat-num { font-size: 22px; }
+
+  /* Country selector */
+  .selector-card { padding: 20px 16px; }
+  .country-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .country-btn { padding: 9px 12px; font-size: 12px; }
+  .flag { font-size: 16px; }
+  .explore-btn { padding: 12px; font-size: 13px; }
+
+  /* Videos */
+  .videos-section { padding: 28px 16px; }
+  .videos-grid { grid-template-columns: 1fr; gap: 12px; }
+  .videos-header { flex-direction: column; gap: 6px; }
+  .video-thumb { height: 180px; }
+
+  /* Filters */
+  .filters-section { top: 56px; }
+  .filters-main {
+    padding: 8px 16px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+  }
+  .filters-main::-webkit-scrollbar { display: none; }
+  .filter-label { display: none; }
+  #searchInput { width: 140px; font-size: 11px; }
+
+  /* Expanded filters */
+  .filters-grid { grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; }
+
+  /* Split layout — stack vertically */
+  .split {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  /* Map — hidden by default on mobile, shown as overlay */
+  .map-panel {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1050;
+    height: 100vh !important;
+  }
+  .map-panel.map-open { display: block; }
+
+  /* Map close button */
+  .map-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 1060;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  }
+
+  /* Schools panel */
+  .schools-panel { padding: 16px; padding-bottom: 80px; }
+  .panel-title { font-size: 17px; }
+
+  /* Cards */
+  .school-card { padding: 14px; }
+  .card-name { font-size: 13px; }
+
+  /* Map toggle button */
+  .map-toggle-btn { display: flex; }
+
+  /* Map legend */
+  .map-legend-box { bottom: 72px; right: 16px; font-size: 10px; padding: 8px 10px; gap: 10px; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .country-grid { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 14px; }
+  .stat-num { font-size: 20px; }
+  .stat-label { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BETA BANNER -->
+<div style="background:#1a1814;color:rgba(255,255,255,0.85);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;text-align:center;padding:9px 20px;letter-spacing:.03em;display:flex;align-items:center;justify-content:center;gap:10px;">
+  <span style="display:inline-flex;align-items:center;gap:6px;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#C4633A;display:inline-block;animation:pulse 2s infinite;"></span>
+    <strong>Beta</strong> — This site is currently in development. Data may be incomplete.
+  </span>
+  <span style="opacity:.4">·</span>
+  <span>We're adding schools and reviews every week.</span>
+  <span style="opacity:.4">·</span>
+  <a href="#" style="color:var(--terra,#C4633A);text-decoration:none;font-weight:600;">Get notified when we launch →</a>
+</div>
+<style>
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-top">Schools</div>
+    <div class="logo-line"></div>
+    <div class="logo-bottom">Reviews</div>
+  </div>
+  <div class="nav-links">
+    <a href="#">Browse</a>
+    <a href="#">Compare</a>
+    <a href="#">About</a>
+    <a href="#" class="nav-cta">Get matched</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">Independent School Reviews</div>
+    <h1>Find the right school<br>for your <em>child</em></h1>
+    <p class="hero-desc">We know how hard it is to choose the right school — every family wants to visit them all. We've done the tours so you don't have to. Because every child is different, we help you find what's right for yours.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Schools reviewed</div></div>
+      <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Countries</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Independent</div></div>
+    </div>
+  </div>
+  <div class="selector-card">
+    <div class="selector-label">Where are you looking?</div>
+    <div class="country-grid">
+      <button class="country-btn active" onclick="selectCountry(this)" data-country="Portugal"><span class="flag">🇵🇹</span> Portugal</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="Spain"><span class="flag">🇪🇸</span> Spain</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="France"><span class="flag">🇫🇷</span> France</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="Netherlands"><span class="flag">🇳🇱</span> Netherlands</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="Germany"><span class="flag">🇩🇪</span> Germany</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="Italy"><span class="flag">🇮🇹</span> Italy</button>
+      <button class="country-btn" onclick="selectCountry(this)" data-country="Croatia"><span class="flag">🇭🇷</span> Croatia</button>
+    </div>
+    <button class="more-btn">+ 40 more countries →</button>
+    <button class="explore-btn">Explore schools →</button>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="videos-section">
+  <div class="videos-inner">
+    <div class="videos-header">
+      <div>
+        <div class="videos-tag">Independent video reviews</div>
+        <div class="videos-title">Schools we've visited</div>
+      </div>
+      <a href="#" class="videos-all">Subscribe for updates →</a>
+    </div>
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-thumb" style="background:#EDE8E2;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-size:11px;font-weight:600;color:#bbb;letter-spacing:.05em;text-transform:uppercase;">To be added</span>
+        </div>
+        <div class="video-info">
+          <div class="video-school">Carlucci American Int'l School</div>
+          <div class="video-loc">📍 Sintra, Lisbon · IB · €12,182–€23,532/yr</div>
+          <div class="video-desc">Independent school tour — coming soon</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background:#E4ECE8;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-size:11px;font-weight:600;color:#bbb;letter-spacing:.05em;text-transform:uppercase;">To be added</span>
+        </div>
+        <div class="video-info">
+          <div class="video-school">St Julian's School</div>
+          <div class="video-loc">📍 Carcavelos · British / IB · €12,693–€19,323/yr</div>
+          <div class="video-desc">Independent school tour — coming soon</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background:#E8E4DE;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-size:11px;font-weight:600;color:#bbb;letter-spacing:.05em;text-transform:uppercase;">To be added</span>
+        </div>
+        <div class="video-info">
+          <div class="video-school">St Peter's International School</div>
+          <div class="video-loc">📍 Palmela · British / IB · €8,325–€17,100/yr</div>
+          <div class="video-desc">Independent school tour — coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filters-main">
+    <span class="filter-label">Filter:</span>
+    <button class="chip reviewed" onclick="toggleReviewed(this)">★ Reviewed only</button>
+    <button class="chip prog-chip active" onclick="setProgFilter('all',this)">All programmes</button>
+    <button class="chip prog-chip" onclick="setProgFilter('IB',this)">IB</button>
+    <button class="chip prog-chip" onclick="setProgFilter('British',this)">British</button>
+    <button class="chip prog-chip" onclick="setProgFilter('American',this)">American</button>
+    <button class="chip prog-chip" onclick="setProgFilter('Cambridge',this)">Cambridge</button>
+    <button class="chip price-chip active" onclick="setPriceFilter('all',this)">All prices</button>
+    <button class="chip price-chip" onclick="setPriceFilter('low',this)">Under €8k</button>
+    <button class="chip price-chip" onclick="setPriceFilter('mid',this)">€8–15k</button>
+    <button class="chip price-chip" onclick="setPriceFilter('high',this)">€15k+</button>
+    <input id="searchInput" type="text" placeholder="🔍 Search school or city..." oninput="state.search=this.value.toLowerCase();renderList()" style="margin-left:8px;padding:6px 12px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;width:200px;">
+    <button class="more-filters-btn" id="moreFiltersBtn" onclick="toggleFilters()">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      More filters
+    </button>
+  </div>
+
+  <!-- EXPANDED FILTERS -->
+  <div class="filters-expanded" id="filtersExpanded">
+    <div class="filters-grid">
+
+      <!-- Age range -->
+      <div>
+        <div class="filter-group-title">Age group</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="age1" value="preschool"><label for="age1">Pre-school (3–5)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age2" value="primary"><label for="age2">Primary (6–11)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age3" value="middle"><label for="age3">Middle (11–14)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age4" value="high"><label for="age4">High school (14–18)</label></div>
+        </div>
+      </div>
+
+      <!-- School type -->
+      <div>
+        <div class="filter-group-title">School type</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="t1" value="day"><label for="t1">Day school</label></div>
+          <div class="filter-opt"><input type="checkbox" id="t2" value="boarding"><label for="t2">Boarding school</label></div>
+        </div>
+      </div>
+
+      <!-- Language -->
+      <div>
+        <div class="filter-group-title">Language of instruction</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="l1" value="English"><label for="l1">English</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l2" value="French"><label for="l2">French</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l3" value="German"><label for="l3">German</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l5" value="Portuguese"><label for="l5">Portuguese</label></div>
+        </div>
+      </div>
+
+      <!-- Tuition range -->
+      <div>
+        <div class="filter-group-title">Max annual tuition</div>
+        <div class="filter-range">
+          <div class="range-row">
+            <span>€0</span>
+            <input type="range" class="range-input" id="priceRange" min="0" max="40000" step="1000" value="40000" oninput="document.getElementById('rangeVal').textContent='€'+parseInt(this.value).toLocaleString()">
+            <span class="range-val" id="rangeVal">€40,000</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="filters-footer">
+      <button class="reset-btn" onclick="resetFilters()">Reset all</button>
+      <button class="apply-btn" onclick="applyFilters()">Apply filters</button>
+    </div>
+  </div>
+</div>
+
+<!-- SPLIT -->
+<div class="split">
+  <div class="schools-panel">
+    <div class="panel-header">
+      <div class="panel-title">Schools in Portugal</div>
+      <div class="panel-sub" id="panel-count">40 schools</div>
+    </div>
+    <div id="schoolsList"></div>
+  </div>
+  <div class="map-panel" id="mapPanel">
+    <button class="map-close-btn" onclick="toggleMap()" title="Close map">✕</button>
+    <div id="map"></div>
+    <div class="map-legend-box">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--terra)"></div>Reviewed</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#2E7D32"></div>Verified Apr 2026</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--ink)"></div>Listed</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAP TOGGLE BUTTON (mobile) -->
+<button class="map-toggle-btn" id="mapToggleBtn" onclick="toggleMap()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+  Show map
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+// ── ALL SCHOOLS DATA ──
+const allSchools = [
+  // ── PORTUGAL — LISBON ──
+  { id:1,  country:"Portugal", name:"Carlucci American Int'l School (CAISL)", short:"CA", loc:"Sintra, Lisbon",       prog:"American / IB", price:12182, priceMax:23532, reviewed:true,  verified:true,  boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7978, lng:-9.3617 },
+  { id:2,  country:"Portugal", name:"St Julian's School",                     short:"SJ", loc:"Carcavelos, Lisbon",   prog:"British / IB",  price:12693, priceMax:19323, reviewed:true,  verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333 },
+  { id:3,  country:"Portugal", name:"St Peter's International School",        short:"SP", loc:"Palmela, Setúbal",     prog:"British / IB",  price:8325,  priceMax:17100, reviewed:false, verified:false, boarding:true,  bg:"#FAEEDA", color:"#633806", lat:38.5667, lng:-8.9000 },
+  { id:4,  country:"Portugal", name:"Tasis Portugal",                         short:"TP", loc:"Sintra, Lisbon",       prog:"American / IB", price:12390, priceMax:23160, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.8029, lng:-9.3878 },
+  { id:5,  country:"Portugal", name:"Deutsche Schule Lissabon",               short:"DS", loc:"Lisbon",               prog:"German / IB",   price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:38.7223, lng:-9.1393 },
+  { id:6,  country:"Portugal", name:"The British School of Lisbon",           short:"BS", loc:"Lisbon",               prog:"British",       price:13110, priceMax:21375, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7167, lng:-9.1500 },
+  { id:7,  country:"Portugal", name:"King's College School Lisbon",           short:"KC", loc:"Cascais",              prog:"British / IB",  price:12000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215 },
+  { id:8,  country:"Portugal", name:"Prime School — Lisbon",                  short:"PL", loc:"Lisbon",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7200, lng:-9.1550 },
+  { id:9,  country:"Portugal", name:"Prime School — Estoril",                 short:"PE", loc:"Estoril",              prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7066, lng:-9.3911 },
+  { id:10, country:"Portugal", name:"Prime School — Sintra",                  short:"PS", loc:"Sintra",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.8000, lng:-9.3800 },
+  { id:11, country:"Portugal", name:"United Lisbon International School",     short:"UL", loc:"Parque das Nações",    prog:"IB / American", price:11800, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7650, lng:-9.0950 },
+  { id:12, country:"Portugal", name:"The Lisboan International School",       short:"LB", loc:"Alcântara, Lisbon",    prog:"British / IB",  price:12200, priceMax:22600, reviewed:false, verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7050, lng:-9.1800 },
+  { id:13, country:"Portugal", name:"PaRK International School",              short:"PK", loc:"Lisbon",               prog:"IB",            price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7350, lng:-9.1580 },
+  { id:14, country:"Portugal", name:"L'École Trilingue",                      short:"ET", loc:"Lisbon",               prog:"French",        price:7000,  priceMax:9500,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:38.7200, lng:-9.1400 },
+  { id:15, country:"Portugal", name:"Lycée Français Charles Lepierre",        short:"LF", loc:"Lisbon",               prog:"French",        price:5452,  priceMax:7536,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:38.7300, lng:-9.1600 },
+  { id:16, country:"Portugal", name:"Redbridge School Lisbon",                short:"RB", loc:"Lisbon",               prog:"Cambridge",     price:7650,  priceMax:8750,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7100, lng:-9.1450 },
+  { id:17, country:"Portugal", name:"St Dominic's International School",      short:"SD", loc:"Cascais",              prog:"IB",            price:8470,  priceMax:16200, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7000, lng:-9.3500 },
+  { id:18, country:"Portugal", name:"Oeiras International School",            short:"OI", loc:"Oeiras",               prog:"IB",            price:7900,  priceMax:9250,  reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147 },
+  { id:19, country:"Portugal", name:"Int'l Sharing School — Taguspark",       short:"IS", loc:"Oeiras",               prog:"IB",            price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7050, lng:-9.3000 },
+  { id:20, country:"Portugal", name:"Colégio Planalto",                       short:"CP", loc:"Lisbon",               prog:"Portuguese/IB", price:6000,  priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#EAF3DE", color:"#27500A", lat:38.7400, lng:-9.1700 },
+  { id:21, country:"Portugal", name:"Int'l Christian School of Cascais",      short:"IC", loc:"Cascais",              prog:"American",      price:8000,  priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.6950, lng:-9.4000 },
+  { id:22, country:"Portugal", name:"Lisbon Montessori School",               short:"LM", loc:"Lisbon",               prog:"Montessori",    price:7000,  priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#FEF5E7", color:"#7D6608", lat:38.7250, lng:-9.1500 },
+  { id:23, country:"Portugal", name:"Cesário Verde Int'l School (SEK)",       short:"CV", loc:"Lisbon",               prog:"IB",            price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7180, lng:-9.1350 },
+  { id:24, country:"Portugal", name:"St James' Primary School Lisbon",        short:"SJ", loc:"Lisbon",               prog:"British",       price:6000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7150, lng:-9.1600 },
+  { id:25, country:"Portugal", name:"Greene's College Oxford — Estoril",      short:"GC", loc:"Estoril",              prog:"A-Levels",      price:15000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7066, lng:-9.3950 },
+  { id:26, country:"Portugal", name:"Butterflies School",                     short:"BF", loc:"Lisbon",               prog:"British",       price:7000,  priceMax:11000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7280, lng:-9.1480 },
+  { id:27, country:"Portugal", name:"Hypha International School",             short:"HY", loc:"Colares, Sintra",      prog:"Cambridge",     price:10495, priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#EAF3DE", color:"#27500A", lat:38.8050, lng:-9.4600 },
+  { id:28, country:"Portugal", name:"Beyond International School",            short:"BI", loc:"Barcarena, Queluz",    prog:"Cambridge",     price:11800, priceMax:12850, reviewed:false, verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7400, lng:-9.2600 },
+  { id:29, country:"Portugal", name:"TISA — Theodore Int'l Startup Academy",  short:"TI", loc:"Lisbon",               prog:"IB PYP",        price:15000, priceMax:18000, reviewed:false, verified:true,  boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7300, lng:-9.1550 },
+  // ── PORTUGAL — PORTO ──
+  { id:30, country:"Portugal", name:"Oporto British School (OBS)",            short:"OB", loc:"Porto",                prog:"British / IB",  price:8000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.1579, lng:-8.6291 },
+  { id:31, country:"Portugal", name:"CLIP — Colégio Luso Internacional",      short:"CL", loc:"Porto",                prog:"British",       price:8600,  priceMax:14700, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.1700, lng:-8.6500 },
+  { id:32, country:"Portugal", name:"CJD International School",               short:"CJ", loc:"Porto",                prog:"Cambridge",     price:9300,  priceMax:11000, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:41.1800, lng:-8.6000 },
+  { id:33, country:"Portugal", name:"Int'l Preparatory School (IPS)",         short:"IP", loc:"Porto",                prog:"British",       price:7000,  priceMax:11000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.1550, lng:-8.6400 },
+  { id:34, country:"Portugal", name:"Deutsche Schule Porto",                  short:"DP", loc:"Porto",                prog:"German",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:41.1600, lng:-8.6350 },
+  { id:50, country:"Portugal", name:"Int'l Sharing School — Porto",           short:"IP", loc:"Porto",                prog:"IB",            price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:41.1650, lng:-8.6200 },
+  { id:51, country:"Portugal", name:"Colégio Luso-Francês",                   short:"LF", loc:"Porto",                prog:"French",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:41.1450, lng:-8.6100 },
+  { id:52, country:"Portugal", name:"Externato Delfim Ferreira",              short:"EX", loc:"Braga",                prog:"Portuguese",    price:4500,  priceMax:8000,  reviewed:false, verified:false, boarding:false, bg:"#EAF3DE", color:"#27500A", lat:41.5454, lng:-8.4265 },
+  // ── PORTUGAL — ALGARVE ──
+  { id:35, country:"Portugal", name:"Nobel Int'l School Algarve — Almancil",  short:"NA", loc:"Almancil, Algarve",   prog:"British / IB",  price:8000,  priceMax:16000, reviewed:false, verified:false, boarding:true,  bg:"#E1F5EE", color:"#085041", lat:37.0700, lng:-8.0200 },
+  { id:36, country:"Portugal", name:"Nobel Int'l School Algarve — Lagoa",     short:"NL", loc:"Lagoa, Algarve",      prog:"British / IB",  price:8000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.1333, lng:-8.4500 },
+  { id:37, country:"Portugal", name:"Algarve International School (AIS)",     short:"AI", loc:"Central Algarve",     prog:"British",       price:6700,  priceMax:7700,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.2000, lng:-8.2000 },
+  { id:38, country:"Portugal", name:"Aljezur International School",           short:"AJ", loc:"Aljezur, Algarve",    prog:"Cambridge",     price:7200,  priceMax:8100,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:37.3167, lng:-8.8000 },
+  { id:39, country:"Portugal", name:"Vilamoura International School",         short:"VI", loc:"Vilamoura, Algarve",  prog:"British",       price:5385,  priceMax:12415, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.0800, lng:-8.1200 },
+  { id:40, country:"Portugal", name:"Eden Montessori Int'l School",           short:"EM", loc:"Albufeira, Algarve",  prog:"Montessori",    price:6340,  priceMax:9090,  reviewed:false, verified:false, boarding:false, bg:"#FEF5E7", color:"#7D6608", lat:37.0892, lng:-8.2500 },
+  { id:41, country:"Portugal", name:"Deutsche Schule Algarve",                short:"DA", loc:"Algarve",             prog:"German",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:37.1500, lng:-8.3000 },
+  { id:42, country:"Portugal", name:"Nederlands Onderwijs Algarve",           short:"NO", loc:"Algarve",             prog:"Dutch",         price:5500,  priceMax:6500,  reviewed:false, verified:false, boarding:false, bg:"#E8F4FC", color:"#1A5276", lat:37.1800, lng:-8.1500 },
+  { id:43, country:"Portugal", name:"Colégio Bernardette Romeira",            short:"BR", loc:"Algarve",             prog:"British",       price:7000,  priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.2200, lng:-8.4000 },
+  { id:44, country:"Portugal", name:"Colégio Santiago Internacional",         short:"CS", loc:"E. Algarve",          prog:"British",       price:5500,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.1700, lng:-7.8000 },
+  { id:45, country:"Portugal", name:"Montalvo International School",          short:"MI", loc:"Algarve",             prog:"British",       price:8470,  priceMax:16200, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.1200, lng:-8.5000 },
+  { id:46, country:"Portugal", name:"Bright International School Algarve",   short:"BI", loc:"Algarve",             prog:"British",       price:7000,  priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.0950, lng:-8.2200 },
+  { id:47, country:"Portugal", name:"BGA — Birdies Golf Academy School",      short:"BG", loc:"Algarve",             prog:"British",       price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.0600, lng:-8.0500 },
+  { id:48, country:"Portugal", name:"Vale Verde International School",        short:"VV", loc:"Algarve",             prog:"British",       price:5500,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.1400, lng:-8.6000 },
+  { id:49, country:"Portugal", name:"Int'l School of the Algarve (ISA)",      short:"IA", loc:"Portimão, Algarve",   prog:"British",       price:3800,  priceMax:14200, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:37.1362, lng:-8.5377 },
+  // ── PORTUGAL — OTHER ──
+  { id:53, country:"Portugal", name:"International School of Madeira",        short:"IM", loc:"Madeira",             prog:"British",       price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:32.6669, lng:-16.9241 },
+  { id:54, country:"Portugal", name:"Leiria International School",            short:"LI", loc:"Leiria",              prog:"Cambridge",     price:5000,  priceMax:8000,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:39.7436, lng:-8.8071 },
+  { id:55, country:"Portugal", name:"Instituto Espanhol Giner de Los Rios",   short:"GR", loc:"Lisbon",              prog:"Spanish",       price:3000,  priceMax:5000,  reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.7250, lng:-9.1480 },
+  { id:56, country:"Portugal", name:"International Sharing School",           short:"IS", loc:"Lisbon",              prog:"IB",            price:11790, priceMax:26760, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7180, lng:-9.1600 },
+  // ── SPAIN — MADRID ──
+  { id:101, country:"Spain", name:"King's College School Madrid",             short:"KC", loc:"Madrid",              prog:"British / IB",  price:10000, priceMax:18000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:40.4168, lng:-3.7038 },
+  { id:102, country:"Spain", name:"Runnymede College",                        short:"RC", loc:"Alcobendas, Madrid",  prog:"British",       price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:40.5400, lng:-3.6400 },
+  { id:103, country:"Spain", name:"American School of Madrid",                short:"AM", loc:"Pozuelo, Madrid",     prog:"American / IB", price:11000, priceMax:20000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:40.4350, lng:-3.8200 },
+  { id:104, country:"Spain", name:"Lycée Français de Madrid",                 short:"LM", loc:"Madrid",              prog:"French",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:40.4200, lng:-3.6950 },
+  { id:105, country:"Spain", name:"Deutsche Schule Madrid",                   short:"DS", loc:"Madrid",              prog:"German",        price:5000,  priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:40.4050, lng:-3.7200 },
+  { id:106, country:"Spain", name:"Colegio Internacional SEK El Castillo",    short:"SE", loc:"Villafranca del Castillo", prog:"IB",       price:9000,  priceMax:18000, reviewed:false, verified:false, boarding:true,  bg:"#E6F1FB", color:"#0C447C", lat:40.4700, lng:-4.0200 },
+  { id:107, country:"Spain", name:"Colegio Brains",                           short:"CB", loc:"Madrid",              prog:"British / IB",  price:8000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:40.4600, lng:-3.6600 },
+  { id:108, country:"Spain", name:"Colegio Europeo de Madrid",                short:"CE", loc:"Madrid",              prog:"IB",            price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:40.4300, lng:-3.6800 },
+  // ── SPAIN — BARCELONA ──
+  { id:110, country:"Spain", name:"Benjamin Franklin Int'l School",           short:"BF", loc:"Barcelona",           prog:"American / IB", price:12000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:41.4036, lng:2.1744 },
+  { id:111, country:"Spain", name:"British School of Barcelona",              short:"BS", loc:"Esplugues, Barcelona", prog:"British",      price:9000,  priceMax:17000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.3700, lng:2.0900 },
+  { id:112, country:"Spain", name:"Lycée Français de Barcelone",              short:"LB", loc:"Barcelona",           prog:"French",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:41.4050, lng:2.1800 },
+  { id:113, country:"Spain", name:"Agora Barcelona International School",     short:"AG", loc:"Barcelona",           prog:"IB",            price:10000, priceMax:19000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:41.3750, lng:2.0600 },
+  { id:114, country:"Spain", name:"Deutsche Schule Barcelona",                short:"DB", loc:"Barcelona",           prog:"German",        price:5000,  priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:41.4100, lng:2.1600 },
+  { id:115, country:"Spain", name:"GEMS International School Barcelona",      short:"GI", loc:"Barcelona",           prog:"IB",            price:11000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:41.3900, lng:2.1200 },
+  // ── SPAIN — MÁLAGA / COSTA DEL SOL ──
+  { id:120, country:"Spain", name:"Laude San Pedro International College",    short:"LS", loc:"San Pedro, Marbella", prog:"British / IB",  price:8000,  priceMax:16000, reviewed:false, verified:false, boarding:true,  bg:"#E1F5EE", color:"#085041", lat:36.5100, lng:-4.9800 },
+  { id:121, country:"Spain", name:"English International College",            short:"EI", loc:"Marbella",            prog:"British",       price:7000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:36.5200, lng:-4.8800 },
+  { id:122, country:"Spain", name:"Aloha College",                            short:"AL", loc:"Marbella",            prog:"British / IB",  price:8000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:36.5300, lng:-4.8700 },
+  { id:123, country:"Spain", name:"Swans International School",               short:"SW", loc:"Sierra Blanca, Marbella", prog:"British",   price:9000,  priceMax:17000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:36.5400, lng:-4.8600 },
+  // ── SPAIN — VALENCIA / ALICANTE ──
+  { id:130, country:"Spain", name:"Colegio El Limonar International",         short:"EL", loc:"Valencia",            prog:"British / IB",  price:7000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:39.4699, lng:-0.3763 },
+  { id:131, country:"Spain", name:"American School of Valencia",              short:"AV", loc:"Valencia",            prog:"American / IB", price:9000,  priceMax:17000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:39.4800, lng:-0.3900 },
+  { id:132, country:"Spain", name:"Colegio Internacional Agora Alicante",     short:"AA", loc:"Alicante",            prog:"IB",            price:8000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.3452, lng:-0.4810 },
+
+  // ── FRANCE — PARIS ──
+  { id:201, country:"France", name:"American School of Paris",                short:"AP", loc:"Saint-Cloud, Paris",  prog:"American / IB", price:24000, priceMax:34000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:48.8414, lng:2.2058 },
+  { id:202, country:"France", name:"International School of Paris (ISP)",     short:"IP", loc:"Paris 16e",           prog:"IB",            price:18000, priceMax:28000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:48.8566, lng:2.2769 },
+  { id:203, country:"France", name:"British School of Paris",                 short:"BP", loc:"Croissy-sur-Seine",   prog:"British",       price:27000, priceMax:35000, reviewed:false, verified:false, boarding:true,  bg:"#E1F5EE", color:"#085041", lat:48.8780, lng:2.1370 },
+  { id:204, country:"France", name:"Marymount International School Paris",    short:"MI", loc:"Paris 16e",           prog:"American / IB", price:22000, priceMax:30000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:48.8630, lng:2.2680 },
+  { id:205, country:"France", name:"École Jeannine Manuel Paris",             short:"JM", loc:"Paris 15e",           prog:"IB / French",   price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:48.8417, lng:2.3100 },
+  { id:206, country:"France", name:"Lycée International de St-Germain-en-Laye", short:"LI", loc:"Saint-Germain-en-Laye", prog:"IB / French", price:6000, priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:48.8993, lng:2.0878 },
+  { id:207, country:"France", name:"EIB — École Internationale Bilingue",    short:"EI", loc:"Paris",               prog:"French / British",price:9000, priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:48.8500, lng:2.2900 },
+  // ── FRANCE — SOUTH ──
+  { id:210, country:"France", name:"Mougins School",                          short:"MS", loc:"Mougins, Côte d'Azur",prog:"British / IB",  price:19000, priceMax:25000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:43.6000, lng:6.9900 },
+  { id:211, country:"France", name:"International School of Nice (ISN)",      short:"IN", loc:"Nice",                prog:"IB / American", price:14000, priceMax:20000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:43.7102, lng:7.2620 },
+  { id:212, country:"France", name:"IBS of Provence",                         short:"IB", loc:"Aix-en-Provence",     prog:"IB / Cambridge", price:12000, priceMax:16000, reviewed:false, verified:false, boarding:true,  bg:"#E6F1FB", color:"#0C447C", lat:43.5297, lng:5.4474 },
+  { id:213, country:"France", name:"Ombrosa International School",            short:"OS", loc:"Lyon",                prog:"IB / French",   price:16000, priceMax:18000, reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:45.7640, lng:4.8357 },
+  { id:214, country:"France", name:"International School of Lyon",            short:"IL", loc:"Lyon",                prog:"IB / Cambridge", price:10000, priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.7500, lng:4.8200 },
+  { id:215, country:"France", name:"Bordeaux International School",           short:"BI", loc:"Bordeaux",            prog:"British / IB",  price:9000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:44.8378, lng:-0.5792 },
+
+  // ── NETHERLANDS — AMSTERDAM ──
+  { id:301, country:"Netherlands", name:"Amsterdam International Community School", short:"AI", loc:"Amsterdam",    prog:"IB",            price:16000, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:52.3676, lng:4.9041 },
+  { id:302, country:"Netherlands", name:"British School of Amsterdam",        short:"BA", loc:"Amsterdam",          prog:"British / IB",  price:18000, priceMax:26000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:52.3500, lng:4.8700 },
+  { id:303, country:"Netherlands", name:"American School of The Hague",       short:"AH", loc:"Wassenaar, The Hague", prog:"American / IB",price:20000, priceMax:28000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:52.1250, lng:4.4000 },
+  { id:304, country:"Netherlands", name:"International School of The Hague",  short:"IH", loc:"The Hague",          prog:"IB",            price:16000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:52.0705, lng:4.3007 },
+  { id:305, country:"Netherlands", name:"Rotterdam International Secondary",  short:"RI", loc:"Rotterdam",          prog:"IB",            price:8000,  priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:51.9225, lng:4.4792 },
+  { id:306, country:"Netherlands", name:"Rijnlands Lyceum Oegstgeest",        short:"RL", loc:"Oegstgeest, Leiden", prog:"IB / Dutch",    price:7000,  priceMax:11000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:52.1600, lng:4.4700 },
+  { id:307, country:"Netherlands", name:"International School Eindhoven",     short:"IE", loc:"Eindhoven",          prog:"IB",            price:9000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:51.4416, lng:5.4697 },
+  { id:308, country:"Netherlands", name:"Deutsche Schule Den Haag",           short:"DD", loc:"The Hague",          prog:"German",        price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:52.0850, lng:4.3200 },
+
+  // ── GERMANY — BERLIN ──
+  { id:401, country:"Germany", name:"Berlin Brandenburg International School",short:"BB", loc:"Kleinmachnow, Berlin",prog:"IB",            price:18000, priceMax:26000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:52.3600, lng:13.2200 },
+  { id:402, country:"Germany", name:"British School Berlin",                  short:"BS", loc:"Berlin",              prog:"British / IB",  price:16000, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:52.5200, lng:13.4050 },
+  { id:403, country:"Germany", name:"John F. Kennedy School Berlin",          short:"JK", loc:"Berlin",              prog:"American / IB", price:2000,  priceMax:5000,  reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:52.4500, lng:13.2800 },
+  { id:404, country:"Germany", name:"Metropolitan School Frankfurt",          short:"MF", loc:"Frankfurt",           prog:"IB",            price:18000, priceMax:26000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:50.1109, lng:8.6821 },
+  { id:405, country:"Germany", name:"Frankfurt International School",         short:"FI", loc:"Oberursel, Frankfurt",prog:"IB / American", price:20000, priceMax:29000, reviewed:false, verified:false, boarding:true,  bg:"#E6F1FB", color:"#0C447C", lat:50.2000, lng:8.5800 },
+  { id:406, country:"Germany", name:"International School of Hamburg",        short:"IH", loc:"Hamburg",             prog:"IB",            price:16000, priceMax:23000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:53.5753, lng:10.0153 },
+  { id:407, country:"Germany", name:"Munich International School",            short:"MI", loc:"Starnberg, Munich",   prog:"IB / American", price:20000, priceMax:30000, reviewed:false, verified:false, boarding:true,  bg:"#E6F1FB", color:"#0C447C", lat:47.9988, lng:11.3381 },
+  { id:408, country:"Germany", name:"Cologne International School (CIS)",     short:"CI", loc:"Cologne",             prog:"IB",            price:14000, priceMax:20000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:50.9333, lng:6.9500 },
+
+  // ── ITALY — ROME ──
+  { id:501, country:"Italy", name:"Marymount International School Rome",      short:"MR", loc:"Rome",                prog:"American / IB", price:18000, priceMax:26000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:41.9028, lng:12.4964 },
+  { id:502, country:"Italy", name:"St George's British International School",short:"SG", loc:"Rome",                 prog:"British / IB",  price:16000, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.8700, lng:12.4500 },
+  { id:503, country:"Italy", name:"Rome International School",                short:"RI", loc:"Rome",                prog:"IB",            price:14000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:41.9100, lng:12.5100 },
+  { id:504, country:"Italy", name:"American Overseas School of Rome",         short:"AO", loc:"Rome",                prog:"American / IB", price:15000, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:41.9500, lng:12.4700 },
+  // ── ITALY — MILAN ──
+  { id:510, country:"Italy", name:"Milan International School",               short:"MS", loc:"Milan",               prog:"IB",            price:16000, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.4654, lng:9.1859 },
+  { id:511, country:"Italy", name:"American School of Milan",                 short:"AM", loc:"Noverasco, Milan",    prog:"American / IB", price:18000, priceMax:26000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:45.3900, lng:9.1500 },
+  { id:512, country:"Italy", name:"British School of Milan",                  short:"BM", loc:"Milan",               prog:"British",       price:14000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:45.4800, lng:9.2000 },
+  { id:513, country:"Italy", name:"International School of Milan",            short:"IM", loc:"Milan",               prog:"IB / Cambridge", price:15000, priceMax:23000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.4900, lng:9.1700 },
+  // ── ITALY — OTHER ──
+  { id:520, country:"Italy", name:"International School of Florence",         short:"IF", loc:"Florence",            prog:"IB / American", price:12000, priceMax:20000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:43.7696, lng:11.2558 },
+  { id:521, country:"Italy", name:"International School of Turin",            short:"IT", loc:"Turin",               prog:"IB",            price:11000, priceMax:18000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.0703, lng:7.6869 },
+
+  // ── CROATIA — ZAGREB ──
+  { id:601, country:"Croatia", name:"International School of Zagreb",         short:"IZ", loc:"Zagreb",              prog:"IB",            price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.8150, lng:15.9819 },
+  { id:602, country:"Croatia", name:"American International School of Zagreb",short:"AZ", loc:"Zagreb",              prog:"American / IB", price:10000, priceMax:18000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:45.8000, lng:15.9700 },
+  { id:603, country:"Croatia", name:"XV. Gymnasium Zagreb",                   short:"GZ", loc:"Zagreb",              prog:"IB",            price:1000,  priceMax:3000,  reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:45.8200, lng:15.9900 },
+  // ── CROATIA — COAST ──
+  { id:610, country:"Croatia", name:"International School of Split",          short:"IS", loc:"Split",               prog:"IB / Cambridge", price:6000, priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:43.5081, lng:16.4402 },
+  { id:611, country:"Croatia", name:"QSI International School of Dubrovnik",  short:"QD", loc:"Dubrovnik",           prog:"American",      price:7000,  priceMax:13000, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:42.6507, lng:18.0944 },
+  { id:612, country:"Croatia", name:"International School of Istria",         short:"II", loc:"Pula, Istria",        prog:"IB / Cambridge", price:5000, priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:44.8683, lng:13.8481 },
+];
+
+// ── FILTER STATE ──
+const state = { prog: 'all', price: 'all', reviewed: false, boarding: false, search: '', country: 'Portugal' };
+
+// Active filtered subset
+function getSchools(){ return allSchools.filter(s => s.country === state.country); }
+
+// ── FILTER STATE ──
+// state defined above
+
+function progPill(p){
+  if(p.includes("IB")) return "p-blue";
+  if(p.includes("British")) return "p-teal";
+  if(p.includes("American")) return "p-amber";
+  if(p.includes("Cambridge")) return "p-purple";
+  if(p.includes("French")) return "p-pink";
+  return "p-gray";
+}
+
+function getFiltered(){
+  return getSchools().filter(s => {
+    if(state.reviewed && !s.reviewed) return false;
+    if(state.boarding && !s.boarding) return false;
+    if(state.prog !== 'all' && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
+    if(state.price === 'low'  && s.price > 8000)  return false;
+    if(state.price === 'mid'  && (s.price < 8000 || s.price > 15000)) return false;
+    if(state.price === 'high' && s.price < 15000) return false;
+    if(state.maxPrice && s.price > state.maxPrice) return false;
+    if(state.lang && !s.prog.toLowerCase().includes(state.lang.toLowerCase())) return false;
+    if(state.typeBoarding === 'boarding' && !s.boarding) return false;
+    if(state.typeBoarding === 'day' && s.boarding) return false;
+    if(state.search && !s.name.toLowerCase().includes(state.search) && !s.loc.toLowerCase().includes(state.search)) return false;
+    return true;
+  });
+}
+
+function applyFilters(){
+  // Max price from slider
+  const priceRange = document.getElementById('priceRange');
+  state.maxPrice = priceRange ? parseInt(priceRange.value) : null;
+
+  // Language checkboxes
+  const langChecked = ['l1','l2','l3','l5'].map(id => document.getElementById(id)).filter(el => el && el.checked).map(el => el.value);
+  state.lang = langChecked.length === 1 ? langChecked[0] : null;
+
+  // Boarding type
+  const isDay      = document.getElementById('t1')?.checked;
+  const isBoarding = document.getElementById('t2')?.checked;
+  if(isBoarding && !isDay)      state.typeBoarding = 'boarding';
+  else if(isDay && !isBoarding) state.typeBoarding = 'day';
+  else                           state.typeBoarding = null;
+
+  renderList();
+  // Close panel
+  document.getElementById('filtersExpanded').classList.remove('open');
+  document.getElementById('moreFiltersBtn').classList.remove('open');
+  document.getElementById('moreFiltersBtn').innerHTML = `<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg> More filters`;
+}
+
+function resetFilters(){
+  // Reset checkboxes
+  ['age1','age2','age3','age4','t1','t2','l1','l2','l3','l5'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.checked = false;
+  });
+  // Reset slider
+  const pr = document.getElementById('priceRange');
+  if(pr){ pr.value = 40000; document.getElementById('rangeVal').textContent = '€40,000'; }
+  // Reset state
+  state.maxPrice = null;
+  state.lang = null;
+  state.typeBoarding = null;
+  renderList();
+}
+
+function renderList(){
+  const filtered = getFiltered();
+  document.getElementById("panel-count").textContent = filtered.length + ' schools · ' + state.country;
+
+  // update map pins opacity
+  allSchools.forEach(s => {
+    const filteredIds = new Set(filtered.map(x=>x.id));
+    if(markers[s.id]){
+      const el = markers[s.id].getElement();
+      if(el) el.style.opacity = filteredIds.has(s.id) ? '1' : '0.2';
+    }
+  });
+
+  document.getElementById("schoolsList").innerHTML = filtered.length === 0
+    ? `<div style="text-align:center;padding:40px;color:var(--gray);font-size:13px;">No schools match your filters.<br><span style="font-size:12px;">Try adjusting the criteria above.</span></div>`
+    : filtered.map(s=>`
+    <div class="school-card ${s.reviewed?"reviewed":""} ${s.verified?"verified-card":""}" id="card-${s.id}" onclick="focusSchool(${s.id})">
+      ${s.verified?`<div class="verified-bar"></div>`:""}
+      <div class="card-top">
+        <div class="avatar" style="background:${s.bg};color:${s.color};">${s.short}</div>
+        <div class="card-info">
+          <div class="card-name">${s.name}</div>
+          <div class="card-loc">📍 ${s.loc}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0;">
+          ${s.reviewed?`<div class="review-tag">★ Reviewed</div>`:""}
+          ${s.verified?`<div class="verified-tag">✓ Apr 2026</div>`:""}
+        </div>
+      </div>
+      <div class="pills">
+        <span class="pill ${progPill(s.prog)}">${s.prog}</span>
+        ${s.boarding?`<span class="pill p-amber">Boarding</span>`:`<span class="pill p-gray">Day school</span>`}
+      </div>
+      <div class="card-bottom">
+        <div class="price">€${s.price.toLocaleString()} <span>– €${s.priceMax.toLocaleString()} /yr</span></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ── FILTER HANDLERS ──
+function setProgFilter(val, btn){
+  state.prog = val;
+  document.querySelectorAll('.prog-chip').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderList();
+}
+
+function setPriceFilter(val, btn){
+  state.price = val;
+  document.querySelectorAll('.price-chip').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderList();
+}
+
+function toggleReviewed(btn){
+  state.reviewed = !state.reviewed;
+  btn.classList.toggle('reviewed', state.reviewed);
+  btn.classList.toggle('active', state.reviewed);
+  renderList();
+}
+
+function toggleFilters(){
+  const expanded = document.getElementById("filtersExpanded");
+  const btn = document.getElementById("moreFiltersBtn");
+  expanded.classList.toggle("open");
+  btn.classList.toggle("open");
+  if(btn.classList.contains("open")){
+    btn.innerHTML = `<svg class="chevron" style="transform:rotate(180deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg> Less filters`;
+  } else {
+    btn.innerHTML = `<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg> More filters`;
+  }
+}
+
+function toggleChip(btn){ btn.classList.toggle("active"); }
+
+function updateRange(el){
+  document.getElementById("rangeVal").textContent = "€" + parseInt(el.value).toLocaleString();
+}
+
+function selectCountry(btn){
+  document.querySelectorAll(".country-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  state.country = btn.dataset.country || "Portugal";
+  const centers = {
+    'Portugal':    [39.5, -8.0,  7],
+    'Spain':       [40.4, -3.7,  6],
+    'France':      [46.2,  2.2,  6],
+    'Netherlands': [52.3,  5.3,  8],
+    'Germany':     [51.2, 10.5,  6],
+    'Italy':       [42.5, 12.5,  6],
+    'Croatia':     [45.1, 16.4,  7],
+  };
+  const c = centers[state.country] || [48.0, 10.0, 5];
+  map.setView([c[0], c[1]], c[2], { animate:true });
+  allSchools.forEach(s => {
+    if(markers[s.id]){
+      const el = markers[s.id].getElement();
+      if(el) el.style.opacity = s.country === state.country ? '1' : '0.08';
+    }
+  });
+  renderList();
+}
+
+// Map
+const map = L.map("map", { zoomControl: false }).setView([39.5, -8.0], 7);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  attribution: "© OpenStreetMap © Carto", subdomains: "abcd", maxZoom: 19
+}).addTo(map);
+L.control.zoom({ position: "bottomleft" }).addTo(map);
+
+const markers = {};
+allSchools.forEach(s => {
+  const size = s.reviewed ? 34 : s.verified ? 30 : 26;
+  const bg = s.reviewed ? "#C4633A" : s.verified ? "#2E7D32" : "#1a1814";
+  const icon = L.divIcon({
+    className: "",
+    html: `<div style="width:${size}px;height:${size}px;background:${bg};color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.25);font-family:'DM Sans',sans-serif;">${s.short.slice(0,2)}</div>`,
+    iconSize: [size, size], iconAnchor: [size/2, size/2]
+  });
+  const m = L.marker([s.lat, s.lng], { icon }).addTo(map).bindPopup(`
+    <div class="popup-name">${s.name}</div>
+    <div class="popup-meta">€${s.price.toLocaleString()}–€${s.priceMax.toLocaleString()} / year · ${s.prog}</div>
+    <div class="popup-meta" style="color:#aaa;">${s.country}</div>
+    ${s.reviewed ? '<div class="popup-badge">★ Independent review</div>' : ""}
+    ${s.verified && !s.reviewed ? '<div class="popup-badge" style="background:#EAF3DE;color:#2E7D32;">✓ Verified Apr 2026</div>' : ""}
+  `, { offset:[0,-6] });
+  m.on("click", () => {
+    document.querySelectorAll(".school-card").forEach(c=>c.classList.remove("highlighted"));
+    const card = document.getElementById(`card-${s.id}`);
+    if(card){ card.classList.add("highlighted"); card.scrollIntoView({ behavior:"smooth", block:"nearest" }); }
+  });
+  markers[s.id] = m;
+});
+
+function focusSchool(id){
+  const s = allSchools.find(x=>x.id===id);
+  if(!s) return;
+  map.setView([s.lat, s.lng], 13, { animate:true });
+  if(markers[id]) markers[id].openPopup();
+  document.querySelectorAll(".school-card").forEach(c=>c.classList.remove("highlighted"));
+  const card = document.getElementById(`card-${id}`);
+  if(card){ card.classList.add("highlighted"); card.scrollIntoView({ behavior:"smooth", block:"nearest" }); }
+}
+
+function toggleMap(){
+  const panel = document.getElementById('mapPanel');
+  const btn   = document.getElementById('mapToggleBtn');
+  const isOpen = panel.classList.toggle('map-open');
+  btn.innerHTML = isOpen
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Close map`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Show map`;
+  if(isOpen) setTimeout(()=>map.invalidateSize(), 50);
+}
+
+renderList();
+</script>
+</body>
+</html>
