@@ -353,7 +353,111 @@ nav {
 .popup-meta { font-size: 11px; color: var(--gray); }
 .popup-badge { display: inline-block; margin-top: 5px; font-size: 10px; font-weight: 600; color: var(--terra); background: var(--terra-light); padding: 2px 7px; border-radius: 4px; }
 
-/* ── MAP TOGGLE BUTTON (mobile) ── */
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,24,20,.55);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  color: var(--gray);
+}
+.modal-close:hover { background: var(--cream); }
+.modal-hero {
+  background: var(--ink);
+  border-radius: 20px 20px 0 0;
+  padding: 32px 28px 24px;
+  color: var(--white);
+}
+.modal-tag { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+.modal-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.2; }
+.modal-loc { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 16px; }
+.modal-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.modal-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.mb-verified { background: #2E7D32; color: #fff; }
+.mb-reviewed { background: var(--terra); color: #fff; }
+.mb-prog { background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); }
+.mb-boarding { background: #1a4a7a; color: #fff; }
+
+.modal-body { padding: 24px 28px; }
+.modal-section { margin-bottom: 24px; }
+.modal-section-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-item { }
+.modal-item-label { font-size: 10px; color: var(--gray); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .05em; }
+.modal-item-value { font-size: 14px; font-weight: 600; color: var(--ink); }
+.modal-item-value.price { color: var(--terra); }
+.modal-item-value.green { color: #2E7D32; }
+.modal-item-value.red { color: #c0392b; }
+.modal-desc { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 20px; }
+.modal-video-placeholder {
+  background: var(--cream);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.modal-video-placeholder svg { opacity: .3; margin-bottom: 8px; }
+.modal-video-placeholder p { font-size: 12px; color: var(--gray); }
+.modal-footer { display: flex; gap: 10px; padding: 0 28px 28px; }
+.modal-btn-primary {
+  flex: 1; background: var(--ink); color: var(--white);
+  border: none; border-radius: 10px; padding: 13px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.modal-btn-primary:hover { background: #2d2a26; }
+.modal-btn-secondary {
+  background: var(--cream); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 10px; padding: 13px 18px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+@media (max-width: 600px) {
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal { border-radius: 20px 20px 0 0; max-height: 92vh; width: 100%; }
+  .modal-hero { border-radius: 20px 20px 0 0; }
+  .modal-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal-footer { padding: 0 20px 32px; flex-direction: column; }
+  .modal-close { top: 12px; right: 12px; }
+}
+</style>
+</head>
+<body>
 .map-toggle-btn {
   display: none;
   position: fixed;
@@ -608,6 +712,7 @@ nav {
     <button class="chip prog-chip" onclick="setProgFilter('British',this)">British</button>
     <button class="chip prog-chip" onclick="setProgFilter('American',this)">American</button>
     <button class="chip prog-chip" onclick="setProgFilter('Cambridge',this)">Cambridge</button>
+    <button class="chip prog-chip" onclick="setProgFilter('French',this)">French</button>
     <button class="chip price-chip active" onclick="setPriceFilter('all',this)">All prices</button>
     <button class="chip price-chip" onclick="setPriceFilter('low',this)">Under €8k</button>
     <button class="chip price-chip" onclick="setPriceFilter('mid',this)">€8–15k</button>
@@ -625,12 +730,11 @@ nav {
 
       <!-- Age range -->
       <div>
-        <div class="filter-group-title">Age group</div>
+        <div class="filter-group-title">Age range</div>
         <div class="filter-options">
-          <div class="filter-opt"><input type="checkbox" id="age1" value="preschool"><label for="age1">Pre-school (3–5)</label></div>
-          <div class="filter-opt"><input type="checkbox" id="age2" value="primary"><label for="age2">Primary (6–11)</label></div>
-          <div class="filter-opt"><input type="checkbox" id="age3" value="middle"><label for="age3">Middle (11–14)</label></div>
-          <div class="filter-opt"><input type="checkbox" id="age4" value="high"><label for="age4">High school (14–18)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age_all" value="all_ages"><label for="age_all">All ages (3–18)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age_primary" value="primary"><label for="age_primary">Up to age 12 only</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age_secondary" value="secondary"><label for="age_secondary">Secondary (12–18)</label></div>
         </div>
       </div>
 
@@ -640,6 +744,8 @@ nav {
         <div class="filter-options">
           <div class="filter-opt"><input type="checkbox" id="t1" value="day"><label for="t1">Day school</label></div>
           <div class="filter-opt"><input type="checkbox" id="t2" value="boarding"><label for="t2">Boarding school</label></div>
+          <div class="filter-opt"><input type="checkbox" id="t_new" value="new"><label for="t_new">New school (after 2020)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="t_small" value="small"><label for="t_small">Small classes (below 20)</label></div>
         </div>
       </div>
 
@@ -651,6 +757,19 @@ nav {
           <div class="filter-opt"><input type="checkbox" id="l2" value="French"><label for="l2">French</label></div>
           <div class="filter-opt"><input type="checkbox" id="l3" value="German"><label for="l3">German</label></div>
           <div class="filter-opt"><input type="checkbox" id="l5" value="Portuguese"><label for="l5">Portuguese</label></div>
+        </div>
+      </div>
+
+      <!-- Area (Portugal only) -->
+      <div id="areaFilter">
+        <div class="filter-group-title">Area (Portugal)</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="area1" value="Sintra"><label for="area1">Sintra</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area2" value="Cascais"><label for="area2">Cascais</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area3" value="Lisbon"><label for="area3">Lisbon city</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area4" value="Oeiras"><label for="area4">Oeiras</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area5" value="Porto"><label for="area5">Porto</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area6" value="Algarve"><label for="area6">Algarve</label></div>
         </div>
       </div>
 
@@ -700,6 +819,16 @@ nav {
   Show map
 </button>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 
@@ -707,12 +836,12 @@ nav {
 const allSchools = [
   // ── PORTUGAL — LISBON ──
   { id:1,  country:"Portugal", name:"Carlucci American Int'l School (CAISL)", short:"CA", loc:"Sintra, Lisbon",       prog:"American / IB", price:12182, priceMax:23532, reviewed:true,  verified:true,  boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7978, lng:-9.3617 },
-  { id:2,  country:"Portugal", name:"St Julian's School",                     short:"SJ", loc:"Carcavelos, Lisbon",   prog:"British / IB",  price:12693, priceMax:19323, reviewed:true,  verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333 },
+  { id:2,  country:"Portugal", name:"St Julian's School", short:"SJ", loc:"Carcavelos, Cascais", prog:"British / IB", price:12693, priceMax:19323, reviewed:true, verified:true, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333, founded:1932, students:1200, classSize:18, appFee:250, enrollFee:750, lunchIncluded:false, examRequired:true, ibAvg:34.5, area:"Cascais", ageMax:18, website:"https://www.stjulians.com", description:"One of Portugal's most prestigious international schools founded in 1932 in a historic 18th-century estate. Over 40 nationalities. Offers English and bilingual sections." },
   { id:3,  country:"Portugal", name:"St Peter's International School",        short:"SP", loc:"Palmela, Setúbal",     prog:"British / IB",  price:8325,  priceMax:17100, reviewed:false, verified:false, boarding:true,  bg:"#FAEEDA", color:"#633806", lat:38.5667, lng:-8.9000 },
   { id:4,  country:"Portugal", name:"Tasis Portugal",                         short:"TP", loc:"Sintra, Lisbon",       prog:"American / IB", price:12390, priceMax:23160, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.8029, lng:-9.3878 },
   { id:5,  country:"Portugal", name:"Deutsche Schule Lissabon",               short:"DS", loc:"Lisbon",               prog:"German / IB",   price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:38.7223, lng:-9.1393 },
   { id:6,  country:"Portugal", name:"The British School of Lisbon",           short:"BS", loc:"Lisbon",               prog:"British",       price:13110, priceMax:21375, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7167, lng:-9.1500 },
-  { id:7,  country:"Portugal", name:"King's College School Lisbon",           short:"KC", loc:"Cascais",              prog:"British / IB",  price:12000, priceMax:22000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215 },
+  { id:7,  country:"Portugal", name:"King's College School Lisbon",           short:"KC", loc:"Cascais",              prog:"Cambridge / IB / A-Level", price:12500, priceMax:27500, reviewed:false, verified:false, boarding:true,  bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215, lunchIncluded:true, appFee:250, enrollFee:"3000-5250" },
   { id:8,  country:"Portugal", name:"Prime School — Lisbon",                  short:"PL", loc:"Lisbon",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7200, lng:-9.1550 },
   { id:9,  country:"Portugal", name:"Prime School — Estoril",                 short:"PE", loc:"Estoril",              prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7066, lng:-9.3911 },
   { id:10, country:"Portugal", name:"Prime School — Sintra",                  short:"PS", loc:"Sintra",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.8000, lng:-9.3800 },
@@ -941,9 +1070,10 @@ function renderList(){
   document.getElementById("schoolsList").innerHTML = filtered.length === 0
     ? `<div style="text-align:center;padding:40px;color:var(--gray);font-size:13px;">No schools match your filters.<br><span style="font-size:12px;">Try adjusting the criteria above.</span></div>`
     : filtered.map(s=>`
-    <div class="school-card ${s.reviewed?"reviewed":""} ${s.verified?"verified-card":""}" id="card-${s.id}" onclick="focusSchool(${s.id})">
+    <div class="school-card ${s.reviewed?"reviewed":""} ${s.verified?"verified-card":""}" id="card-${s.id}" onclick="openModal(${s.id})" ontouchend="openModal(${s.id})"
+         style="cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,.05);">
       ${s.verified?`<div class="verified-bar"></div>`:""}
-      <div class="card-top">
+      <div class="card-top" style="pointer-events:none;">
         <div class="avatar" style="background:${s.bg};color:${s.color};">${s.short}</div>
         <div class="card-info">
           <div class="card-name">${s.name}</div>
@@ -1069,6 +1199,250 @@ function focusSchool(id){
   const card = document.getElementById(`card-${id}`);
   if(card){ card.classList.add("highlighted"); card.scrollIntoView({ behavior:"smooth", block:"nearest" }); }
 }
+
+// ── FAVOURITES & COMPARE ──
+const favourites = new Set();
+const compareList = new Set();
+
+function toggleFavourite(id, btn){
+  event.stopPropagation();
+  if(favourites.has(id)){ favourites.delete(id); btn.innerHTML='♡'; btn.style.color='var(--gray)'; }
+  else { favourites.add(id); btn.innerHTML='♥'; btn.style.color='#e24b4a'; }
+}
+
+function toggleCompare(id, btn){
+  event.stopPropagation();
+  if(compareList.has(id)){
+    compareList.delete(id);
+    btn.textContent='+ Compare'; btn.classList.remove('added');
+  } else {
+    if(compareList.size >= 4){ alert('You can compare up to 4 schools at a time.'); return; }
+    compareList.add(id);
+    btn.textContent='✓ Added'; btn.classList.add('added');
+  }
+  updateCompareBar();
+}
+
+function updateCompareBar(){
+  let bar = document.getElementById('compareBar');
+  if(!bar){
+    bar = document.createElement('div');
+    bar.id = 'compareBar';
+    bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:1200;font-family:"DM Sans",sans-serif;font-size:13px;';
+    document.body.appendChild(bar);
+  }
+  if(compareList.size === 0){ bar.style.display='none'; return; }
+  bar.style.display='flex';
+  const names = [...compareList].map(id => allSchools.find(s=>s.id===id)?.name.split(' ').slice(0,2).join(' ')).join(' · ');
+  bar.innerHTML = `
+    <span><strong>${compareList.size} school${compareList.size>1?'s':''} selected:</strong> ${names}</span>
+    <div style="display:flex;gap:10px;">
+      <button onclick="openCompare()" style="background:var(--terra);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Compare →</button>
+      <button onclick="clearCompare()" style="background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">Clear</button>
+    </div>
+  `;
+}
+
+function clearCompare(){
+  compareList.clear();
+  document.querySelectorAll('.compare-btn').forEach(b=>{ b.textContent='+ Compare'; b.classList.remove('added'); });
+  updateCompareBar();
+}
+
+function openCompare(){
+  const schools = [...compareList].map(id => allSchools.find(s=>s.id===id));
+  const fields = [
+    { label:'Programme', key: s => s.prog },
+    { label:'Annual tuition', key: s => s.price ? `€${s.price.toLocaleString()}–€${s.priceMax.toLocaleString()}` : '—' },
+    { label:'Application fee', key: s => s.appFee ? '€'+s.appFee : '—' },
+    { label:'Enrollment fee', key: s => s.enrollFee ? '€'+s.enrollFee : '—' },
+    { label:'Lunch included', key: s => s.lunchIncluded ? '✓ Yes' : s.lunchIncluded===false ? '✗ No' : '—' },
+    { label:'Boarding', key: s => s.boarding ? '✓ Yes' : '✗ No' },
+    { label:'Founded', key: s => s.founded || '—' },
+    { label:'Students', key: s => s.students ? s.students.toLocaleString() : '—' },
+    { label:'Class size', key: s => s.classSize ? 'Max '+s.classSize : '—' },
+    { label:'IB avg score', key: s => s.ibAvg ? s.ibAvg+' / 45' : '—' },
+    { label:'Exam results', key: s => s.examRequired ? '✓ Public' : '—' },
+    { label:'Verified Apr 2026', key: s => s.verified ? '✓' : '—' },
+  ];
+  const cols = schools.map(s=>`<th style="padding:12px 16px;text-align:left;font-size:13px;font-weight:700;background:#f5f5f5;min-width:160px;">${s.name}</th>`).join('');
+  const rows = fields.map(f=>`
+    <tr>
+      <td style="padding:10px 16px;font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em;background:#fafafa;border-bottom:1px solid #eee;white-space:nowrap;">${f.label}</td>
+      ${schools.map(s=>`<td style="padding:10px 16px;font-size:13px;border-bottom:1px solid #eee;">${f.key(s)}</td>`).join('')}
+    </tr>
+  `).join('');
+  const overlay = document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML=`
+    <div style="background:#fff;border-radius:16px;max-width:900px;width:100%;max-height:90vh;overflow:auto;position:relative;">
+      <div style="padding:20px 24px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:17px;font-weight:700;">Comparing ${schools.length} schools</div>
+        <button onclick="this.closest('div[style]').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;">✕</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="border-collapse:collapse;width:100%;">
+          <thead><tr><th style="padding:12px 16px;text-align:left;font-size:11px;color:#888;background:#f5f5f5;min-width:140px;">Feature</th>${cols}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+}
+
+function openModal(id){
+  const s = allSchools.find(x=>x.id===id);
+  if(!s) return;
+
+  // Fly map to school
+  map.setView([s.lat, s.lng], 13, { animate:true });
+  if(markers[s.id]) markers[s.id].openPopup();
+
+  const isFav = favourites.has(id);
+  const inCompare = compareList.has(id);
+
+  document.getElementById('modalHero').innerHTML = `
+    <div class="modal-tag">${s.country} · ${s.loc}</div>
+    <div class="modal-name">${s.name}</div>
+    <div class="modal-loc">📍 ${s.loc}</div>
+    <div class="modal-badges" style="margin-bottom:16px;">
+      <span class="modal-badge mb-prog">${s.prog}</span>
+      ${s.boarding ? '<span class="modal-badge mb-boarding">Boarding ✓</span>' : '<span class="modal-badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);">Day school</span>'}
+      ${s.verified ? '<span class="modal-badge mb-verified">✓ Verified Apr 2026</span>' : ''}
+      ${s.reviewed ? '<span class="modal-badge mb-reviewed">★ Reviewed</span>' : ''}
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button id="modalFavBtn" onclick="toggleFavourite(${id}, this)" style="background:rgba(255,255,255,.12);color:${isFav?'#ff6b6b':'rgba(255,255,255,.8)'};border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;">
+        ${isFav?'♥':'♡'} ${isFav?'Saved':'Save'}
+      </button>
+      <button id="modalCmpBtn" onclick="toggleCompare(${id}, this)" class="compare-btn ${inCompare?'added':''}" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        ${inCompare?'✓ Added':'+ Compare'}
+      </button>
+    </div>
+  `;
+
+  document.getElementById('modalBody').innerHTML = `
+
+    <!-- PHOTO -->
+    <div class="modal-section" style="padding:0;margin:0 0 20px;">
+      <div style="background:var(--cream);border-radius:12px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed var(--border);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span style="font-size:12px;color:#bbb;font-weight:500;">Photos — coming soon</span>
+      </div>
+    </div>
+
+    ${s.description ? `<div class="modal-desc">${s.description}</div>` : ''}
+
+    <!-- FEES -->
+    <div class="modal-section">
+      <div class="modal-section-title">Fees</div>
+      <div class="modal-grid">
+        <div class="modal-item">
+          <div class="modal-item-label">Annual tuition</div>
+          <div class="modal-item-value price">€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Application fee</div>
+          <div class="modal-item-value">${s.appFee ? '€'+s.appFee : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Enrollment fee</div>
+          <div class="modal-item-value">${s.enrollFee ? '€'+s.enrollFee : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Lunch included</div>
+          <div class="modal-item-value">${s.lunchIncluded === true ? '<span style="color:#2E7D32">✓ Yes</span>' : s.lunchIncluded === false ? '<span style="color:#aaa">✗ No</span>' : '—'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHOOL PROFILE -->
+    <div class="modal-section">
+      <div class="modal-section-title">School profile</div>
+      <div class="modal-grid">
+        <div class="modal-item">
+          <div class="modal-item-label">Programme</div>
+          <div class="modal-item-value">${s.prog || '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Main language</div>
+          <div class="modal-item-value">${s.mainLang || 'English'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Founded</div>
+          <div class="modal-item-value">${s.founded || '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">New or established</div>
+          <div class="modal-item-value">${s.founded >= 2020 ? '🆕 New school' : s.founded ? 'Established' : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Students</div>
+          <div class="modal-item-value">${s.students ? s.students.toLocaleString() : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Class size</div>
+          <div class="modal-item-value">${s.classSize ? 'Max '+s.classSize+(s.classSize<20?' <span style="color:#2E7D32;font-size:11px;">✓ Small</span>':'') : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Campus size</div>
+          <div class="modal-item-value">${s.campus || '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Exam results</div>
+          <div class="modal-item-value">${s.examRequired === true ? '<span style="color:#2E7D32">✓ Published</span>' : s.examRequired === false ? '<span style="color:#aaa">Not public</span>' : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">IB avg score</div>
+          <div class="modal-item-value">${s.ibAvg ? '<span style="color:#2E7D32">'+s.ibAvg+' / 45</span>' : '—'}</div>
+        </div>
+        <div class="modal-item">
+          <div class="modal-item-label">Boarding</div>
+          <div class="modal-item-value">${s.boarding ? '<span style="color:#2E7D32">✓ Available</span>' : '✗ Day only'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INDEPENDENT REVIEW -->
+    <div class="modal-section">
+      <div class="modal-section-title">Independent review</div>
+      <div style="background:var(--cream);border-radius:12px;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed var(--border);margin-bottom:12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="#ccc" stroke="none"/></svg>
+        <span style="font-size:12px;color:#bbb;font-weight:500;">${s.reviewed ? 'Video review — coming soon' : 'Not yet visited'}</span>
+      </div>
+      ${s.reviewed ? `<div style="background:var(--terra-light);border-radius:10px;padding:12px 14px;font-size:12px;color:#8B3A1F;">★ We've visited this school. Full video review coming soon.</div>` : ''}
+    </div>
+  `;
+
+  document.getElementById('modalFooter').innerHTML = `
+    ${s.website ? `<a href="${s.website}" target="_blank" class="modal-btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Visit school website
+    </a>` : `<button class="modal-btn-primary" style="opacity:.4;cursor:default;">Website not available</button>`}
+    <button class="modal-btn-secondary" onclick="closeModal()">Close</button>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e){
+  if(e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close modal on overlay tap (mobile)
+document.addEventListener('DOMContentLoaded', function(){
+  const overlay = document.getElementById('modalOverlay');
+  if(overlay){
+    overlay.addEventListener('touchend', function(e){
+      if(e.target === overlay) closeModal();
+    });
+  }
+});
 
 function toggleMap(){
   const panel = document.getElementById('mapPanel');
