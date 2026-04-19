@@ -173,17 +173,18 @@ nav {
 .filters-expanded {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .3s ease;
+  transition: max-height .4s ease;
   border-top: 0px solid var(--border);
 }
 .filters-expanded.open {
-  max-height: 300px;
+  max-height: 1200px;
   border-top: 1px solid var(--border);
+  overflow-y: auto;
 }
 
 .filters-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   padding: 20px 40px;
 }
@@ -455,9 +456,7 @@ nav {
   .modal-footer { padding: 0 20px 32px; flex-direction: column; }
   .modal-close { top: 12px; right: 12px; }
 }
-</style>
-</head>
-<body>
+
 .map-toggle-btn {
   display: none;
   position: fixed;
@@ -481,105 +480,48 @@ nav {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-
-  /* Beta banner */
   .beta-banner { flex-direction: column; gap: 4px; padding: 10px 16px; font-size: 11px; }
   .beta-sep { display: none; }
-
-  /* Nav */
   nav { padding: 0 16px; height: 56px; }
   .logo-top { font-size: 18px; }
   .nav-links a:not(.nav-cta) { display: none; }
   .nav-cta { padding: 7px 14px; font-size: 12px; }
-
-  /* Hero */
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 32px 16px 28px;
-    gap: 28px;
-  }
+  .hero { grid-template-columns: 1fr; padding: 32px 16px 28px; gap: 28px; }
   .hero h1 { font-size: 34px; letter-spacing: -0.5px; }
   .hero-desc { font-size: 14px; }
   .hero-stats { gap: 20px; }
   .stat-num { font-size: 22px; }
-
-  /* Country selector */
   .selector-card { padding: 20px 16px; }
   .country-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
   .country-btn { padding: 9px 12px; font-size: 12px; }
   .flag { font-size: 16px; }
   .explore-btn { padding: 12px; font-size: 13px; }
-
-  /* Videos */
   .videos-section { padding: 28px 16px; }
   .videos-grid { grid-template-columns: 1fr; gap: 12px; }
   .videos-header { flex-direction: column; gap: 6px; }
   .video-thumb { height: 180px; }
-
-  /* Filters */
   .filters-section { top: 56px; }
-  .filters-main {
-    padding: 8px 16px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 6px;
-  }
+  .filters-main { padding: 8px 16px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 6px; }
   .filters-main::-webkit-scrollbar { display: none; }
   .filter-label { display: none; }
   #searchInput { width: 140px; font-size: 11px; }
-
-  /* Expanded filters */
   .filters-grid { grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; }
-
-  /* Split layout — stack vertically */
-  .split {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  /* Map — hidden by default on mobile, shown as overlay */
-  .map-panel {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 1050;
-    height: 100vh !important;
-  }
+  .split { grid-template-columns: 1fr; height: auto; }
+  .map-panel { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1050; height: 100vh !important; }
   .map-panel.map-open { display: block; }
-
-  /* Map close button */
-  .map-close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 1060;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,.12);
-  }
-
-  /* Schools panel */
+  .map-close-btn { position: absolute; top: 16px; right: 16px; z-index: 1060; background: var(--white); border: 1px solid var(--border); border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
   .schools-panel { padding: 16px; padding-bottom: 80px; }
   .panel-title { font-size: 17px; }
-
-  /* Cards */
   .school-card { padding: 14px; }
   .card-name { font-size: 13px; }
-
-  /* Map toggle button */
   .map-toggle-btn { display: flex; }
-
-  /* Map legend */
   .map-legend-box { bottom: 72px; right: 16px; font-size: 10px; padding: 8px 10px; gap: 10px; }
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal { border-radius: 20px 20px 0 0; max-height: 92vh; width: 100%; }
+  .modal-hero { border-radius: 20px 20px 0 0; }
+  .modal-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal-footer { padding: 0 20px 32px; flex-direction: column; }
+  .modal-close { top: 12px; right: 12px; }
 }
 
 @media (max-width: 480px) {
@@ -588,6 +530,11 @@ nav {
   .hero-stats { gap: 14px; }
   .stat-num { font-size: 20px; }
   .stat-label { font-size: 10px; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
 }
 </style>
 </head>
@@ -602,14 +549,8 @@ nav {
   <span style="opacity:.4">·</span>
   <span>We're adding schools and reviews every week.</span>
   <span style="opacity:.4">·</span>
-  <a href="#" style="color:var(--terra,#C4633A);text-decoration:none;font-weight:600;">Get notified when we launch →</a>
+  <a href="#" style="color:#C4633A;text-decoration:none;font-weight:600;">Get notified when we launch →</a>
 </div>
-<style>
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .3; }
-}
-</style>
 
 <!-- NAV -->
 <nav>
@@ -630,9 +571,13 @@ nav {
 <section class="hero">
   <div>
     <div class="hero-badge">Independent School Reviews</div>
-    <h1>Find the right school<br>for your <em>child</em></h1>
-    <p class="hero-desc">We know how hard it is to choose the right school — every family wants to visit them all. We've done the tours so you don't have to. Because every child is different, we help you find what's right for yours.</p>
-    <div class="hero-stats">
+    <h1>One window.<br><em>Every school.</em></h1>
+    <p class="hero-desc">Independent reviews · Verified data · Direct applications</p>
+    <button onclick="openHowItWorks()" style="display:inline-flex;align-items:center;gap:10px;margin-top:14px;background:var(--terra);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;padding:10px 18px;border-radius:30px;letter-spacing:.02em;">
+      <span style="font-size:15px;">▶</span>
+      How it works
+    </button>
+    <div class="hero-stats" style="margin-top:28px;">
       <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Schools reviewed</div></div>
       <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Countries</div></div>
       <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Independent</div></div>
@@ -728,60 +673,104 @@ nav {
   <div class="filters-expanded" id="filtersExpanded">
     <div class="filters-grid">
 
-      <!-- Age range -->
+      <!-- 1. LOCATION — first -->
       <div>
-        <div class="filter-group-title">Age range</div>
+        <div class="filter-group-title">📍 Location</div>
         <div class="filter-options">
-          <div class="filter-opt"><input type="checkbox" id="age_all" value="all_ages"><label for="age_all">All ages (3–18)</label></div>
-          <div class="filter-opt"><input type="checkbox" id="age_primary" value="primary"><label for="age_primary">Up to age 12 only</label></div>
-          <div class="filter-opt"><input type="checkbox" id="age_secondary" value="secondary"><label for="age_secondary">Secondary (12–18)</label></div>
-        </div>
-      </div>
-
-      <!-- School type -->
-      <div>
-        <div class="filter-group-title">School type</div>
-        <div class="filter-options">
-          <div class="filter-opt"><input type="checkbox" id="t1" value="day"><label for="t1">Day school</label></div>
-          <div class="filter-opt"><input type="checkbox" id="t2" value="boarding"><label for="t2">Boarding school</label></div>
-          <div class="filter-opt"><input type="checkbox" id="t_new" value="new"><label for="t_new">New school (after 2020)</label></div>
-          <div class="filter-opt"><input type="checkbox" id="t_small" value="small"><label for="t_small">Small classes (below 20)</label></div>
-        </div>
-      </div>
-
-      <!-- Language -->
-      <div>
-        <div class="filter-group-title">Language of instruction</div>
-        <div class="filter-options">
-          <div class="filter-opt"><input type="checkbox" id="l1" value="English"><label for="l1">English</label></div>
-          <div class="filter-opt"><input type="checkbox" id="l2" value="French"><label for="l2">French</label></div>
-          <div class="filter-opt"><input type="checkbox" id="l3" value="German"><label for="l3">German</label></div>
-          <div class="filter-opt"><input type="checkbox" id="l5" value="Portuguese"><label for="l5">Portuguese</label></div>
-        </div>
-      </div>
-
-      <!-- Area (Portugal only) -->
-      <div id="areaFilter">
-        <div class="filter-group-title">Area (Portugal)</div>
-        <div class="filter-options">
-          <div class="filter-opt"><input type="checkbox" id="area1" value="Sintra"><label for="area1">Sintra</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area3" value="Lisbon"><label for="area3">Lisbon centre</label></div>
           <div class="filter-opt"><input type="checkbox" id="area2" value="Cascais"><label for="area2">Cascais</label></div>
-          <div class="filter-opt"><input type="checkbox" id="area3" value="Lisbon"><label for="area3">Lisbon city</label></div>
+          <div class="filter-opt"><input type="checkbox" id="area1" value="Sintra"><label for="area1">Sintra</label></div>
           <div class="filter-opt"><input type="checkbox" id="area4" value="Oeiras"><label for="area4">Oeiras</label></div>
           <div class="filter-opt"><input type="checkbox" id="area5" value="Porto"><label for="area5">Porto</label></div>
           <div class="filter-opt"><input type="checkbox" id="area6" value="Algarve"><label for="area6">Algarve</label></div>
         </div>
       </div>
 
-      <!-- Tuition range -->
+      <!-- 2. PROGRAMME -->
       <div>
-        <div class="filter-group-title">Max annual tuition</div>
-        <div class="filter-range">
+        <div class="filter-group-title">🎓 Programme</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="prog_ib" value="IB"><label for="prog_ib">IB</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_british" value="British"><label for="prog_british">British</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_american" value="American"><label for="prog_american">American</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_cambridge" value="Cambridge"><label for="prog_cambridge">Cambridge</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_french" value="French"><label for="prog_french">French</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_german" value="German"><label for="prog_german">German</label></div>
+          <div class="filter-opt"><input type="checkbox" id="prog_portuguese" value="Portuguese"><label for="prog_portuguese">Portuguese national</label></div>
+        </div>
+      </div>
+
+      <!-- 3. PRICE -->
+      <div>
+        <div class="filter-group-title">💶 Annual tuition</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="pr_low" value="low"><label for="pr_low">Under €8,000</label></div>
+          <div class="filter-opt"><input type="checkbox" id="pr_mid" value="mid"><label for="pr_mid">€8,000 – €15,000</label></div>
+          <div class="filter-opt"><input type="checkbox" id="pr_high" value="high"><label for="pr_high">€15,000+</label></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div style="font-size:11px;color:var(--gray);margin-bottom:6px;">Or set max price:</div>
           <div class="range-row">
-            <span>€0</span>
+            <span style="font-size:11px;">€0</span>
             <input type="range" class="range-input" id="priceRange" min="0" max="40000" step="1000" value="40000" oninput="document.getElementById('rangeVal').textContent='€'+parseInt(this.value).toLocaleString()">
             <span class="range-val" id="rangeVal">€40,000</span>
           </div>
+        </div>
+      </div>
+
+      <!-- 4. SCHOOL TYPE -->
+      <div>
+        <div class="filter-group-title">🏫 School type</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="st_intl" value="international"><label for="st_intl">International school</label></div>
+          <div class="filter-opt"><input type="checkbox" id="st_national" value="national"><label for="st_national">National private school</label></div>
+        </div>
+      </div>
+
+      <!-- 5. BOARDING / DAY -->
+      <div>
+        <div class="filter-group-title">🏠 Boarding / Day</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="t1" value="day"><label for="t1">Day school only</label></div>
+          <div class="filter-opt"><input type="checkbox" id="t2" value="boarding"><label for="t2">Boarding available</label></div>
+        </div>
+      </div>
+
+      <!-- 6. CLASS SIZE -->
+      <div>
+        <div class="filter-group-title">👥 Class size</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="t_small" value="small"><label for="t_small">Small classes (below 20)</label></div>
+        </div>
+      </div>
+
+      <!-- 7. AGE -->
+      <div>
+        <div class="filter-group-title">👶 Age group</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="age_primary" value="primary"><label for="age_primary">Up to age 12</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age_secondary" value="secondary"><label for="age_secondary">Secondary (12–18)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="age_all" value="all_ages"><label for="age_all">All ages (3–18)</label></div>
+        </div>
+      </div>
+
+      <!-- 6. FOUNDING DATE -->
+      <div>
+        <div class="filter-group-title">📅 School age</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="f_old" value="old"><label for="f_old">Old school (founded before 2000)</label></div>
+          <div class="filter-opt"><input type="checkbox" id="f_new" value="new"><label for="f_new">New school (founded after 2020)</label></div>
+        </div>
+      </div>
+
+      <!-- 7. LANGUAGE -->
+      <div>
+        <div class="filter-group-title">🌐 Language of instruction</div>
+        <div class="filter-options">
+          <div class="filter-opt"><input type="checkbox" id="l1" value="English"><label for="l1">English</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l2" value="French"><label for="l2">French</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l3" value="German"><label for="l3">German</label></div>
+          <div class="filter-opt"><input type="checkbox" id="l5" value="Portuguese"><label for="l5">Portuguese</label></div>
         </div>
       </div>
 
@@ -819,6 +808,52 @@ nav {
   Show map
 </button>
 
+<!-- HOW IT WORKS MODAL -->
+<div id="howItWorksOverlay" onclick="closeHowItWorks(event)" style="display:none;position:fixed;inset:0;background:rgba(26,24,20,.6);backdrop-filter:blur(4px);z-index:2500;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.18);overflow:hidden;position:relative;">
+    <button onclick="closeHowItWorks()" style="position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1px solid #e8e3de;background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#888;">✕</button>
+
+    <!-- Header -->
+    <div style="background:#1a1814;padding:32px 32px 28px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin-bottom:10px;">How it works</div>
+      <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.3;">One window. Every school.</div>
+    </div>
+
+    <!-- Three pillars -->
+    <div style="padding:28px 32px 32px;display:flex;flex-direction:column;gap:24px;">
+
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:44px;height:44px;border-radius:12px;background:#F5EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">★</div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#1a1814;margin-bottom:4px;">Independent reviews</div>
+          <div style="font-size:13px;color:#888;line-height:1.6;">We visit schools ourselves and film honest video tours. Our editorial content is always independent — though some schools may have a premium listing for higher visibility.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:44px;height:44px;border-radius:12px;background:#E1F5EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">📋</div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#1a1814;margin-bottom:4px;">Full school profiles</div>
+          <div style="font-size:13px;color:#888;line-height:1.6;">Fees, class sizes, exam results, programmes, boarding options — everything verified and updated. All in one place, so you don't have to search ten different websites.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:44px;height:44px;border-radius:12px;background:#E6F1FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">✉️</div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#1a1814;margin-bottom:4px;">Apply directly</div>
+          <div style="font-size:13px;color:#888;line-height:1.6;">Send your application straight to the school from this page. No middlemen, no extra forms. Available for schools with a premium listing.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="padding:0 32px 28px;">
+      <button onclick="closeHowItWorks()" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Got it — start exploring →</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modalBox">
@@ -839,19 +874,19 @@ const allSchools = [
   { id:2,  country:"Portugal", name:"St Julian's School", short:"SJ", loc:"Carcavelos, Cascais", prog:"British / IB", price:12693, priceMax:19323, reviewed:true, verified:true, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333, founded:1932, students:1200, classSize:18, appFee:250, enrollFee:750, lunchIncluded:false, examRequired:true, ibAvg:34.5, area:"Cascais", ageMax:18, website:"https://www.stjulians.com", description:"One of Portugal's most prestigious international schools founded in 1932 in a historic 18th-century estate. Over 40 nationalities. Offers English and bilingual sections." },
   { id:3,  country:"Portugal", name:"St Peter's International School",        short:"SP", loc:"Palmela, Setúbal",     prog:"British / IB",  price:8325,  priceMax:17100, reviewed:false, verified:false, boarding:true,  bg:"#FAEEDA", color:"#633806", lat:38.5667, lng:-8.9000 },
   { id:4,  country:"Portugal", name:"Tasis Portugal",                         short:"TP", loc:"Sintra, Lisbon",       prog:"American / IB", price:12390, priceMax:23160, reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.8029, lng:-9.3878 },
-  { id:5,  country:"Portugal", name:"Deutsche Schule Lissabon",               short:"DS", loc:"Lisbon",               prog:"German / IB",   price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:38.7223, lng:-9.1393 },
-  { id:6,  country:"Portugal", name:"The British School of Lisbon",           short:"BS", loc:"Lisbon",               prog:"British",       price:13110, priceMax:21375, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7167, lng:-9.1500 },
+  { id:5,  country:"Portugal", name:"Deutsche Schule Lissabon",               short:"DS", loc:"Lisbon",               prog:"German / IB",   price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#F1EFE8", color:"#444",    lat:38.7601, lng:-9.1520 },
+  { id:6,  country:"Portugal", name:"The British School of Lisbon",           short:"BS", loc:"Lisbon",               prog:"British",       price:13110, priceMax:21375, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7069, lng:-9.1463 },
   { id:7,  country:"Portugal", name:"King's College School Lisbon",           short:"KC", loc:"Cascais",              prog:"Cambridge / IB / A-Level", price:12500, priceMax:27500, reviewed:false, verified:false, boarding:true,  bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215, lunchIncluded:true, appFee:250, enrollFee:"3000-5250" },
   { id:8,  country:"Portugal", name:"Prime School — Lisbon",                  short:"PL", loc:"Lisbon",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7200, lng:-9.1550 },
   { id:9,  country:"Portugal", name:"Prime School — Estoril",                 short:"PE", loc:"Estoril",              prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7066, lng:-9.3911 },
   { id:10, country:"Portugal", name:"Prime School — Sintra",                  short:"PS", loc:"Sintra",               prog:"Cambridge",     price:10470, priceMax:19280, reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.8000, lng:-9.3800 },
-  { id:11, country:"Portugal", name:"United Lisbon International School",     short:"UL", loc:"Parque das Nações",    prog:"IB / American", price:11800, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7650, lng:-9.0950 },
-  { id:12, country:"Portugal", name:"The Lisboan International School",       short:"LB", loc:"Alcântara, Lisbon",    prog:"British / IB",  price:12200, priceMax:22600, reviewed:false, verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7050, lng:-9.1800 },
-  { id:13, country:"Portugal", name:"PaRK International School",              short:"PK", loc:"Lisbon",               prog:"IB",            price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7350, lng:-9.1580 },
+  { id:11, country:"Portugal", name:"United Lisbon International School",     short:"UL", loc:"Parque das Nações",    prog:"IB / American", price:11800, priceMax:24000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7687, lng:-9.0929 },
+  { id:12, country:"Portugal", name:"The Lisboan International School",       short:"LB", loc:"Alcântara, Lisbon",    prog:"British / IB",  price:12200, priceMax:22600, reviewed:false, verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7008, lng:-9.1798 },
+  { id:13, country:"Portugal", name:"PaRK International School",              short:"PK", loc:"Lisbon",               prog:"IB",            price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7394, lng:-9.1540 },
   { id:14, country:"Portugal", name:"L'École Trilingue",                      short:"ET", loc:"Lisbon",               prog:"French",        price:7000,  priceMax:9500,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:38.7200, lng:-9.1400 },
-  { id:15, country:"Portugal", name:"Lycée Français Charles Lepierre",        short:"LF", loc:"Lisbon",               prog:"French",        price:5452,  priceMax:7536,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:38.7300, lng:-9.1600 },
-  { id:16, country:"Portugal", name:"Redbridge School Lisbon",                short:"RB", loc:"Lisbon",               prog:"Cambridge",     price:7650,  priceMax:8750,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7100, lng:-9.1450 },
-  { id:17, country:"Portugal", name:"St Dominic's International School",      short:"SD", loc:"Cascais",              prog:"IB",            price:8470,  priceMax:16200, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7000, lng:-9.3500 },
+  { id:15, country:"Portugal", name:"Lycée Français Charles Lepierre",        short:"LF", loc:"Lisbon",               prog:"French",        price:5452,  priceMax:7536,  reviewed:false, verified:false, boarding:false, bg:"#FBEAF0", color:"#72243E", lat:38.7189, lng:-9.1467 },
+  { id:16, country:"Portugal", name:"Redbridge School Lisbon",                short:"RB", loc:"Lisbon",               prog:"Cambridge",     price:7650,  priceMax:8750,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:38.7142, lng:-9.1597 },
+  { id:17, country:"Portugal", name:"St Dominic's International School",      short:"SD", loc:"Cascais",              prog:"IB",            price:8470,  priceMax:16200, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.6917, lng:-9.3561 },
   { id:18, country:"Portugal", name:"Oeiras International School",            short:"OI", loc:"Oeiras",               prog:"IB",            price:7900,  priceMax:9250,  reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147 },
   { id:19, country:"Portugal", name:"Int'l Sharing School — Taguspark",       short:"IS", loc:"Oeiras",               prog:"IB",            price:8000,  priceMax:14000, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7050, lng:-9.3000 },
   { id:20, country:"Portugal", name:"Colégio Planalto",                       short:"CP", loc:"Lisbon",               prog:"Portuguese/IB", price:6000,  priceMax:10000, reviewed:false, verified:false, boarding:false, bg:"#EAF3DE", color:"#27500A", lat:38.7400, lng:-9.1700 },
@@ -863,7 +898,7 @@ const allSchools = [
   { id:26, country:"Portugal", name:"Butterflies School",                     short:"BF", loc:"Lisbon",               prog:"British",       price:7000,  priceMax:11000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7280, lng:-9.1480 },
   { id:27, country:"Portugal", name:"Hypha International School",             short:"HY", loc:"Colares, Sintra",      prog:"Cambridge",     price:10495, priceMax:12000, reviewed:false, verified:false, boarding:false, bg:"#EAF3DE", color:"#27500A", lat:38.8050, lng:-9.4600 },
   { id:28, country:"Portugal", name:"Beyond International School",            short:"BI", loc:"Barcarena, Queluz",    prog:"Cambridge",     price:11800, priceMax:12850, reviewed:false, verified:true,  boarding:false, bg:"#E1F5EE", color:"#085041", lat:38.7400, lng:-9.2600 },
-  { id:29, country:"Portugal", name:"TISA — Theodore Int'l Startup Academy",  short:"TI", loc:"Lisbon",               prog:"IB PYP",        price:15000, priceMax:18000, reviewed:false, verified:true,  boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7300, lng:-9.1550 },
+  { id:29, country:"Portugal", name:"TISA — Theodore Int'l Startup Academy",  short:"TI", loc:"Lisbon",               prog:"IB PYP",        price:15000, priceMax:18000, reviewed:false, verified:true,  boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7217, lng:-9.1389 },
   // ── PORTUGAL — PORTO ──
   { id:30, country:"Portugal", name:"Oporto British School (OBS)",            short:"OB", loc:"Porto",                prog:"British / IB",  price:8000,  priceMax:15000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.1579, lng:-8.6291 },
   { id:31, country:"Portugal", name:"CLIP — Colégio Luso Internacional",      short:"CL", loc:"Porto",                prog:"British",       price:8600,  priceMax:14700, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:41.1700, lng:-8.6500 },
@@ -893,7 +928,7 @@ const allSchools = [
   { id:53, country:"Portugal", name:"International School of Madeira",        short:"IM", loc:"Madeira",             prog:"British",       price:5000,  priceMax:9000,  reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:32.6669, lng:-16.9241 },
   { id:54, country:"Portugal", name:"Leiria International School",            short:"LI", loc:"Leiria",              prog:"Cambridge",     price:5000,  priceMax:8000,  reviewed:false, verified:false, boarding:false, bg:"#EEEDFE", color:"#3C3489", lat:39.7436, lng:-8.8071 },
   { id:55, country:"Portugal", name:"Instituto Espanhol Giner de Los Rios",   short:"GR", loc:"Lisbon",              prog:"Spanish",       price:3000,  priceMax:5000,  reviewed:false, verified:false, boarding:false, bg:"#FAEEDA", color:"#633806", lat:38.7250, lng:-9.1480 },
-  { id:56, country:"Portugal", name:"International Sharing School",           short:"IS", loc:"Lisbon",              prog:"IB",            price:11790, priceMax:26760, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7180, lng:-9.1600 },
+  { id:56, country:"Portugal", name:"International Sharing School",           short:"IS", loc:"Lisbon",              prog:"IB",            price:11790, priceMax:26760, reviewed:false, verified:false, boarding:false, bg:"#E6F1FB", color:"#0C447C", lat:38.7050, lng:-9.2280 },
   // ── SPAIN — MADRID ──
   { id:101, country:"Spain", name:"King's College School Madrid",             short:"KC", loc:"Madrid",              prog:"British / IB",  price:10000, priceMax:18000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:40.4168, lng:-3.7038 },
   { id:102, country:"Spain", name:"Runnymede College",                        short:"RC", loc:"Alcobendas, Madrid",  prog:"British",       price:9000,  priceMax:16000, reviewed:false, verified:false, boarding:false, bg:"#E1F5EE", color:"#085041", lat:40.5400, lng:-3.6400 },
@@ -1000,36 +1035,91 @@ function progPill(p){
 
 function getFiltered(){
   return getSchools().filter(s => {
+    // Reviewed only
     if(state.reviewed && !s.reviewed) return false;
-    if(state.boarding && !s.boarding) return false;
+    // Boarding
+    if(state.typeBoarding === 'boarding' && !s.boarding) return false;
+    if(state.typeBoarding === 'day' && s.boarding) return false;
+    // Programme (from chips)
     if(state.prog !== 'all' && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
+    // Programme (from checkboxes)
+    if(state.progChecked && state.progChecked.length > 0 && !state.progChecked.some(p => s.prog.toLowerCase().includes(p.toLowerCase()))) return false;
+    // Price (from chips)
     if(state.price === 'low'  && s.price > 8000)  return false;
     if(state.price === 'mid'  && (s.price < 8000 || s.price > 15000)) return false;
     if(state.price === 'high' && s.price < 15000) return false;
-    if(state.maxPrice && s.price > state.maxPrice) return false;
+    // Price (from checkboxes)
+    if(state.priceChecked === 'low'  && s.price > 8000)  return false;
+    if(state.priceChecked === 'mid'  && (s.price < 8000 || s.price > 15000)) return false;
+    if(state.priceChecked === 'high' && s.price < 15000) return false;
+    // Max price slider
+    if(state.maxPrice && state.maxPrice < 40000 && s.price > state.maxPrice) return false;
+    // Language
     if(state.lang && !s.prog.toLowerCase().includes(state.lang.toLowerCase())) return false;
-    if(state.typeBoarding === 'boarding' && !s.boarding) return false;
-    if(state.typeBoarding === 'day' && s.boarding) return false;
+    // Area / location
+    if(state.area && !s.loc.toLowerCase().includes(state.area.toLowerCase())) return false;
+    // School age (old/new)
+    if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2000)) return false;
+    if(state.schoolAge === 'new' && (!s.founded || s.founded < 2020)) return false;
+    // Small classes
+    if(state.smallClasses && (!s.classSize || s.classSize >= 20)) return false;
+    // School type: international vs national
+    if(state.schoolType === 'international' && s.prog.toLowerCase().includes('portuguese')) return false;
+    if(state.schoolType === 'national' && !s.prog.toLowerCase().includes('portuguese')) return false;
+    // Search
     if(state.search && !s.name.toLowerCase().includes(state.search) && !s.loc.toLowerCase().includes(state.search)) return false;
     return true;
   });
 }
 
 function applyFilters(){
-  // Max price from slider
-  const priceRange = document.getElementById('priceRange');
-  state.maxPrice = priceRange ? parseInt(priceRange.value) : null;
+  // Max price slider
+  const pr = document.getElementById('priceRange');
+  state.maxPrice = pr ? parseInt(pr.value) : 40000;
 
-  // Language checkboxes
-  const langChecked = ['l1','l2','l3','l5'].map(id => document.getElementById(id)).filter(el => el && el.checked).map(el => el.value);
+  // Programme checkboxes
+  const progIds = ['prog_ib','prog_british','prog_american','prog_cambridge','prog_french','prog_german','prog_portuguese'];
+  state.progChecked = progIds.map(id=>document.getElementById(id)).filter(el=>el&&el.checked).map(el=>el.value);
+  if(state.progChecked.length === 0) state.progChecked = null;
+
+  // Price checkboxes
+  const priceIds = ['pr_low','pr_mid','pr_high'];
+  const prChecked = priceIds.map(id=>document.getElementById(id)).filter(el=>el&&el.checked).map(el=>el.value);
+  state.priceChecked = prChecked.length === 1 ? prChecked[0] : null;
+
+  // Language
+  const langIds = ['l1','l2','l3','l5'];
+  const langChecked = langIds.map(id=>document.getElementById(id)).filter(el=>el&&el.checked).map(el=>el.value);
   state.lang = langChecked.length === 1 ? langChecked[0] : null;
 
-  // Boarding type
-  const isDay      = document.getElementById('t1')?.checked;
+  // Area
+  const areaIds = ['area1','area2','area3','area4','area5','area6'];
+  const areaChecked = areaIds.map(id=>document.getElementById(id)).filter(el=>el&&el.checked).map(el=>el.value);
+  state.area = areaChecked.length === 1 ? areaChecked[0] : null;
+
+  // Boarding
+  const isDay = document.getElementById('t1')?.checked;
   const isBoarding = document.getElementById('t2')?.checked;
-  if(isBoarding && !isDay)      state.typeBoarding = 'boarding';
+  if(isBoarding && !isDay) state.typeBoarding = 'boarding';
   else if(isDay && !isBoarding) state.typeBoarding = 'day';
-  else                           state.typeBoarding = null;
+  else state.typeBoarding = null;
+
+  // Small classes
+  state.smallClasses = document.getElementById('t_small')?.checked || false;
+
+  // School age
+  const isOld = document.getElementById('f_old')?.checked;
+  const isNew = document.getElementById('f_new')?.checked;
+  if(isOld && !isNew) state.schoolAge = 'old';
+  else if(isNew && !isOld) state.schoolAge = 'new';
+  else state.schoolAge = null;
+
+  // School type
+  const isIntl = document.getElementById('st_intl')?.checked;
+  const isNational = document.getElementById('st_national')?.checked;
+  if(isIntl && !isNational) state.schoolType = 'international';
+  else if(isNational && !isIntl) state.schoolType = 'national';
+  else state.schoolType = null;
 
   renderList();
   // Close panel
@@ -1039,18 +1129,17 @@ function applyFilters(){
 }
 
 function resetFilters(){
-  // Reset checkboxes
-  ['age1','age2','age3','age4','t1','t2','l1','l2','l3','l5'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.checked = false;
-  });
-  // Reset slider
+  const ids = ['age_all','age_primary','age_secondary','t1','t2','t_small','l1','l2','l3','l5',
+                'area1','area2','area3','area4','area5','area6','f_old','f_new',
+                'st_intl','st_national','prog_ib','prog_british','prog_american',
+                'prog_cambridge','prog_french','prog_german','prog_portuguese',
+                'pr_low','pr_mid','pr_high'];
+  ids.forEach(id => { const el = document.getElementById(id); if(el) el.checked = false; });
   const pr = document.getElementById('priceRange');
   if(pr){ pr.value = 40000; document.getElementById('rangeVal').textContent = '€40,000'; }
-  // Reset state
-  state.maxPrice = null;
-  state.lang = null;
-  state.typeBoarding = null;
+  state.maxPrice = null; state.lang = null; state.typeBoarding = null;
+  state.area = null; state.schoolAge = null; state.smallClasses = false;
+  state.schoolType = null; state.progChecked = null; state.priceChecked = null;
   renderList();
 }
 
@@ -1290,6 +1379,18 @@ function openCompare(){
   `;
   document.body.appendChild(overlay);
   overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+}
+
+function openHowItWorks(){
+  const el = document.getElementById('howItWorksOverlay');
+  el.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHowItWorks(e){
+  if(e && e.target !== document.getElementById('howItWorksOverlay')) return;
+  document.getElementById('howItWorksOverlay').style.display = 'none';
+  document.body.style.overflow = '';
 }
 
 function openModal(id){
