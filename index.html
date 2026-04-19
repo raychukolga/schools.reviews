@@ -1518,11 +1518,18 @@ function openModal(id){
   `;
 
   document.getElementById('modalFooter').innerHTML = `
-    ${s.website ? `<a href="${s.website}" target="_blank" class="modal-btn-primary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      Visit school website
-    </a>` : `<button class="modal-btn-primary" style="opacity:.4;cursor:default;">Website not available</button>`}
-    <button class="modal-btn-secondary" onclick="closeModal()">Close</button>
+    <div style="width:100%;padding:0 0 12px;">
+      <div style="font-size:11px;color:#aaa;text-align:center;padding:10px 0 14px;border-top:1px solid var(--border);">
+        Information sourced from public data · Last updated Apr 2026 · Always verify directly with the school
+      </div>
+      <div style="display:flex;gap:10px;">
+        ${s.website ? `<a href="${s.website}" target="_blank" class="modal-btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Visit school website
+        </a>` : `<button class="modal-btn-primary" style="opacity:.4;cursor:default;">Website not available</button>`}
+        <button class="modal-btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
   `;
 
   document.getElementById('modalOverlay').classList.add('open');
@@ -1557,5 +1564,44 @@ function toggleMap(){
 
 renderList();
 </script>
+<!-- FOOTER -->
+<footer style="background:#1a1814;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:12px;padding:36px 40px;margin-top:0;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-bottom:28px;">
+    <div>
+      <div style="display:flex;flex-direction:column;margin-bottom:12px;">
+        <span style="font-size:16px;font-weight:700;color:#fff;">Schools</span>
+        <div style="width:48px;height:2px;background:#C4633A;margin:3px 0 2px;position:relative;">
+          <div style="position:absolute;right:0;top:-3px;width:5px;height:5px;border-radius:50%;background:#C4633A;"></div>
+        </div>
+        <span style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);">Reviews</span>
+      </div>
+      <p style="line-height:1.6;font-size:12px;">Independent school reviews, verified data and direct applications — all in one place.</p>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">About</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="#" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;">How it works</a>
+        <a href="#" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;">For schools</a>
+        <a href="#" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Countries</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:12px;">🇵🇹 Portugal</span>
+        <span style="font-size:12px;">🇪🇸 Spain</span>
+        <span style="font-size:12px;">🇫🇷 France</span>
+        <span style="font-size:12px;">🇩🇪 Germany · 🇮🇹 Italy · 🇭🇷 Croatia</span>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+    <p style="margin:0;line-height:1.7;max-width:640px;font-size:11px;">
+      School data is compiled from publicly available sources including school websites, the IB Organization, and third-party directories. Schools Reviews does not guarantee the accuracy or completeness of this information. Fees, programmes, and school details change frequently — always verify directly with the school before making any decisions.
+    </p>
+    <span style="font-size:11px;white-space:nowrap;">© 2026 Schools Reviews</span>
+  </div>
+</footer>
+
 </body>
 </html>
