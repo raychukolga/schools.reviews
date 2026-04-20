@@ -319,36 +319,36 @@ const schools = [
     loc:"Sintra, Lisbon", prog:"American / IB",
     price:12182, priceMax:23532,
     earlyPrice:"12,128", primaryPrice:"14,060–15,632", middlePrice:"17,756", secondaryPrice:"23,532",
-    appFee:null, enrollFee:"1,935 (Grades 1–5)", annualEnrollFee:null,
-    lunchIncluded:false, lunchPrice:"1,212", transport:"3,632",
+    appFee:null, enrollFee:"600", annualEnrollFee:"1,935 (Grades 1–5)",
+    lunchIncluded:false, lunchPrice:"1,212", schoolBus:"3,632",
     lessonsStart:null, lessonsEnd:null,
     reviewed:true, verified:true, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7978, lng:-9.3617,
     founded:2011, students:755,
     website:"https://www.caislisbon.org",
-    description:"The only US State Department-sponsored school in Portugal. Non-profit." },
+    description:"The only US State Department-sponsored school in Portugal. Non-profit, all tuition reinvested." },
 
   { id:2, name:"St Julian's School", short:"SJ",
     address:"Quinta Nova, Av. Jorge V 374, 2775-588 Carcavelos",
     loc:"Carcavelos, Cascais", prog:"British / IB",
     price:12693, priceMax:19323,
-    earlyPrice:null, primaryPrice:null, middlePrice:null, secondaryPrice:null,
+    earlyPrice:"12,693", primaryPrice:"15,462–18,624", middlePrice:"19,323", secondaryPrice:"23,493–29,970",
     appFee:250, enrollFee:"750", annualEnrollFee:"5,000",
-    lunchIncluded:false, lunchPrice:"1,017–1,459", transport:null,
-    lessonsStart:null, lessonsEnd:null,
+    lunchIncluded:false, lunchPrice:"1,017–1,459", schoolBus:"yes",
+    lessonsStart:"8:20", lessonsEnd:"16:00",
     reviewed:true, verified:true, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333,
-    founded:1932, classSize:null, ibAvg:34.5, examRequired:true,
+    founded:1932, classSize:22, ibAvg:34.5, examRequired:true,
     website:"https://www.stjulians.com",
-    description:"One of Portugal's most prestigious schools. Founded 1932 in a historic 18th-century estate. 40+ nationalities." },
+    description:"One of Portugal's most prestigious schools. Founded 1932 in a historic 18th-century Pombaline estate. 40+ nationalities. IB avg 36.6 in 2024." },
 
   { id:3, name:"St Peter's International School", short:"SP",
-    address:"Quinta dos Barreleiros, Palmela",
+    address:"Quinta dos Barreleiros CCI 3952, 2950-420 Palmela",
     loc:"Palmela, Setúbal", prog:"British / IB",
     price:8325, priceMax:17100,
     earlyPrice:null, primaryPrice:null, middlePrice:null, secondaryPrice:null,
     appFee:null, enrollFee:"800–1,600", annualEnrollFee:null,
-    lunchIncluded:false, lunchPrice:"2,115", transport:"yes, price varies",
+    lunchIncluded:false, lunchPrice:"2,115", schoolBus:"yes, price varies",
     lessonsStart:null, lessonsEnd:null,
     reviewed:false, verified:false, boarding:true,
     bg:"#FAEEDA", color:"#633806", lat:38.5667, lng:-8.9000,
@@ -358,14 +358,17 @@ const schools = [
 
   { id:4, name:"Tasis Portugal", short:"TP",
     address:"Alameda do Linhó 6, Penaferrim, 2710-697 Sintra",
-    loc:"Sintra, Lisbon", prog:"American / IB",
-    price:12390, priceMax:23160,
-    earlyPrice:null, primaryPrice:null, middlePrice:null, secondaryPrice:null,
-    appFee:null, enrollFee:null, annualEnrollFee:null,
-    lunchIncluded:false, lunchPrice:null, transport:null,
+    loc:"Sintra, Lisbon", prog:"American / IB / Cambridge",
+    price:13007, priceMax:24308,
+    earlyPrice:"13,007", primaryPrice:"17,290", middlePrice:"19,246–20,028", secondaryPrice:"23,093–24,308",
+    appFee:"100–150", enrollFee:"3,000–5,000", annualEnrollFee:"750",
+    lunchIncluded:true, lunchPrice:null, schoolBus:null,
+    lessonsStart:"8:30", lessonsEnd:"15:45",
     reviewed:false, verified:false, boarding:false,
     bg:"#FAEEDA", color:"#633806", lat:38.8029, lng:-9.3878,
-    website:"https://www.tasisportugal.org" },
+    students:959,
+    website:"https://www.tasisportugal.org",
+    description:"Clubs included in price. American, IB and Cambridge programmes." },
 
   { id:5, name:"Deutsche Schule Lissabon", short:"DS",
     address:"Lisbon", loc:"Lisbon", prog:"German / IB",
@@ -378,11 +381,12 @@ const schools = [
 
   { id:6, name:"The British School of Lisbon", short:"BS",
     address:"Rua de S. Paulo 89, 1200-427 Lisboa",
-    loc:"Lisbon Centre", prog:"British",
+    loc:"Lisbon City", prog:"British",
     price:13633, priceMax:22230,
     earlyPrice:"13,633", primaryPrice:"15,818–17,100", middlePrice:"17,100–17,860", secondaryPrice:"22,230",
     appFee:250, enrollFee:"5,000", annualEnrollFee:null,
-    lunchIncluded:false, lunchPrice:"1,800", transport:"yes",
+    lunchIncluded:false, lunchPrice:"1,800", schoolBus:"yes",
+    lessonsStart:"8:30", lessonsEnd:"15:30",
     classSize:22,
     reviewed:false, verified:false, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:38.7069, lng:-9.1463,
@@ -395,12 +399,13 @@ const schools = [
     price:12500, priceMax:27500,
     earlyPrice:"12,500", primaryPrice:"16,525–18,525", middlePrice:"19,500", secondaryPrice:"22,950–27,500",
     appFee:250, enrollFee:"3,000–5,250", annualEnrollFee:"600",
-    lunchIncluded:true, lunchPrice:null,
-    lessonsStart:"8:20–9:00", lessonsEnd:"~16:00",
+    lunchIncluded:true, lunchPrice:null, schoolBus:null,
+    lessonsStart:"8:20–9:00", lessonsEnd:"16:00",
     reviewed:false, verified:false, boarding:true,
     bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215,
+    founded:2023,
     website:"https://www.cascais.kingscollegeschool.pt",
-    description:"Cambridge, IB and A-Level. Lunch included in fees." },
+    description:"Cambridge, IB and A-Level. Lunch included in fees. Most expensive school in Portugal." },
 
   { id:8, name:"Prime School — Lisbon", short:"PL",
     address:"Lisbon", loc:"Lisbon", prog:"Cambridge",
@@ -436,13 +441,14 @@ const schools = [
     loc:"Alcântara, Lisbon", prog:"British / IB",
     price:12200, priceMax:22600,
     earlyPrice:"12,200", primaryPrice:"14,300–16,350", middlePrice:"16,350–18,490", secondaryPrice:"20,550–22,600",
-    appFee:250, enrollFee:"3,000", annualEnrollFee:null,
-    lunchIncluded:false, lunchPrice:"1,620",
+    appFee:250, enrollFee:"3,000", annualEnrollFee:"1,000",
+    lunchIncluded:false, lunchPrice:"1,620", schoolBus:null,
+    lessonsStart:"8:30", lessonsEnd:"16:00",
     reviewed:false, verified:true, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:38.7008, lng:-9.1798,
     founded:2025,
     website:"https://www.thelisboan.com",
-    description:"Opened 2025 in a restored 1908 pasta factory. British curriculum leading to IB Diploma." },
+    description:"Opened 2025 in a restored 1908 pasta factory in Alcântara. British curriculum leading to IB Diploma." },
 
   { id:13, name:"PaRK International School", short:"PK",
     address:"Lisbon", loc:"Lisbon", prog:"IB",
@@ -484,7 +490,7 @@ const schools = [
     price:11778, priceMax:23166,
     earlyPrice:"11,778–13,328", primaryPrice:"15,000–15,777", middlePrice:"18,111–21,666", secondaryPrice:"23,166",
     appFee:null, enrollFee:"5,250", annualEnrollFee:"1,178–2,316",
-    lunchIncluded:false, lunchPrice:"1,450", transport:"yes",
+    lunchIncluded:false, lunchPrice:"1,450", schoolBus:"yes",
     classSize:32, examRequired:true,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6917, lng:-9.3561,
@@ -570,13 +576,17 @@ const schools = [
     website:"https://www.butterfliesschool.pt" },
 
   { id:27, name:"Hypha International School", short:"HY",
-    address:"Colares, Sintra", loc:"Colares, Sintra", prog:"Cambridge",
-    price:10495, priceMax:12000,
+    address:"R. Dr. Sá Carneiro 80, 2705-000 Sintra",
+    loc:"Colares, Sintra", prog:"Cambridge",
+    price:10900, priceMax:14900,
+    earlyPrice:"10,900", primaryPrice:"12,800–14,900", middlePrice:null, secondaryPrice:null,
+    appFee:50, enrollFee:"1,500", annualEnrollFee:"850",
+    lunchIncluded:true, lunchPrice:null, schoolBus:"yes",
     reviewed:false, verified:false, boarding:false,
     bg:"#EAF3DE", color:"#27500A", lat:38.8050, lng:-9.4600,
     students:20, classSize:12, campus:"7,000 m²",
     website:"https://hyphaportugal.com",
-    description:"Forest school in Sintra Natural Park. 3+ hours outdoors daily. 20 students, 17 nationalities." },
+    description:"Forest school in Sintra Natural Park. 3+ hours outdoors daily. 20 students, 17 nationalities. Lunch included." },
 
   { id:28, name:"Beyond International School", short:"BI",
     address:"R. Soeiro Pereira Gomes 59, 2730-178 Barcarena",
@@ -584,23 +594,27 @@ const schools = [
     price:9010, priceMax:11800,
     earlyPrice:"9,010–9,540", primaryPrice:"10,070", middlePrice:"11,300–11,800", secondaryPrice:null,
     appFee:100, enrollFee:"850–1,050", annualEnrollFee:"500–525",
-    lunchIncluded:false, lunchPrice:"not included",
+    lunchIncluded:false, lunchPrice:"included up to Year 9",
     lessonsStart:"8:30", lessonsEnd:"16:30",
     reviewed:false, verified:true, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:38.7400, lng:-9.2600,
     founded:2025,
     website:"https://beyondschool.pt",
-    description:"New bilingual Cambridge school (English + Portuguese). Ages 3–12." },
+    description:"New bilingual Cambridge school (English + Portuguese). Ages 3–12. Lunch included up to Year 9." },
 
   { id:29, name:"TISA — Theodore Int'l Startup Academy", short:"TI",
     address:"R. São Sebastião da Pedreira 27, 1050-010 Lisboa",
-    loc:"Lisbon", prog:"IB PYP",
-    price:15000, priceMax:18000,
+    loc:"Lisbon City", prog:"IB PYP",
+    price:18000, priceMax:18000,
+    earlyPrice:"18,000", primaryPrice:"18,000", middlePrice:null, secondaryPrice:null,
+    appFee:null, enrollFee:null, annualEnrollFee:null,
+    lunchIncluded:true, lunchPrice:null, schoolBus:null,
+    lessonsStart:"8:30", lessonsEnd:"17:50",
     reviewed:false, verified:true, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7217, lng:-9.1389,
     founded:2023, classSize:12,
     website:"https://tisaschool.pt",
-    description:"Max 12 students per class. Focus on entrepreneurship and robotics." },
+    description:"Max 12 students per class. Focus on entrepreneurship and robotics. Lunch included." },
 
   { id:30, name:"IPS Cascais", short:"IC",
     address:"R. Lagoa 171, 2645-344 Alcabideche",
@@ -625,10 +639,15 @@ const schools = [
 
   { id:32, name:"Astoria International School", short:"AS",
     address:"Av. Alm. Gago Coutinho 88-73, 1700-031 Lisboa",
-    loc:"Lisbon", prog:"British / Portuguese",
-    price:null, priceMax:null,
-    reviewed:false, verified:false, boarding:false,
-    bg:"#E1F5EE", color:"#085041", lat:38.7480, lng:-9.1250 },
+    loc:"Lisbon City", prog:"Portuguese / Cambridge",
+    price:5940, priceMax:5940,
+    earlyPrice:"5,940", primaryPrice:null, middlePrice:null, secondaryPrice:null,
+    appFee:null, enrollFee:"495", annualEnrollFee:null,
+    lunchIncluded:true, lunchPrice:null, schoolBus:null,
+    reviewed:false, verified:true, boarding:false,
+    bg:"#E1F5EE", color:"#085041", lat:38.7480, lng:-9.1250,
+    website:"https://colegioeuropeu-astoria.com",
+    description:"Bilingual Portuguese/English school. From 1 year old. Lunch included." },
 
   // Porto
   { id:40, name:"Oporto British School (OBS)", short:"OB",
@@ -932,7 +951,7 @@ function openModal(id){
 
       ${hasPrice ? `
       <div class="m-section">
-        <div class="m-section-title">Fees by age group</div>
+        <div class="m-section-title">Fees by age group <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;">· 2026/27 academic year</span></div>
         <div class="m-grid" style="grid-template-columns:repeat(2,1fr)">
           <div><div class="m-item-label">Early Years (0–4)</div><div class="m-item-val">${s.earlyPrice?'€'+s.earlyPrice:'—'}</div></div>
           <div><div class="m-item-label">Primary (5–9)</div><div class="m-item-val">${s.primaryPrice?'€'+s.primaryPrice:'—'}</div></div>
@@ -942,13 +961,13 @@ function openModal(id){
       </div>` : ''}
 
       <div class="m-section">
-        <div class="m-section-title">Entry & recurring fees</div>
+        <div class="m-section-title">Entry & recurring fees <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;">· 2026/27</span></div>
         <div class="m-grid">
           <div><div class="m-item-label">Application fee</div><div class="m-item-val">${s.appFee?'€'+s.appFee:'—'}</div></div>
           <div><div class="m-item-label">One-time enrollment</div><div class="m-item-val">${s.enrollFee?'€'+s.enrollFee:'—'}</div></div>
           <div><div class="m-item-label">Annual enrollment</div><div class="m-item-val">${s.annualEnrollFee?'€'+s.annualEnrollFee:'—'}</div></div>
           <div><div class="m-item-label">Lunch</div><div class="m-item-val">${s.lunchIncluded===true?'<span style="color:#2E7D32">✓ Included</span>':s.lunchPrice?'€'+s.lunchPrice+' /yr':'—'}</div></div>
-          <div><div class="m-item-label">Transport</div><div class="m-item-val">${s.transport?s.transport:'—'}</div></div>
+          <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus||s.transport||'—'}</div></div>
           ${s.lessonsStart?`<div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart} – ${s.lessonsEnd||'?'}</div></div>`:''}
         </div>
       </div>
