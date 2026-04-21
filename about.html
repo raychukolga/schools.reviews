@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Schools Reviews</title>
+<meta name="description" content="Independent insight to help you choose the right school. We help families understand schools clearly — without endless visits, scattered information, and guesswork.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://schools.reviews/about">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1814;
+  --terra: #C4633A;
+  --terra-light: #F5EDE8;
+  --cream: #FAF8F5;
+  --white: #ffffff;
+  --gray: #888;
+  --border: #e8e3de;
+  --green: #2E7D32;
+  --green-light: #EAF3DE;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--cream); }
+
+/* BETA BANNER */
+.beta-bar { background: var(--terra-light); border-bottom: 1px solid #e8d5c8; color: #8B3A1F; font-size: 12px; text-align: center; padding: 9px 20px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.beta-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--terra); display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.beta-bar a { color: var(--terra); text-decoration: none; font-weight: 600; }
+
+/* NAV */
+nav { background: var(--white); border-bottom: 1px solid var(--border); height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; position: sticky; top: 0; z-index: 500; }
+.logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
+.logo-top { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.8px; }
+.logo-line { width: 100%; height: 2px; background: var(--terra); margin: 4px 0 3px; position: relative; }
+.logo-line::after { content:''; position: absolute; right: 0; top: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--terra); }
+.logo-bottom { font-size: 10px; color: var(--gray); letter-spacing: 3.5px; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 24px; font-size: 13px; }
+.nav-links a { text-decoration: none; color: var(--gray); transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-signin { display: flex; align-items: center; gap: 7px; background: var(--terra-light); border: 1px solid #e8c4b0; border-radius: 30px; padding: 6px 14px 6px 8px; font-size: 13px; font-weight: 500; color: #8B3A1F; cursor: pointer; text-decoration: none; transition: background .2s; }
+.nav-signin:hover { background: #f0ddd4; color: #8B3A1F !important; }
+.nav-signin-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--terra); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-signin-icon svg { width: 13px; height: 13px; }
+.nav-signin-chevron { font-size: 9px; margin-left: 2px; transition: transform .2s; }
+.nav-signin-wrap { position: relative; }
+.nav-signin-wrap:hover .nav-signin-chevron { transform: rotate(180deg); }
+.nav-signin-menu { display: none; position: absolute; top: calc(100% + 10px); right: 0; background: var(--white); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 12px 40px rgba(0,0,0,.1); min-width: 220px; padding: 6px; z-index: 600; }
+.nav-signin-wrap:hover .nav-signin-menu { display: block; }
+.nav-signin-menu a { display: flex !important; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px; font-size: 13px; color: var(--ink) !important; text-decoration: none; font-weight: 500; transition: background .15s; }
+.nav-signin-menu a:hover { background: var(--cream); }
+.nav-signin-menu-ico { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.nav-signin-menu-sub { font-size: 11px; color: var(--gray); font-weight: 400; margin-top: 1px; }
+.nav-signin-menu-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+/* PAGE HERO */
+.page-hero { background: var(--ink); padding: 64px 40px 56px; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(196,99,58,.12) 0%, transparent 65%); pointer-events: none; }
+.breadcrumb { font-size: 11px; color: rgba(255,255,255,.35); margin-bottom: 20px; }
+.breadcrumb a { color: var(--terra); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.hero-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: #fff; line-height: 1.1; max-width: 640px; }
+.hero-title em { font-style: italic; color: rgba(255,255,255,.75); }
+.hero-sub { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 520px; margin-top: 18px; font-weight: 300; }
+
+/* MAIN CONTENT */
+.content-wrap { max-width: 800px; margin: 0 auto; padding: 64px 40px 80px; }
+
+/* SECTION */
+.about-section { margin-bottom: 56px; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; color: var(--ink); line-height: 1.2; margin-bottom: 18px; }
+.section-body { font-size: 15px; color: #555; line-height: 1.8; }
+.section-body p { margin-bottom: 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+
+/* WHAT WE DO — cards */
+.what-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.what-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 22px 20px; }
+.what-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px; }
+.what-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.what-card-desc { font-size: 13px; color: var(--gray); line-height: 1.65; }
+
+/* APPROACH — quote block */
+.approach-block { background: var(--white); border: 1.5px solid var(--border); border-radius: 16px; padding: 28px 32px; margin-top: 24px; position: relative; }
+.approach-block::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 80px; color: var(--terra-light); position: absolute; top: -10px; left: 20px; line-height: 1; }
+.approach-quote { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--ink); line-height: 1.5; margin-bottom: 14px; padding-top: 16px; }
+.approach-body { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+/* WHY IT MATTERS — list */
+.why-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.why-item { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+.why-dash { width: 28px; height: 28px; border-radius: 8px; background: var(--terra-light); color: var(--terra); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.why-text { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+/* MISSION */
+.mission-block { background: var(--ink); border-radius: 16px; padding: 36px 36px; margin-top: 24px; }
+.mission-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
+.mission-text { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: #fff; line-height: 1.4; }
+
+/* DIVIDER */
+.section-divider { height: 1px; background: var(--border); margin-bottom: 56px; }
+
+/* CTA */
+.cta-block { background: var(--terra-light); border: 1.5px solid #e8c4b0; border-radius: 16px; padding: 32px; text-align: center; margin-top: 56px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.cta-sub { font-size: 13px; color: #8B3A1F; margin-bottom: 20px; }
+.cta-btn { display: inline-block; background: var(--ink); color: #fff; text-decoration: none; border-radius: 10px; padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; transition: background .2s; }
+.cta-btn:hover { background: #2d2a26; }
+
+/* FOOTER */
+footer { background: #2C2825; color: rgba(255,255,255,.5); font-size: 12px; padding: 48px 40px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+.footer-logo-top { font-size: 18px; font-weight: 700; color: #fff; }
+.footer-logo-line { width: 40px; height: 2px; background: var(--terra); margin: 4px 0 3px; }
+.footer-logo-bottom { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.footer-desc { font-size: 12px; line-height: 1.7; margin-top: 12px; }
+.footer-col-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.6); margin-bottom: 14px; }
+.footer-links { display: flex; flex-direction: column; gap: 9px; }
+.footer-links a { color: rgba(255,255,255,.45); text-decoration: none; font-size: 12px; transition: color .2s; }
+.footer-links a:hover { color: rgba(255,255,255,.8); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+.footer-disclaimer { font-size: 11px; line-height: 1.7; max-width: 640px; }
+.footer-copy { font-size: 11px; white-space: nowrap; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; height: 56px; }
+  .logo-top { font-size: 18px; }
+  .page-hero { padding: 40px 20px 36px; }
+  .hero-title { font-size: 34px; }
+  .hero-sub { font-size: 14px; }
+  .content-wrap { padding: 40px 20px 60px; }
+  .what-cards { grid-template-columns: 1fr; }
+  .approach-block { padding: 22px 20px; }
+  .mission-block { padding: 26px 22px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  footer { padding: 40px 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BETA BANNER -->
+<div class="beta-bar">
+  <span class="beta-dot"></span>
+  <strong>Beta</strong> — Site in development. Data may be incomplete. &nbsp;·&nbsp;
+  <a href="#">Get notified when we launch →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <span class="logo-top">Schools</span>
+    <div class="logo-line"></div>
+    <span class="logo-bottom">Reviews</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">← All countries</a>
+    <a href="/about.html" style="color:var(--ink);font-weight:600;">About us</a>
+    <div class="nav-signin-wrap">
+      <a href="#" class="nav-signin">
+        <div class="nav-signin-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        Sign in
+        <span class="nav-signin-chevron">▾</span>
+      </a>
+      <div class="nav-signin-menu">
+        <a href="/parent-dashboard.html">
+          <div class="nav-signin-menu-ico" style="background:var(--terra-light);">👨‍👩‍👧</div>
+          <div>
+            <div>I'm a parent</div>
+            <div class="nav-signin-menu-sub">Find schools for my child</div>
+          </div>
+        </a>
+        <div class="nav-signin-menu-divider"></div>
+        <a href="/school-dashboard.html">
+          <div class="nav-signin-menu-ico" style="background:#E8F5EE;">🏫</div>
+          <div>
+            <div>I represent a school</div>
+            <div class="nav-signin-menu-sub">Manage our listing</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="/">Home</a> → About us</div>
+  <div class="hero-label">About Schools Reviews</div>
+  <h1 class="hero-title">Independent insight to help you<br><em>choose the right school.</em></h1>
+  <p class="hero-sub">We help families understand schools clearly — without endless visits, scattered information, and guesswork.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- WHAT WE DO -->
+  <div class="about-section">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">A parent's perspective on every school.</h2>
+    <div class="section-body">
+      <p>We create independent video school tours — built from a parent's perspective. No polished marketing. No missing details. Just a clear, structured look at each school.</p>
+      <p>We ask the questions that matter, cover what's often left unsaid, and show both strengths and nuances — so you can form your own opinion before visiting.</p>
+    </div>
+    <div class="what-cards">
+      <div class="what-card">
+        <div class="what-card-icon" style="background:var(--terra-light);">★</div>
+        <div class="what-card-title">Independent video tours</div>
+        <div class="what-card-desc">We visit schools ourselves and film honest, structured tours — no marketing, no spin.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:var(--green-light);">✓</div>
+        <div class="what-card-title">Verified school data</div>
+        <div class="what-card-desc">Fees, class sizes, programmes, boarding options — all verified and in one place.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:#E6F1FB;">◎</div>
+        <div class="what-card-title">Honest assessment</div>
+        <div class="what-card-desc">We highlight both what we like and what's worth noting — so you see the full picture.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:#EEEDFE;">→</div>
+        <div class="what-card-title">Your shortlist, faster</div>
+        <div class="what-card-desc">We help you build a confident shortlist from home, before setting foot in a school.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- OUR APPROACH -->
+  <div class="about-section">
+    <div class="section-label">Our Approach</div>
+    <h2 class="section-title">The right school is the one that fits your family.</h2>
+    <div class="approach-block">
+      <div class="approach-quote">There are very few "bad" schools. But there is no one "best" school.</div>
+      <div class="approach-body">Every school is different — and the right choice depends on your family. We're here to help you find that fit.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- WHY IT MATTERS -->
+  <div class="about-section">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="section-title">Save time. Visit with clarity. Decide with confidence.</h2>
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-dash">1</div>
+        <div class="why-text">Build a shortlist from home</div>
+      </div>
+      <div class="why-item">
+        <div class="why-dash">2</div>
+        <div class="why-text">Save time on research</div>
+      </div>
+      <div class="why-item">
+        <div class="why-dash">3</div>
+        <div class="why-text">Visit schools with clarity</div>
+      </div>
+      <div class="why-item">
+        <div class="why-dash">4</div>
+        <div class="why-text">Make more confident decisions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- MISSION -->
+  <div class="about-section">
+    <div class="section-label">Our Mission</div>
+    <div class="mission-block">
+      <div class="mission-label">Schools Reviews</div>
+      <div class="mission-text">To make school selection more transparent, objective, and easier for families.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-title">Ready to find the right school?</div>
+    <div class="cta-sub">Browse our independent reviews and verified school profiles.</div>
+    <a href="/international-private-schools-portugal.html" class="cta-btn">Browse schools in Portugal →</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-top">Schools</div>
+        <div class="footer-logo-line"></div>
+        <div class="footer-logo-bottom">Reviews</div>
+        <p class="footer-desc">Independent school reviews, verified data and direct applications — all in one place.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-links">
+          <a href="/">Browse schools</a>
+          <a href="/about.html">About us</a>
+          <a href="mailto:editor@schools.reviews">Contact us</a>
+          <a href="/parent-dashboard.html">For parents</a>
+          <a href="/school-dashboard.html">For schools</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Countries</div>
+        <div class="footer-links">
+          <a href="/international-private-schools-portugal.html">🇵🇹 Portugal</a>
+          <a href="/international-private-schools-spain.html">🇪🇸 Spain</a>
+          <a href="/international-private-schools-france.html">🇫🇷 France</a>
+          <a href="#">🇩🇪 Germany · 🇮🇹 Italy · 🇭🇷 Croatia</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">School data is compiled from publicly available sources including school websites, the IB Organization, and third-party directories. Schools Reviews does not guarantee the accuracy or completeness of this information. Always verify directly with the school before making any decisions.</p>
+      <span class="footer-copy">© 2026 Schools Reviews</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
