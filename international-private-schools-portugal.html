@@ -43,9 +43,13 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .hero-meta strong { display:block; font-size:22px; font-weight:700; color:var(--ink); }
 
 /* FILTER BAR */
-.filter-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:64px; z-index:400; }
-.filter-main { display:flex; align-items:center; gap:8px; padding:10px 0; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.filter-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:116px; z-index:400; }
+.filter-top-row { display:flex; align-items:center; gap:12px; padding:10px 0; }
+.filter-main { display:flex; align-items:center; gap:8px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; flex:1; }
 .filter-main::-webkit-scrollbar { display:none; }
+.more-filters-btn { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; border:1.5px solid var(--ink); background:var(--white); color:var(--ink); flex-shrink:0; font-family:'DM Sans',sans-serif; transition:all .15s; }
+.more-filters-btn:hover { background:var(--ink); color:var(--white); }
+.more-filters-btn.open { background:var(--ink); color:var(--white); }
 .chip { display:inline-flex; align-items:center; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; white-space:nowrap; border:1px solid var(--border); background:var(--white); color:var(--gray); transition:all .15s; }
 .chip:hover { border-color:var(--ink); color:var(--ink); }
 .chip.active { background:var(--ink); color:var(--white); border-color:var(--ink); }
@@ -53,6 +57,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .more-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; white-space:nowrap; border:1px solid var(--terra); background:var(--white); color:var(--terra); margin-left:auto; flex-shrink:0; }
 .search-input { padding:6px 14px; border:1px solid var(--border); border-radius:20px; font-size:12px; font-family:'DM Sans',sans-serif; outline:none; width:180px; }
 .search-input:focus { border-color:var(--ink); }
+.search-bar-top { background:var(--white); border-bottom:1px solid var(--border); padding:10px 40px; position:sticky; top:64px; z-index:401; }
+.search-bar-top input { width:100%; padding:10px 18px 10px 40px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:'DM Sans',sans-serif; outline:none; background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 14px center; background-size:16px; color:var(--ink); transition:border-color .15s; }
+.search-bar-top input:focus { border-color:var(--ink); background-color:var(--white); }
 
 /* EXPANDED FILTERS */
 .filter-expanded { max-height:0; overflow:hidden; transition:max-height .35s ease; border-top:0 solid var(--border); background:var(--cream); }
@@ -67,13 +74,14 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .apply-btn { background:var(--ink); color:var(--white); border:none; border-radius:8px; padding:8px 20px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
 
 /* SPLIT */
-.split { display:grid; grid-template-columns:380px 1fr; height:calc(100vh - 160px); min-height:500px; }
-.list-panel { border-right:1px solid var(--border); overflow-y:auto; background:var(--white); }
+.split { display:grid; grid-template-columns:500px 1fr; height:calc(100vh - 200px); min-height:500px; }
+.list-panel { border-right:1px solid var(--border); overflow-y:auto; background:#f3f0eb; }
 .list-header { padding:12px 16px; font-size:12px; color:var(--gray); border-bottom:1px solid var(--border); background:var(--cream); position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; }
-.school-card { padding:14px 16px; border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s; }
-.school-card:hover { background:#fdfaf7; }
-.school-card.verified-card { border-top:2px solid var(--green); }
-.school-card.highlighted { background:var(--terra-light); }
+.cards-wrap { padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+.school-card { padding:14px 16px; border:1.5px solid var(--border); border-radius:12px; cursor:pointer; transition:all .15s; background:var(--white); }
+.school-card:hover { border-color:#c8c2bb; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+.school-card.verified-card { border-top:2.5px solid var(--green); }
+.school-card.highlighted { background:var(--terra-light); border-color:var(--terra); }
 .card-top { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
 .avatar { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
 .card-name { font-size:13px; font-weight:600; color:var(--ink); line-height:1.3; }
@@ -126,6 +134,10 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .m-item-label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:.04em; margin-bottom:3px; }
 .m-item-val { font-size:13px; font-weight:600; color:var(--ink); }
 .m-item-val.price { color:var(--terra); }
+.acad-row { display:flex; align-items:baseline; gap:12px; padding:9px 0; border-bottom:1px solid var(--border); }
+.acad-label { font-size:11px; color:var(--gray); text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; width:110px; }
+.acad-val { font-size:13px; font-weight:600; color:var(--ink); flex:1; }
+.acad-bold { font-weight:700; }
 .photo-ph { background:var(--cream); border:1.5px dashed var(--border); border-radius:10px; height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; margin-bottom:18px; }
 .photo-ph span { font-size:11px; color:#bbb; font-weight:500; }
 .video-ph { background:var(--cream); border:1.5px dashed var(--border); border-radius:10px; height:130px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
@@ -134,6 +146,22 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .m-btns { display:flex; gap:10px; }
 .m-btn-primary { flex:1; background:var(--ink); color:var(--white); border:none; border-radius:10px; padding:12px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; }
 .m-btn-secondary { background:var(--cream); color:var(--ink); border:1px solid var(--border); border-radius:10px; padding:12px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+
+/* VIDEO REVIEWS SECTION */
+.video-reviews-section { background:var(--white); border-bottom:1px solid var(--border); padding:28px 40px; }
+.vr-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.vr-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--ink); }
+.vr-subtitle { font-size:12px; color:var(--gray); margin-top:3px; }
+.vr-badge { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--terra-light); color:var(--terra); padding:4px 10px; border-radius:20px; }
+.vr-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.vr-card { background:var(--cream); border:1.5px dashed var(--border); border-radius:12px; overflow:hidden; position:relative; }
+.vr-thumb { height:110px; background:linear-gradient(135deg,#f0ede8,#e8e3de); display:flex; align-items:center; justify-content:center; position:relative; }
+.vr-play { width:42px; height:42px; background:rgba(196,99,58,.15); border:2px solid var(--terra); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.vr-cs-tag { position:absolute; top:8px; left:8px; font-size:9px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--ink); color:#fff; padding:3px 8px; border-radius:4px; }
+.vr-info { padding:10px 12px; }
+.vr-school-name { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.3; }
+.vr-loc { font-size:10px; color:var(--gray); }
+@media (max-width:768px) { .vr-grid { grid-template-columns:repeat(2,1fr); } .video-reviews-section { padding:20px 16px; } }
 
 /* COMPARE BAR */
 #compareBar { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); color:#fff; padding:14px 24px; z-index:1500; font-size:13px; align-items:center; justify-content:space-between; font-family:'DM Sans',sans-serif; }
@@ -145,13 +173,14 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
   nav { padding:0 16px; height:56px; }
   .page-hero { padding:16px; }
   .page-title { font-size:22px; }
-  .filter-bar { padding:0 16px; top:56px; }
+  .search-bar-top { padding:8px 16px; top:56px; }
+  .filter-bar { padding:0 16px; top:116px; }
   .filter-grid { grid-template-columns:1fr 1fr; padding:16px; gap:14px; }
   .filter-footer { padding:10px 16px; }
   .split { grid-template-columns:1fr; height:auto; }
   .map-panel { display:none; position:fixed; inset:0; z-index:600; height:100vh!important; }
   .map-panel.map-open { display:block; }
-  .list-panel { height:calc(100vh - 130px); }
+  .list-panel { height:auto; min-height:60vh; overflow-y:visible; }
   .modal { border-radius:20px 20px 0 0; max-height:92vh; }
   .modal-overlay { align-items:flex-end; padding:0; }
   .m-grid { grid-template-columns:1fr 1fr; }
@@ -188,23 +217,69 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
   </div>
 </div>
 
+<!-- VIDEO REVIEWS -->
+<div class="video-reviews-section">
+  <div class="vr-header">
+    <div>
+      <div class="vr-title">Video School Reviews</div>
+      <div class="vr-subtitle">Independent video tours — we visit, film and tell you everything</div>
+    </div>
+    <span class="vr-badge">Coming soon</span>
+  </div>
+  <div class="vr-grid">
+    <div class="vr-card">
+      <div class="vr-thumb">
+        <div class="vr-cs-tag">Coming soon</div>
+        <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
+      </div>
+      <div class="vr-info"><div class="vr-school-name">CAISL</div><div class="vr-loc">Sintra, Lisbon</div></div>
+    </div>
+    <div class="vr-card">
+      <div class="vr-thumb">
+        <div class="vr-cs-tag">Coming soon</div>
+        <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
+      </div>
+      <div class="vr-info"><div class="vr-school-name">St Julian's School</div><div class="vr-loc">Carcavelos, Cascais</div></div>
+    </div>
+    <div class="vr-card">
+      <div class="vr-thumb">
+        <div class="vr-cs-tag">Coming soon</div>
+        <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
+      </div>
+      <div class="vr-info"><div class="vr-school-name">King's College Lisbon</div><div class="vr-loc">Cascais</div></div>
+    </div>
+    <div class="vr-card">
+      <div class="vr-thumb" style="background:linear-gradient(135deg,#faf8f5,#f0ede8);border:none;cursor:default;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <div class="vr-info"><div class="vr-school-name" style="color:var(--gray);">More reviews</div><div class="vr-loc">Filming in 2025</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-top">
+  <input id="searchInput" type="text" placeholder="Search by school name or location…" oninput="state.search=this.value.toLowerCase();render()">
+</div>
+
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <div class="filter-main">
-    <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
-    <button class="chip prog-chip active" onclick="setP('all',this)">All</button>
-    <button class="chip prog-chip" onclick="setP('IB',this)">IB</button>
-    <button class="chip prog-chip" onclick="setP('British',this)">British</button>
-    <button class="chip prog-chip" onclick="setP('American',this)">American</button>
-    <button class="chip prog-chip" onclick="setP('Cambridge',this)">Cambridge</button>
-    <button class="chip prog-chip" onclick="setP('French',this)">French</button>
-    <button class="chip price-chip active" onclick="setPr('all',this)">All prices</button>
-    <button class="chip price-chip" onclick="setPr('low',this)">Under €8k</button>
-    <button class="chip price-chip" onclick="setPr('mid',this)">€8–15k</button>
-    <button class="chip price-chip" onclick="setPr('high',this)">€15k+</button>
-    <input id="searchInput" class="search-input" type="text" placeholder="🔍 Search..." oninput="state.search=this.value.toLowerCase();render()">
-    <button class="more-btn" id="moreBtn" onclick="toggleExpanded()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  <div class="filter-top-row">
+    <div class="filter-main">
+      <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
+      <button class="chip prog-chip active" onclick="setP('all',this)">All</button>
+      <button class="chip prog-chip" onclick="setP('IB',this)">IB</button>
+      <button class="chip prog-chip" onclick="setP('British',this)">British</button>
+      <button class="chip prog-chip" onclick="setP('American',this)">American</button>
+      <button class="chip prog-chip" onclick="setP('Cambridge',this)">Cambridge</button>
+      <button class="chip prog-chip" onclick="setP('French',this)">French</button>
+      <button class="chip price-chip active" onclick="setPr('all',this)">All prices</button>
+      <button class="chip price-chip" onclick="setPr('low',this)">Under €8k</button>
+      <button class="chip price-chip" onclick="setPr('mid',this)">€8–15k</button>
+      <button class="chip price-chip" onclick="setPr('high',this)">€15k+</button>
+    </div>
+    <button class="more-filters-btn" id="moreBtn" onclick="toggleExpanded()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="12" y2="18"/></svg>
       More filters
     </button>
   </div>
@@ -287,9 +362,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
   <div class="map-panel" id="mapPanel">
     <div id="map"></div>
     <div class="map-legend">
-      <div class="leg-row"><div class="leg-dot" style="background:var(--terra)"></div><span>Reviewed</span></div>
-      <div class="leg-row"><div class="leg-dot" style="background:var(--green)"></div><span>Verified Apr 2026</span></div>
-      <div class="leg-row"><div class="leg-dot" style="background:var(--ink)"></div><span>Listed</span></div>
+      <div class="leg-row"><div class="leg-dot" style="background:var(--ink)"></div><span>Schools</span></div>
     </div>
   </div>
 </div>
@@ -510,15 +583,49 @@ const schools = [
     address:"Av. Dr. Mário Soares 14, 2740-119 Porto Salvo",
     loc:"Taguspark, Oeiras", prog:"IB",
     price:11790, priceMax:26760,
-    earlyPrice:"11,790–12,720", primaryPrice:"15,630–18,510", middlePrice:"19,410–23,310", secondaryPrice:"25,680–26,760",
+    grades:[
+      {label:"Nursery (1–2 yrs)", fee:11790},
+      {label:"Kindergarten", fee:12720},
+      {label:"Grade 1", fee:15630},
+      {label:"Grade 2", fee:16710},
+      {label:"Grade 3", fee:17070},
+      {label:"Grade 4", fee:18510},
+      {label:"Grade 5", fee:18510},
+      {label:"Grade 6", fee:19410},
+      {label:"Grade 7", fee:20730},
+      {label:"Grade 8", fee:21015},
+      {label:"Grade 9", fee:23040},
+      {label:"Grade 10", fee:23310},
+      {label:"Grade 11", fee:25680},
+      {label:"Grade 12", fee:26760},
+    ],
+    academics:{
+      mainLanguage:"English",
+      extraLanguages:["Portuguese"],
+      afterSchoolLanguages:["Russian"],
+      sportsIncluded:[],
+      sportsExtra:["Basketball","Climbing","Crossfit","Ballet","Jazz dance","Football","Gymnastics","Judo","Jiu-jitsu","Padel","Rugby","Sailing","Horse riding","Skate","Surf","Volleyball","Swimming"],
+      musicIncluded:[],
+      musicExtra:["Music Academy"],
+      chess:null,
+      extraActivities:["3D modelling","Art","Cooking","Business mini games","Graffiti","Photography"],
+      computerSkills:["Python coding","Game development","Robotics"],
+    },
+    lessonsStart:"8:30", lessonsEnd:"16:00", afterCare:"18:00",
+    schoolBus:true, ageFrom:1, ageTo:18, timeToLisbon:"25 min",
     appFee:200, enrollFee:"1,200", annualEnrollFee:"600",
-    lunchIncluded:false, lunchPrice:null, transport:null,
+    lunchIncluded:false, lunchPrice:null,
     classSize:25,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7050, lng:-9.3000,
-    founded:1980, students:600,
+    founded:2017, students:600,
     website:"https://taguspark.sharingschool.org",
-    description:"IB school accepting children from 1 year old. One of very few schools with such early entry." },
+    description:"A modern well-equipped campus, conveniently located between Lisbon and Cascais — easy to reach from the city, Oeiras, and the Cascais line. One of the very few true full-cycle schools in Portugal: from age 1 to 18, meaning once you enrol your child, the school question is closed for good. The range of after-school activities is exceptional. The school also runs summer camps open to non-enrolled children — a great way to try before you commit.",
+    srNote:{
+      pros:["Full 1–18 school — one decision for the entire journey","Outstanding variety of after-school activities and summer camps","Summer camps open to non-enrolled children — try before you commit","Well-located between Lisbon, Oeiras and Cascais"],
+      watch:["Large class sizes — up to 25 students per class","Relatively new school (opened 2017) — no graduates yet who started from Nursery. Note: the Sharing School network has a sister campus in Madeira operating since 1980"]
+    },
+  },
 
   { id:20, name:"Colégio Planalto", short:"CP",
     address:"Lisbon", loc:"Lisbon", prog:"Portuguese / IB",
@@ -833,17 +940,19 @@ function render(){
   document.getElementById('heroCount').textContent = filtered.length;
   schools.forEach(s => {
     if(markers[s.id]){
-      const el = markers[s.id].getElement();
       const inFilter = filtered.some(x=>x.id===s.id);
-      if(el) el.style.opacity = inFilter ? '1' : '0.15';
+      const el = markers[s.id].getElement();
+      if(el) el.style.opacity = inFilter ? '1' : '0.12';
+      if(inFilter){ if(!map.hasLayer(markers[s.id])) markers[s.id].addTo(map); }
+      else { markers[s.id].closePopup(); }
     }
   });
   if(filtered.length === 0){
     document.getElementById('schoolsList').innerHTML = `<div class="empty-state">No schools match your filters.<br><small>Try adjusting the criteria above.</small></div>`;
     return;
   }
-  document.getElementById('schoolsList').innerHTML = filtered.map(s=>`
-    <div class="school-card ${s.verified?'verified-card':''}" id="card-${s.id}" onclick="openModal(${s.id})" style="cursor:pointer;">
+  document.getElementById('schoolsList').innerHTML = `<div class="cards-wrap">` + filtered.map(s=>`
+    <div class="school-card ${s.verified?'verified-card':''}" id="card-${s.id}" onclick="focusSchool(${s.id})" style="cursor:pointer;">
       <div class="card-top">
         <div class="avatar" style="background:${s.bg};color:${s.color};">${s.short}</div>
         <div style="flex:1;">
@@ -859,9 +968,12 @@ function render(){
         <span class="pill ${progPill(s.prog)}">${s.prog||'—'}</span>
         ${s.boarding ? '<span class="pill p-blue">Boarding ✓</span>' : '<span class="pill p-gray">Day</span>'}
       </div>
-      <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+        <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
+        <button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>
+      </div>
     </div>
-  `).join('');
+  `).join('') + `</div>`;
 }
 
 function setP(val, btn){
@@ -883,6 +995,7 @@ function toggleReviewed(btn){
 }
 function toggleExpanded(){
   document.getElementById('filterExpanded').classList.toggle('open');
+  document.getElementById('moreBtn').classList.toggle('open');
 }
 function applyExpanded(){
   state.maxPrice = parseInt(document.getElementById('priceSlider').value);
@@ -914,6 +1027,15 @@ function resetAll(){
   render();
 }
 
+function focusSchool(id){
+  const s=schools.find(x=>x.id===id);
+  if(!s) return;
+  document.querySelectorAll('.school-card').forEach(c=>c.classList.remove('highlighted'));
+  const card=document.getElementById('card-'+s.id);
+  if(card) card.classList.add('highlighted');
+  if(s.lat&&s.lng){ map.setView([s.lat,s.lng],13,{animate:true}); if(markers[s.id]) markers[s.id].openPopup(); }
+}
+
 function openModal(id){
   const s = schools.find(x=>x.id===id);
   if(!s) return;
@@ -924,7 +1046,7 @@ function openModal(id){
   if(card){ card.classList.add('highlighted'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
 
   const isFav=favourites.has(id), inCmp=compareList.has(id);
-  const hasPrice = s.price || s.earlyPrice || s.primaryPrice;
+  const hasAnyFee = s.grades || s.price || s.earlyPrice || s.primaryPrice || s.appFee || s.enrollFee;
 
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-hero-bg">
@@ -943,49 +1065,136 @@ function openModal(id){
       </div>
     </div>
     <div class="modal-body">
+      <div style="background:var(--ink);border-radius:12px;padding:13px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+        <div style="flex-shrink:0;line-height:1;">
+          <div style="font-size:11px;font-weight:800;color:#fff;letter-spacing:-.3px;">Schools</div>
+          <div style="height:1.5px;background:var(--terra);margin:2px 0;"></div>
+          <div style="font-size:7px;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase;">Reviews</div>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;">Independent school tour — <span style="color:var(--terra);font-weight:600;">coming soon</span></div>
+      </div>
+
       <div class="photo-ph">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         <span>Photos — coming soon</span>
       </div>
-      ${s.description?`<p style="font-size:13px;color:#888;line-height:1.6;margin-bottom:18px;">${s.description}</p>`:''}
 
-      ${hasPrice ? `
-      <div class="m-section">
-        <div class="m-section-title">Fees by age group <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;">· 2026/27 academic year</span></div>
-        <div class="m-grid" style="grid-template-columns:repeat(2,1fr)">
-          <div><div class="m-item-label">Early Years (0–4)</div><div class="m-item-val">${s.earlyPrice?'€'+s.earlyPrice:'—'}</div></div>
-          <div><div class="m-item-label">Primary (5–9)</div><div class="m-item-val">${s.primaryPrice?'€'+s.primaryPrice:'—'}</div></div>
-          <div><div class="m-item-label">Middle (10–13)</div><div class="m-item-val">${s.middlePrice?'€'+s.middlePrice:'—'}</div></div>
-          <div><div class="m-item-label">Secondary (14+)</div><div class="m-item-val">${s.secondaryPrice?'€'+s.secondaryPrice:'—'}</div></div>
-        </div>
-      </div>` : ''}
+      ${s.description?`<p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px;">${s.description}</p>`:''}
 
-      <div class="m-section">
-        <div class="m-section-title">Entry & recurring fees <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;">· 2026/27</span></div>
-        <div class="m-grid">
-          <div><div class="m-item-label">Application fee</div><div class="m-item-val">${s.appFee?'€'+s.appFee:'—'}</div></div>
-          <div><div class="m-item-label">One-time enrollment</div><div class="m-item-val">${s.enrollFee?'€'+s.enrollFee:'—'}</div></div>
-          <div><div class="m-item-label">Annual enrollment</div><div class="m-item-val">${s.annualEnrollFee?'€'+s.annualEnrollFee:'—'}</div></div>
-          <div><div class="m-item-label">Lunch</div><div class="m-item-val">${s.lunchIncluded===true?'<span style="color:#2E7D32">✓ Included</span>':s.lunchPrice?'€'+s.lunchPrice+' /yr':'—'}</div></div>
-          <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus||s.transport||'—'}</div></div>
-          ${s.lessonsStart?`<div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart} – ${s.lessonsEnd||'?'}</div></div>`:''}
-        </div>
-      </div>
+      ${s.srNote?`<div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+        ${s.srNote.pros?.length?`<div style="padding:12px 16px;${s.srNote.watch?.length?'border-bottom:1px solid var(--border);':''}">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#2E7D32;margin-bottom:8px;">✓ What we like</div>
+          ${s.srNote.pros.map(p=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${p}</div>`).join('')}
+        </div>`:''}
+        ${s.srNote.watch?.length?`<div style="padding:12px 16px;background:#fffbf9;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#b85c2a;margin-bottom:8px;">◎ Worth noting</div>
+          ${s.srNote.watch.map(w=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${w}</div>`).join('')}
+        </div>`:''}
+      </div>`:''}
 
+      <!-- SCHOOL PROFILE -->
       <div class="m-section">
         <div class="m-section-title">School profile</div>
         <div class="m-grid">
-          <div><div class="m-item-label">Programme</div><div class="m-item-val">${s.prog||'—'}</div></div>
           <div><div class="m-item-label">Founded</div><div class="m-item-val">${s.founded||'—'}${s.founded>=2020?' 🆕':''}</div></div>
-          <div><div class="m-item-label">Students</div><div class="m-item-val">${s.students?s.students.toLocaleString():'—'}</div></div>
+          <div><div class="m-item-label">Age range</div><div class="m-item-val">${s.ageFrom&&s.ageTo?s.ageFrom+' – '+s.ageTo+' years old':s.grades?'1 – 18 years old':'From 3+ years'}</div></div>
+          <div><div class="m-item-label">Total students</div><div class="m-item-val">${s.students?s.students.toLocaleString():'—'}</div></div>
           <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize?'Max '+s.classSize+(s.classSize<20?' <span style="color:#2E7D32;font-size:10px;">✓ Small</span>':''):'—'}</div></div>
-          <div><div class="m-item-label">Campus</div><div class="m-item-val">${s.campus||'—'}</div></div>
+          <div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart&&s.lessonsEnd?s.lessonsStart+' – '+s.lessonsEnd:'—'}</div></div>
+          ${s.afterCare?`<div><div class="m-item-label">After care until</div><div class="m-item-val">${s.afterCare}</div></div>`:''}
+          <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus===true||s.schoolBus==='yes'?'<span style="color:#2E7D32">✓ Available</span>':s.schoolBus&&s.schoolBus!==false?'✓ Available · €'+s.schoolBus:'—'}</div></div>
           <div><div class="m-item-label">Boarding</div><div class="m-item-val">${s.boarding?'<span style="color:#2E7D32">✓ Available</span>':'Day only'}</div></div>
+          ${s.timeToLisbon?`<div><div class="m-item-label">To Lisbon city</div><div class="m-item-val">${s.timeToLisbon}</div></div>`:''}
+          ${s.campus?`<div><div class="m-item-label">Campus</div><div class="m-item-val">${s.campus}</div></div>`:''}
           ${s.ibAvg?`<div><div class="m-item-label">IB avg score</div><div class="m-item-val" style="color:#2E7D32">${s.ibAvg} / 45</div></div>`:''}
-          ${s.examRequired===true?`<div><div class="m-item-label">Exam results</div><div class="m-item-val" style="color:#2E7D32">✓ Published</div></div>`:''}
         </div>
       </div>
 
+      <!-- ACADEMICS -->
+      <div class="m-section">
+        <div class="m-section-title">Academics</div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+
+          <div class="acad-row">
+            <div class="acad-label">Programme</div>
+            <div class="acad-val acad-bold">${s.prog||'—'}</div>
+          </div>
+
+          <div class="acad-row" style="border-bottom:none;">
+            <div class="acad-label">Languages</div>
+            <div class="acad-val">${s.academics?.mainLanguage||'—'}${s.academics?.extraLanguages?.length?' <span style="color:var(--gray);font-weight:400;font-size:12px;">· '+s.academics.extraLanguages.join(', ')+'</span>':''}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AFTER SCHOOL ACTIVITIES -->
+      <div class="m-section">
+        <div class="m-section-title">After school activities</div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+
+          <div class="acad-row">
+            <div class="acad-label">Sports</div>
+            <div class="acad-val" style="font-weight:400;">
+              ${s.academics?.sportsIncluded?.length?'<span style="font-weight:600;">'+s.academics.sportsIncluded.join(', ')+'</span>':''}
+              ${s.academics?.sportsExtra?.length?(s.academics?.sportsIncluded?.length?'<br>':'')+s.academics.sportsExtra.join(', '):''}
+              ${!s.academics?.sportsIncluded?.length&&!s.academics?.sportsExtra?.length?'—':''}
+            </div>
+          </div>
+
+          <div class="acad-row">
+            <div class="acad-label">Music</div>
+            <div class="acad-val" style="font-weight:400;">
+              ${s.academics?.musicIncluded?.length?'<span style="font-weight:600;">'+s.academics.musicIncluded.join(', ')+'</span>':''}
+              ${s.academics?.musicExtra?.length?(s.academics?.musicIncluded?.length?'<br>':'')+s.academics.musicExtra.join(', '):''}
+              ${!s.academics?.musicIncluded?.length&&!s.academics?.musicExtra?.length?'—':''}
+            </div>
+          </div>
+
+          <div class="acad-row">
+            <div class="acad-label">Languages</div>
+            <div class="acad-val" style="font-weight:400;">${s.academics?.afterSchoolLanguages?.length?s.academics.afterSchoolLanguages.join(', '):'—'}</div>
+          </div>
+
+          <div class="acad-row">
+            <div class="acad-label">Chess</div>
+            <div class="acad-val">${s.academics?.chess||'—'}</div>
+          </div>
+
+          <div class="acad-row">
+            <div class="acad-label">Other</div>
+            <div class="acad-val" style="font-weight:400;">${s.academics?.extraActivities?.length?s.academics.extraActivities.join(', '):'—'}</div>
+          </div>
+
+          <div class="acad-row" style="border-bottom:none;">
+            <div class="acad-label">Computer skills</div>
+            <div class="acad-val" style="font-weight:400;">${s.academics?.computerSkills?.length?s.academics.computerSkills.join(', '):'—'}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FEES SECTION -->
+      ${hasAnyFee ? `
+      <div class="m-section">
+        <div class="m-section-title">
+          Fees <span style="font-size:10px;font-weight:600;color:var(--gray);text-transform:none;letter-spacing:0;">· 2026/27</span>
+        </div>
+        <div class="m-grid" style="margin-bottom:12px;">
+          ${s.appFee?`<div><div class="m-item-label">Application fee</div><div class="m-item-val">€${s.appFee}</div></div>`:''}
+          ${s.enrollFee?`<div><div class="m-item-label">Enrollment fee (one-time)</div><div class="m-item-val">€${s.enrollFee}</div></div>`:''}
+          ${s.annualEnrollFee?`<div><div class="m-item-label">Re-enrollment fee (annual)</div><div class="m-item-val">€${s.annualEnrollFee}</div></div>`:''}
+          ${s.lunchIncluded===true?`<div><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:#2E7D32">✓ Included</div></div>`:s.lunchPrice?`<div><div class="m-item-label">Lunch</div><div class="m-item-val">€${s.lunchPrice} /yr</div></div>`:''}
+        </div>
+        ${s.grades ? `
+        <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          ${s.grades.map((g,i)=>`
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;${i%2===0?'background:#fff;':'background:var(--cream);'}${i<s.grades.length-1?'border-bottom:1px solid var(--border);':''}">
+              <span style="font-size:12px;color:var(--ink);">${g.label}</span>
+              <span style="font-size:12px;font-weight:600;color:var(--ink);">€${g.fee.toLocaleString()}</span>
+            </div>`).join('')}
+        </div>`:s.price?`<div style="background:var(--cream);border-radius:10px;padding:14px 16px;"><div style="font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Annual tuition range</div><div class="m-item-val price" style="font-size:16px;">€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}</div></div>`:''}
+      </div>` : ''}
       <div class="m-section">
         <div class="m-section-title">Independent review</div>
         <div class="video-ph">
@@ -1078,14 +1287,14 @@ L.control.zoom({position:'bottomleft'}).addTo(map);
 const markers={};
 schools.forEach(s=>{
   if(!s.lat||!s.lng) return;
-  const size=s.reviewed?34:s.verified?30:26;
-  const bg=s.reviewed?'#C4633A':s.verified?'#2E7D32':'#1a1814';
-  const icon=L.divIcon({className:'',html:`<div style="width:${size}px;height:${size}px;background:${bg};color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.25);font-family:'DM Sans',sans-serif;">${s.short.slice(0,2)}</div>`,iconSize:[size,size],iconAnchor:[size/2,size/2]});
+  const size=28;
+  const icon=L.divIcon({className:'',html:`<div style="width:${size}px;height:${size}px;background:#1a1814;color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.25);font-family:'DM Sans',sans-serif;">${s.short.slice(0,2)}</div>`,iconSize:[size,size],iconAnchor:[size/2,size/2]});
   const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`
     <div style="font-weight:600;font-size:13px;margin-bottom:3px;">${s.name}</div>
-    <div style="font-size:11px;color:#888;">${s.price?'€'+s.price.toLocaleString()+'–€'+s.priceMax.toLocaleString()+' / yr':'Price on request'} · ${s.prog||'—'}</div>
-    ${s.verified?'<div style="margin-top:4px;font-size:10px;font-weight:700;color:#2E7D32;">✓ Verified Apr 2026</div>':''}
-  `,{offset:[0,-6]});
+    <div style="font-size:11px;color:#888;margin-bottom:8px;">${s.price?'€'+s.price.toLocaleString()+'–€'+s.priceMax.toLocaleString()+' / yr':'Price on request'} · ${s.prog||'—'}</div>
+    ${s.verified?'<div style="margin-bottom:8px;font-size:10px;font-weight:700;color:#2E7D32;">✓ Verified Apr 2026</div>':''}
+    <button onclick="openModal(${s.id});this.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click();" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">More info →</button>
+  `,{offset:[0,-6],minWidth:180});
   m.on('click',()=>{
     document.querySelectorAll('.school-card').forEach(c=>c.classList.remove('highlighted'));
     const card=document.getElementById('card-'+s.id);
