@@ -21,15 +21,35 @@
 body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--cream); }
 
 /* NAV */
-nav { background:var(--white); border-bottom:1px solid var(--border); height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 40px; position:sticky; top:0; z-index:500; }
+nav { background:var(--white); border-bottom:1px solid var(--border); height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 40px; position:sticky; top:0; z-index:500; }
 .logo { display:flex; flex-direction:column; line-height:1; text-decoration:none; }
-.logo-top { font-size:20px; font-weight:800; color:var(--ink); letter-spacing:-.8px; }
-.logo-line { width:100%; height:2px; background:var(--terra); margin:3px 0 2px; position:relative; }
-.logo-line::after { content:''; position:absolute; right:0; top:-4px; width:6px; height:6px; border-radius:50%; background:var(--terra); }
-.logo-bottom { font-size:9px; color:var(--gray); letter-spacing:3px; text-transform:uppercase; }
+.logo-top { font-size:22px; font-weight:800; color:var(--ink); letter-spacing:-.8px; }
+.logo-line { width:100%; height:2px; background:var(--terra); margin:4px 0 3px; position:relative; }
+.logo-line::after { content:''; position:absolute; right:0; top:-4px; width:7px; height:7px; border-radius:50%; background:var(--terra); }
+.logo-bottom { font-size:10px; color:var(--gray); letter-spacing:3.5px; text-transform:uppercase; }
 .nav-links { display:flex; align-items:center; gap:24px; font-size:13px; }
-.nav-links a { text-decoration:none; color:var(--gray); }
-.nav-cta { background:var(--ink); color:var(--white)!important; padding:8px 18px; border-radius:8px; font-weight:500; }
+.nav-links a { text-decoration:none; color:var(--gray); transition:color .2s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-signin { display:flex; align-items:center; gap:7px; background:var(--terra-light); border:1px solid #e8c4b0; border-radius:30px; padding:6px 14px 6px 8px; font-size:13px; font-weight:500; color:#8B3A1F; cursor:pointer; text-decoration:none; transition:background .2s; position:relative; }
+.nav-signin:hover { background:#f0ddd4; color:#8B3A1F !important; }
+.nav-signin-icon { width:24px; height:24px; border-radius:50%; background:var(--terra); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.nav-signin-icon svg { width:13px; height:13px; }
+.nav-signin-chevron { font-size:9px; margin-left:2px; transition:transform .2s; }
+.nav-signin-wrap { position:relative; }
+.nav-signin-wrap:hover .nav-signin-chevron { transform:rotate(180deg); }
+.nav-signin-menu { display:none; position:absolute; top:calc(100% + 10px); right:0; background:var(--white); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.1); min-width:220px; padding:6px; z-index:600; }
+.nav-signin-wrap:hover .nav-signin-menu { display:block; }
+.nav-signin-menu a { display:flex !important; align-items:center; gap:10px; padding:10px 12px; border-radius:9px; font-size:13px; color:var(--ink) !important; text-decoration:none; font-weight:500; transition:background .15s; }
+.nav-signin-menu a:hover { background:var(--cream); }
+.nav-signin-menu-ico { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.nav-signin-menu-sub { font-size:11px; color:var(--gray); font-weight:400; margin-top:1px; }
+.nav-signin-menu-divider { height:1px; background:var(--border); margin:4px 0; }
+
+/* BETA BANNER */
+.beta-bar { background:var(--terra-light); border-bottom:1px solid #e8d5c8; color:#8B3A1F; font-size:12px; text-align:center; padding:9px 20px; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+.beta-dot { width:7px; height:7px; border-radius:50%; background:var(--terra); display:inline-block; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.beta-bar a { color:var(--terra); text-decoration:none; font-weight:600; }
 
 /* HERO */
 .page-hero { background:var(--white); border-bottom:1px solid var(--border); padding:24px 40px 20px; }
@@ -43,7 +63,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .hero-meta strong { display:block; font-size:22px; font-weight:700; color:var(--ink); }
 
 /* FILTER BAR */
-.filter-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:116px; z-index:400; }
+.filter-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:154px; z-index:400; }
 .filter-top-row { display:flex; align-items:center; gap:12px; padding:10px 0; }
 .filter-main { display:flex; align-items:center; gap:8px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; flex:1; }
 .filter-main::-webkit-scrollbar { display:none; }
@@ -57,7 +77,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 .more-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; white-space:nowrap; border:1px solid var(--terra); background:var(--white); color:var(--terra); margin-left:auto; flex-shrink:0; }
 .search-input { padding:6px 14px; border:1px solid var(--border); border-radius:20px; font-size:12px; font-family:'DM Sans',sans-serif; outline:none; width:180px; }
 .search-input:focus { border-color:var(--ink); }
-.search-bar-top { background:var(--white); border-bottom:1px solid var(--border); padding:10px 40px; position:sticky; top:64px; z-index:401; }
+.search-bar-top { background:var(--white); border-bottom:1px solid var(--border); padding:10px 40px; position:sticky; top:106px; z-index:401; }
 .search-bar-top input { width:100%; padding:10px 18px 10px 40px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:'DM Sans',sans-serif; outline:none; background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 14px center; background-size:16px; color:var(--ink); transition:border-color .15s; }
 .search-bar-top input:focus { border-color:var(--ink); background-color:var(--white); }
 
@@ -173,8 +193,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
   nav { padding:0 16px; height:56px; }
   .page-hero { padding:16px; }
   .page-title { font-size:22px; }
-  .search-bar-top { padding:8px 16px; top:56px; }
-  .filter-bar { padding:0 16px; top:116px; }
+  .search-bar-top { padding:8px 16px; top:94px; }
+  .filter-bar { padding:0 16px; top:138px; }
   .filter-grid { grid-template-columns:1fr 1fr; padding:16px; gap:14px; }
   .filter-footer { padding:10px 16px; }
   .split { grid-template-columns:1fr; height:auto; }
@@ -189,6 +209,13 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
 </head>
 <body>
 
+<!-- BETA BANNER -->
+<div class="beta-bar">
+  <span class="beta-dot"></span>
+  <strong>Beta</strong> — Site in development. Data may be incomplete. &nbsp;·&nbsp;
+  <a href="#">Get notified when we launch →</a>
+</div>
+
 <!-- NAV -->
 <nav>
   <a href="/" class="logo">
@@ -198,7 +225,33 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
   </a>
   <div class="nav-links">
     <a href="/">← All countries</a>
-    <a href="#" class="nav-cta">For schools</a>
+    <a href="/about.html">About us</a>
+    <div class="nav-signin-wrap">
+      <a href="#" class="nav-signin">
+        <div class="nav-signin-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        Sign in
+        <span class="nav-signin-chevron">▾</span>
+      </a>
+      <div class="nav-signin-menu">
+        <a href="/parent-dashboard.html">
+          <div class="nav-signin-menu-ico" style="background:var(--terra-light);">👨‍👩‍👧</div>
+          <div>
+            <div>I'm a parent</div>
+            <div class="nav-signin-menu-sub">Find schools for my child</div>
+          </div>
+        </a>
+        <div class="nav-signin-menu-divider"></div>
+        <a href="/school-dashboard.html">
+          <div class="nav-signin-menu-ico" style="background:#E8F5EE;">🏫</div>
+          <div>
+            <div>I represent a school</div>
+            <div class="nav-signin-menu-sub">Manage our listing</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -306,12 +359,16 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:64p
         </div>
         <div class="fg-title" style="margin-top:16px;">👥 Class size</div>
         <div class="fg-opts">
-          <label class="fg-opt"><input type="checkbox" id="t_small"> Small (below 20)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_all" value="all" checked> All sizes</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_small" value="small"> Small (below 20)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_big" value="big"> Large (20+)</label>
         </div>
         <div class="fg-title" style="margin-top:16px;">📅 School age</div>
         <div class="fg-opts">
-          <label class="fg-opt"><input type="checkbox" id="f_old"> Established (before 2000)</label>
-          <label class="fg-opt"><input type="checkbox" id="f_new"> New school (after 2020)</label>
+          <label class="fg-opt"><input type="radio" name="schoolAge" id="f_all" value="all" checked> All</label>
+          <label class="fg-opt"><input type="radio" name="schoolAge" id="f_old" value="old"> Established (before 2008)</label>
+          <label class="fg-opt"><input type="radio" name="schoolAge" id="f_mid" value="mid"> Growing (2008–2023)</label>
+          <label class="fg-opt"><input type="radio" name="schoolAge" id="f_new" value="new"> New (after 2024)</label>
         </div>
       </div>
       <div>
@@ -887,7 +944,7 @@ const schools = [
     bg:"#FAEEDA", color:"#633806", lat:38.7250, lng:-9.1480 },
 ];
 
-const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, smallClasses:false, schoolAge:null, lang:null };
+const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null };
 const compareList = new Set();
 const favourites = new Set();
 
@@ -917,12 +974,13 @@ function getFiltered(){
     if(state.boarding === 'boarding' && !s.boarding) return false;
     if(state.boarding === 'day' && s.boarding) return false;
     if(state.area && !s.loc.toLowerCase().includes(state.area.toLowerCase())) return false;
-    if(state.smallClasses && (!s.classSize || s.classSize >= 20)) return false;
-    if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2000)) return false;
-    if(state.schoolAge === 'new' && (!s.founded || s.founded < 2020)) return false;
+    if(state.classSize === 'small' && (!s.classSize || s.classSize >= 20)) return false;
+    if(state.classSize === 'big' && (!s.classSize || s.classSize < 20)) return false;
+    if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2008)) return false;
+    if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
+    if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
     if(state.lang && s.prog && !s.prog.toLowerCase().includes(state.lang.toLowerCase())) return false;
     if(state.search && !s.name.toLowerCase().includes(state.search) && !s.loc.toLowerCase().includes(state.search)) return false;
-    // Age group — filter by which price level exists
     if(state.ageGroup && state.ageGroup !== 'all'){
       const ag = state.ageGroup;
       if(ag==='early' && !s.earlyPrice) return false;
@@ -1002,10 +1060,8 @@ function applyExpanded(){
   const isDay = document.getElementById('t_day').checked;
   const isBoarding = document.getElementById('t_boarding').checked;
   state.boarding = isBoarding && !isDay ? 'boarding' : isDay && !isBoarding ? 'day' : null;
-  state.smallClasses = document.getElementById('t_small').checked;
-  const isOld = document.getElementById('f_old').checked;
-  const isNew = document.getElementById('f_new').checked;
-  state.schoolAge = isOld && !isNew ? 'old' : isNew && !isOld ? 'new' : null;
+  state.classSize = document.querySelector('input[name="classSize"]:checked')?.value || 'all';
+  state.schoolAge = document.querySelector('input[name="schoolAge"]:checked')?.value || 'all';
   const areas = [{id:'a_lisbon',v:'Lisbon'},{id:'a_cascais',v:'Cascais'},{id:'a_sintra',v:'Sintra'},{id:'a_oeiras',v:'Oeiras'},{id:'a_porto',v:'Porto'},{id:'a_algarve',v:'Algarve'}];
   const ac = areas.filter(a=>document.getElementById(a.id)?.checked).map(a=>a.v);
   state.area = ac.length===1 ? ac[0] : null;
@@ -1018,12 +1074,13 @@ function applyExpanded(){
   render();
 }
 function resetAll(){
-  ['t_day','t_boarding','t_small','f_old','f_new','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
-  const agAll = document.getElementById('ag_all');
-  if(agAll) agAll.checked = true;
+  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
+  const csAll = document.getElementById('cs_all'); if(csAll) csAll.checked=true;
+  const fAll = document.getElementById('f_all'); if(fAll) fAll.checked=true;
+  const agAll = document.getElementById('ag_all'); if(agAll) agAll.checked=true;
   document.getElementById('priceSlider').value=40000;
   document.getElementById('sliderVal').textContent='€40,000';
-  Object.assign(state,{maxPrice:40000,boarding:null,area:null,smallClasses:false,schoolAge:null,lang:null,ageGroup:'all'});
+  Object.assign(state,{maxPrice:40000,boarding:null,area:null,classSize:'all',schoolAge:'all',lang:null,ageGroup:'all'});
   render();
 }
 
@@ -1081,16 +1138,22 @@ function openModal(id){
 
       ${s.description?`<p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px;">${s.description}</p>`:''}
 
-      ${s.srNote?`<div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
-        ${s.srNote.pros?.length?`<div style="padding:12px 16px;${s.srNote.watch?.length?'border-bottom:1px solid var(--border);':''}">
-          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#2E7D32;margin-bottom:8px;">✓ What we like</div>
-          ${s.srNote.pros.map(p=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${p}</div>`).join('')}
-        </div>`:''}
-        ${s.srNote.watch?.length?`<div style="padding:12px 16px;background:#fffbf9;">
-          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#b85c2a;margin-bottom:8px;">◎ Worth noting</div>
-          ${s.srNote.watch.map(w=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${w}</div>`).join('')}
-        </div>`:''}
-      </div>`:''}
+      ${(()=>{
+        const pros = s.srNote?.pros||[];
+        const watch = s.srNote?.watch||[];
+        const hasPros = pros.length>0;
+        const hasWatch = watch.length>0;
+        return `<div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+          <div style="padding:12px 16px;${hasWatch?'border-bottom:1px solid var(--border);':''}">
+            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#2E7D32;margin-bottom:8px;">✓ What we like</div>
+            ${hasPros?pros.map(p=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${p}</div>`).join(''):'<div style="font-size:12px;color:#bbb;font-style:italic;">Data not yet available</div>'}
+          </div>
+          <div style="padding:12px 16px;background:#fffbf9;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#b85c2a;margin-bottom:8px;">◎ Worth noting</div>
+            ${hasWatch?watch.map(w=>`<div style="font-size:12px;color:var(--ink);line-height:1.6;padding:1px 0;">— ${w}</div>`).join(''):'<div style="font-size:12px;color:#bbb;font-style:italic;">Data not yet available</div>'}
+          </div>
+        </div>`;
+      })()}
 
       <!-- SCHOOL PROFILE -->
       <div class="m-section">
@@ -1102,8 +1165,8 @@ function openModal(id){
           <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize?'Max '+s.classSize+(s.classSize<20?' <span style="color:#2E7D32;font-size:10px;">✓ Small</span>':''):'—'}</div></div>
           <div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart&&s.lessonsEnd?s.lessonsStart+' – '+s.lessonsEnd:'—'}</div></div>
           ${s.afterCare?`<div><div class="m-item-label">After care until</div><div class="m-item-val">${s.afterCare}</div></div>`:''}
-          <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus===true||s.schoolBus==='yes'?'<span style="color:#2E7D32">✓ Available</span>':s.schoolBus&&s.schoolBus!==false?'✓ Available · €'+s.schoolBus:'—'}</div></div>
-          <div><div class="m-item-label">Boarding</div><div class="m-item-val">${s.boarding?'<span style="color:#2E7D32">✓ Available</span>':'Day only'}</div></div>
+          <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus&&s.schoolBus!==false?'<span style="color:#2E7D32">✓ Yes</span>':'<span style="color:#888">No</span>'}</div></div>
+          <div><div class="m-item-label">Boarding</div><div class="m-item-val">${s.boarding?'<span style="color:#2E7D32">✓ Yes</span>':'<span style="color:#888">No</span>'}</div></div>
           ${s.timeToLisbon?`<div><div class="m-item-label">To Lisbon city</div><div class="m-item-val">${s.timeToLisbon}</div></div>`:''}
           ${s.campus?`<div><div class="m-item-label">Campus</div><div class="m-item-val">${s.campus}</div></div>`:''}
           ${s.ibAvg?`<div><div class="m-item-label">IB avg score</div><div class="m-item-val" style="color:#2E7D32">${s.ibAvg} / 45</div></div>`:''}
@@ -1120,9 +1183,14 @@ function openModal(id){
             <div class="acad-val acad-bold">${s.prog||'—'}</div>
           </div>
 
+          <div class="acad-row">
+            <div class="acad-label">Teaching language</div>
+            <div class="acad-val acad-bold">${s.academics?.mainLanguage||'—'}</div>
+          </div>
+
           <div class="acad-row" style="border-bottom:none;">
-            <div class="acad-label">Languages</div>
-            <div class="acad-val">${s.academics?.mainLanguage||'—'}${s.academics?.extraLanguages?.length?' <span style="color:var(--gray);font-weight:400;font-size:12px;">· '+s.academics.extraLanguages.join(', ')+'</span>':''}</div>
+            <div class="acad-label">Extra languages</div>
+            <div class="acad-val" style="font-weight:400;">${s.academics?.extraLanguages?.length?s.academics.extraLanguages.join(', '):'—'}</div>
           </div>
 
         </div>
@@ -1153,7 +1221,7 @@ function openModal(id){
 
           <div class="acad-row">
             <div class="acad-label">Languages</div>
-            <div class="acad-val" style="font-weight:400;">${s.academics?.afterSchoolLanguages?.length?s.academics.afterSchoolLanguages.join(', '):'—'}</div>
+            <div class="acad-val" style="font-weight:400;">${s.academics?.afterSchoolLanguages?.length?s.academics.afterSchoolLanguages.join(', ')+'<span style="color:var(--gray);font-size:10px;font-weight:400;"> · after school</span>':'—'}</div>
           </div>
 
           <div class="acad-row">
@@ -1193,7 +1261,24 @@ function openModal(id){
               <span style="font-size:12px;color:var(--ink);">${g.label}</span>
               <span style="font-size:12px;font-weight:600;color:var(--ink);">€${g.fee.toLocaleString()}</span>
             </div>`).join('')}
-        </div>`:s.price?`<div style="background:var(--cream);border-radius:10px;padding:14px 16px;"><div style="font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Annual tuition range</div><div class="m-item-val price" style="font-size:16px;">€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}</div></div>`:''}
+        </div>` : (() => {
+          const levels = [
+            {label:'Early Years', val: s.earlyPrice ? '€'+s.earlyPrice : null},
+            {label:'Primary', val: s.primaryPrice ? '€'+s.primaryPrice : null},
+            {label:'Middle School', val: s.middlePrice ? '€'+s.middlePrice : null},
+            {label:'Secondary', val: s.secondaryPrice ? '€'+s.secondaryPrice : null},
+          ].filter(l => l.val || s.price);
+          if(levels.length > 0) {
+            return `<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+              ${levels.map((l,i)=>`
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;${i%2===0?'background:#fff;':'background:var(--cream);'}${i<levels.length-1?'border-bottom:1px solid var(--border);':''}">
+                  <span style="font-size:12px;color:var(--ink);">${l.label}</span>
+                  <span style="font-size:12px;font-weight:600;color:var(--ink);">${l.val||'—'}</span>
+                </div>`).join('')}
+            </div>`;
+          }
+          return s.price ? `<div style="background:var(--cream);border-radius:10px;padding:14px 16px;"><div style="font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Annual tuition range</div><div class="m-item-val price" style="font-size:16px;">€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}</div></div>` : '';
+        })()}
       </div>` : ''}
       <div class="m-section">
         <div class="m-section-title">Independent review</div>
