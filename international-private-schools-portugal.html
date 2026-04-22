@@ -181,13 +181,12 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vr-info { padding:10px 12px; }
 .vr-school-name { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.3; }
 .vr-loc { font-size:10px; color:var(--gray); }
-@media (max-width:768px) { .vr-grid { grid-template-columns:repeat(2,1fr); } .video-reviews-section { padding:20px 16px; } }
+@media (max-width:768px) { .video-reviews-section { padding:20px 16px; } }
 .vr-show-more { display:none; }
 @media (max-width:768px) {
   .vr-card-extra { display:none; }
-  .vr-card-extra.visible { display:block; }
+  .vr-card-extra.visible { display:grid; }
   .vr-show-more { display:block; width:100%; margin-top:12px; background:none; border:1px solid var(--border); border-radius:8px; padding:9px; font-size:12px; font-weight:600; color:var(--gray); cursor:pointer; font-family:'DM Sans',sans-serif; }
-  .vr-grid { grid-template-columns:repeat(2,1fr); }
 }
 
 /* COMPARE BAR */
@@ -206,14 +205,13 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .filter-footer { padding:10px 16px; }
   .split { grid-template-columns:1fr; height:auto; display:flex; flex-direction:column; }
   .list-panel { height:auto; overflow-y:visible; order:1; }
-  .map-panel { display:block !important; position:relative; height:320px; order:2; }
-  #map { height:320px; width:100%; }
+  .map-panel { display:block !important; position:relative; height:300px; order:2; }
+  #map { height:300px !important; width:100%; }
   .map-legend { display:none; }
   .modal { border-radius:20px 20px 0 0; max-height:92vh; }
   .modal-overlay { align-items:flex-end; padding:0; }
   .m-grid { grid-template-columns:1fr 1fr; }
-  .vr-grid { grid-template-columns:1fr; }
-  .video-reviews-section { padding:20px 16px; }
+  .vr-grid { grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
