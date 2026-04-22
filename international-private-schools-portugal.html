@@ -1405,6 +1405,7 @@ schools.forEach(s=>{
   markers[s.id]=m;
 });
 render();
+setTimeout(()=>{ map.invalidateSize(); }, 300);
 </script>
 </body>
 </html>
