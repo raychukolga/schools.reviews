@@ -182,6 +182,13 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vr-school-name { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.3; }
 .vr-loc { font-size:10px; color:var(--gray); }
 @media (max-width:768px) { .vr-grid { grid-template-columns:repeat(2,1fr); } .video-reviews-section { padding:20px 16px; } }
+.vr-show-more { display:none; }
+@media (max-width:768px) {
+  .vr-card-extra { display:none; }
+  .vr-card-extra.visible { display:block; }
+  .vr-show-more { display:block; width:100%; margin-top:12px; background:none; border:1px solid var(--border); border-radius:8px; padding:9px; font-size:12px; font-weight:600; color:var(--gray); cursor:pointer; font-family:'DM Sans',sans-serif; }
+  .vr-grid { grid-template-columns:repeat(2,1fr); }
+}
 
 /* COMPARE BAR */
 #compareBar { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); color:#fff; padding:14px 24px; z-index:1500; font-size:13px; align-items:center; justify-content:space-between; font-family:'DM Sans',sans-serif; }
@@ -197,13 +204,16 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .filter-bar { padding:0 16px; top:138px; }
   .filter-grid { grid-template-columns:1fr 1fr; padding:16px; gap:14px; }
   .filter-footer { padding:10px 16px; }
-  .split { grid-template-columns:1fr; height:auto; }
-  .map-panel { display:none; position:fixed; inset:0; z-index:600; height:100vh!important; }
-  .map-panel.map-open { display:block; }
-  .list-panel { height:auto; min-height:60vh; overflow-y:visible; }
+  .split { grid-template-columns:1fr; height:auto; display:flex; flex-direction:column; }
+  .list-panel { height:auto; overflow-y:visible; order:1; }
+  .map-panel { display:block !important; position:relative; height:320px; order:2; }
+  #map { height:320px; width:100%; }
+  .map-legend { display:none; }
   .modal { border-radius:20px 20px 0 0; max-height:92vh; }
   .modal-overlay { align-items:flex-end; padding:0; }
   .m-grid { grid-template-columns:1fr 1fr; }
+  .vr-grid { grid-template-columns:1fr; }
+  .video-reviews-section { padding:20px 16px; }
 }
 </style>
 </head>
@@ -294,20 +304,21 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       </div>
       <div class="vr-info"><div class="vr-school-name">St Julian's School</div><div class="vr-loc">Carcavelos, Cascais</div></div>
     </div>
-    <div class="vr-card">
+    <div class="vr-card vr-card-extra">
       <div class="vr-thumb">
         <div class="vr-cs-tag">Coming soon</div>
         <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">King's College Lisbon</div><div class="vr-loc">Cascais</div></div>
     </div>
-    <div class="vr-card">
+    <div class="vr-card vr-card-extra">
       <div class="vr-thumb" style="background:linear-gradient(135deg,#faf8f5,#f0ede8);border:none;cursor:default;">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
       </div>
       <div class="vr-info"><div class="vr-school-name" style="color:var(--gray);">More reviews</div><div class="vr-loc">Filming in 2025</div></div>
     </div>
   </div>
+  <button class="vr-show-more" id="vrShowMore" onclick="toggleVrMore()">Show more ↓</button>
 </div>
 
 <!-- SEARCH BAR -->
@@ -1364,6 +1375,14 @@ function openCompare(){
   </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+}
+
+function toggleVrMore(){
+  const extras = document.querySelectorAll('.vr-card-extra');
+  const btn = document.getElementById('vrShowMore');
+  const open = extras[0].classList.contains('visible');
+  extras.forEach(c => c.classList.toggle('visible', !open));
+  btn.textContent = open ? 'Show more ↓' : 'Show less ↑';
 }
 
 const map=L.map('map',{zoomControl:false}).setView([39.5,-8.0],7);
