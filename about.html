@@ -127,6 +127,14 @@ footer { background: #2C2825; color: rgba(255,255,255,.5); font-size: 12px; padd
 .footer-disclaimer { font-size: 11px; line-height: 1.7; max-width: 640px; }
 .footer-copy { font-size: 11px; white-space: nowrap; }
 
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: flex; align-items: center; gap: 4px; color: var(--gray); text-decoration: none; transition: color .2s; }
+.nav-dropdown > a:hover { color: var(--ink); }
+.nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.1); min-width: 200px; padding: 6px; z-index: 600; }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu a { display: block; padding: 9px 14px; border-radius: 8px; font-size: 13px; color: var(--ink) !important; text-decoration: none; transition: background .15s; white-space: nowrap; }
+.nav-dropdown-menu a:hover { background: var(--cream); }
+.menu-divider { height: 1px; background: var(--border); margin: 4px 0; }
 /* MOBILE */
 @media (max-width: 768px) {
   nav { padding: 0 16px; height: 56px; }
@@ -156,8 +164,7 @@ footer { background: #2C2825; color: rgba(255,255,255,.5); font-size: 12px; padd
 <!-- BETA BANNER -->
 <div class="beta-bar">
   <span class="beta-dot"></span>
-  <strong>Beta</strong> — Site in development. Data may be incomplete. &nbsp;·&nbsp;
-  <a href="#">Get notified when we launch →</a>
+  <strong>Beta</strong> — Site in development. Data may be incomplete.
 </div>
 
 <!-- NAV -->

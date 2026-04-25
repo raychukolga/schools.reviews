@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Grades by Age: IB, British, American & Portuguese Compared | Schools Reviews</title>
+<meta name="description" content="What grade is my child in? Compare school grades by age across IB, Cambridge, American and Portuguese curricula — with an interactive year group finder.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://schools.reviews/school-year-grade-by-age-guide">
+<meta property="og:title" content="School Grades by Age: IB, British, American & Portuguese Compared">
+<meta property="og:description" content="What grade is my child in? Find your child's year group across IB, Cambridge, American and Portuguese curricula.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-QGB1YVCB1R");
+</script>
+
+<style>
+:root {
+  --ink: #1a1814;
+  --terra: #C4633A;
+  --terra-light: #F5EDE8;
+  --cream: #FAF8F5;
+  --white: #ffffff;
+  --gray: #888;
+  --border: #e8e3de;
+  --green: #2E7D32;
+  --green-light: #EAF3DE;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--cream); }
+
+/* BETA BANNER */
+.beta-bar { background: var(--terra-light); border-bottom: 1px solid #e8d5c8; color: #8B3A1F; font-size: 12px; text-align: center; padding: 9px 20px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.beta-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--terra); display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.beta-bar a { color: var(--terra); text-decoration: none; font-weight: 600; }
+
+/* NAV */
+nav { background: var(--white); border-bottom: 1px solid var(--border); height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; position: sticky; top: 0; z-index: 500; }
+.logo { display: flex; flex-direction: column; line-height: 1; text-decoration: none; }
+.logo-top { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.8px; }
+.logo-line { width: 100%; height: 2px; background: var(--terra); margin: 4px 0 3px; position: relative; }
+.logo-line::after { content:''; position: absolute; right: 0; top: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--terra); }
+.logo-bottom { font-size: 10px; color: var(--gray); letter-spacing: 3.5px; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 24px; font-size: 13px; }
+.nav-links a { text-decoration: none; color: var(--gray); transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-signin { display: flex; align-items: center; gap: 7px; background: var(--terra-light); border: 1px solid #e8c4b0; border-radius: 30px; padding: 6px 14px 6px 8px; font-size: 13px; font-weight: 500; color: #8B3A1F; cursor: pointer; text-decoration: none; }
+.nav-signin-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--terra); display: flex; align-items: center; justify-content: center; }
+.nav-signin-icon svg { width: 13px; height: 13px; }
+
+/* HERO */
+.article-hero { background: var(--white); border-bottom: 1px solid var(--border); padding: 40px 40px 36px; }
+.article-hero-inner { max-width: 760px; margin: 0 auto; }
+.breadcrumb { font-size: 11px; color: var(--gray); margin-bottom: 18px; }
+.breadcrumb a { color: var(--terra); text-decoration: none; }
+.article-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--terra); background: var(--terra-light); padding: 5px 12px; border-radius: 20px; margin-bottom: 16px; }
+.article-title { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--ink); line-height: 1.1; margin-bottom: 14px; }
+.article-sub { font-size: 16px; color: var(--gray); line-height: 1.7; margin-bottom: 20px; max-width: 600px; font-weight: 300; }
+.article-meta { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--gray); padding-top: 16px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.meta-sep { color: var(--border); }
+
+/* LAYOUT */
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 40px 40px 80px; }
+
+/* CALCULATOR */
+.calc-block { background: var(--ink); border-radius: 16px; padding: 28px 32px; margin-bottom: 40px; }
+.calc-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+.calc-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 20px; line-height: 1.2; }
+.calc-input-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+.calc-input-wrap { display: flex; flex-direction: column; gap: 5px; }
+.calc-input-label { font-size: 11px; color: rgba(255,255,255,.4); }
+.calc-input { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 10px 16px; font-size: 20px; font-weight: 700; color: #fff; width: 90px; font-family: 'DM Sans', sans-serif; text-align: center; outline: none; }
+.calc-input:focus { border-color: var(--terra); background: rgba(255,255,255,.15); }
+.calc-btn { background: var(--terra); color: #fff; border: none; border-radius: 10px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; align-self: flex-end; transition: background .2s; }
+.calc-btn:hover { background: #b5582f; }
+.calc-result { display: none; }
+.calc-result.show { display: block; }
+.calc-result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.calc-result-item { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 14px 16px; }
+.calc-result-system { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 5px; }
+.calc-result-year { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.calc-result-note { font-size: 11px; color: rgba(255,255,255,.45); line-height: 1.4; }
+.calc-result-highlight { background: rgba(196,99,58,.2); border-color: rgba(196,99,58,.4); }
+.calc-no-result { font-size: 13px; color: rgba(255,255,255,.5); padding: 12px 0; }
+
+/* ARTICLE BODY */
+.article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--ink); margin: 36px 0 14px; line-height: 1.2; }
+.article-body h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin: 24px 0 10px; }
+.article-body p { font-size: 15px; color: #444; line-height: 1.85; margin-bottom: 16px; }
+.article-body ul { margin: 0 0 16px 0; padding-left: 0; list-style: none; }
+.article-body ul li { font-size: 15px; color: #444; line-height: 1.75; padding: 3px 0 3px 18px; position: relative; }
+.article-body ul li::before { content: '—'; position: absolute; left: 0; color: var(--terra); }
+
+/* CALLOUT */
+.callout { background: var(--terra-light); border-left: 3px solid var(--terra); border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 20px 0 24px; font-size: 14px; color: #8B3A1F; line-height: 1.65; }
+.callout strong { font-weight: 700; }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; margin: 24px 0 32px; border-radius: 12px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+thead tr { background: var(--ink); }
+thead th { color: #fff; font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 11px 14px; text-align: left; }
+thead th:first-child { border-radius: 0; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--terra-light); }
+tbody tr:nth-child(even) { background: var(--cream); }
+tbody tr:nth-child(even):hover { background: var(--terra-light); }
+td { padding: 9px 14px; color: var(--ink); vertical-align: middle; }
+td:first-child { font-weight: 700; color: var(--terra); font-size: 12px; }
+.exam-tag { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: 4px; vertical-align: middle; }
+.exam-igcse { background: #E6F1FB; color: #0C447C; }
+.exam-ib { background: var(--green-light); color: var(--green); }
+.exam-aLevel { background: #F3E8FF; color: #6B21A8; }
+.exam-sat { background: #FFF3E0; color: #E65100; }
+.exam-pt { background: #FCE4EC; color: #C62828; }
+.exam-pyp { background: var(--green-light); color: var(--green); }
+.exam-myp { background: #E8F5E9; color: #1B5E20; }
+
+/* SYSTEM CARDS */
+.system-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 20px 0 28px; }
+.system-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 18px; }
+.system-card-flag { font-size: 22px; margin-bottom: 8px; }
+.system-card-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.system-card-desc { font-size: 12px; color: var(--gray); line-height: 1.55; }
+.system-card-schools { font-size: 11px; color: var(--terra); margin-top: 8px; font-weight: 500; }
+
+/* CTA */
+.article-cta { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 24px 28px; margin: 40px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.cta-text-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.cta-text-sub { font-size: 13px; color: var(--gray); }
+.cta-btn { background: var(--ink); color: #fff; text-decoration: none; border-radius: 10px; padding: 11px 22px; font-size: 13px; font-weight: 600; white-space: nowrap; transition: background .2s; }
+.cta-btn:hover { background: #2d2a26; }
+
+/* FOOTER */
+footer { background: #2C2825; color: rgba(255,255,255,.5); font-size: 12px; padding: 48px 40px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+.footer-logo-top { font-size: 18px; font-weight: 700; color: #fff; }
+.footer-logo-line { width: 40px; height: 2px; background: var(--terra); margin: 4px 0 3px; }
+.footer-logo-bottom { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.footer-desc { font-size: 12px; line-height: 1.7; margin-top: 12px; }
+.footer-col-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.6); margin-bottom: 14px; }
+.footer-links { display: flex; flex-direction: column; gap: 9px; }
+.footer-links a { color: rgba(255,255,255,.45); text-decoration: none; font-size: 12px; transition: color .2s; }
+.footer-links a:hover { color: rgba(255,255,255,.8); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+.footer-disclaimer { font-size: 11px; line-height: 1.7; max-width: 640px; }
+.footer-copy { font-size: 11px; white-space: nowrap; }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: flex; align-items: center; gap: 4px; color: var(--gray); text-decoration: none; transition: color .2s; }
+.nav-dropdown > a:hover { color: var(--ink); }
+.nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--white); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.1); min-width: 200px; padding: 6px; z-index: 600; }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu a { display: block; padding: 9px 14px; border-radius: 8px; font-size: 13px; color: var(--ink) !important; text-decoration: none; transition: background .15s; white-space: nowrap; }
+.nav-dropdown-menu a:hover { background: var(--cream); }
+.menu-divider { height: 1px; background: var(--border); margin: 4px 0; }
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; height: 56px; }
+  .article-hero { padding: 24px 20px 20px; }
+  .article-title { font-size: 30px; }
+  .article-wrap { padding: 24px 20px 60px; }
+  .calc-result-grid { grid-template-columns: 1fr 1fr; }
+  .system-cards { grid-template-columns: 1fr; }
+  .article-cta { flex-direction: column; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  footer { padding: 40px 20px 24px; }
+  .calc-block { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BETA BANNER -->
+<div class="beta-bar">
+  <span class="beta-dot"></span>
+  <strong>Beta</strong> — Site in development.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <span class="logo-top">Schools</span>
+    <div class="logo-line"></div>
+    <span class="logo-bottom">Reviews</span>
+  </a>
+  <div class="nav-links">
+    <a href="/international-private-schools-portugal.html">🇵🇹 Portugal</a>
+    <a href="/about.html">About us</a>
+    <a href="#" class="nav-signin">
+      <div class="nav-signin-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      Sign in ▾
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="/">Home</a> → <a href="/guides">Guides</a> → School years by age</div>
+    <div class="article-tag">📚 Parent Guide</div>
+    <h1 class="article-title">Same age, different name: how school grades compare across curricula</h1>
+    <p class="article-sub">Year 6, 6º Ano, PYP Grade 6, Grade 5 — they all mean the same age. How school grades compare across IB, Cambridge, American and Portuguese systems — and what exams fall at each stage.</p>
+    <div class="article-meta">
+      <span>By Schools Reviews</span>
+      <span class="meta-sep">·</span>
+      <span>Updated April 2026</span>
+      <span class="meta-sep">·</span>
+      <span>5 min read</span>
+      <span class="meta-sep">·</span>
+      <span>🇵🇹 Portugal focus</span>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="article-wrap">
+
+  <!-- CALCULATOR -->
+  <div class="calc-block">
+    <div class="calc-label">Interactive tool</div>
+    <div class="calc-title">What year will my child be in?</div>
+    <div class="calc-input-row">
+      <div class="calc-input-wrap">
+        <div class="calc-input-label">Child's age in September</div>
+        <input class="calc-input" type="number" id="childAge" min="3" max="18" placeholder="8" oninput="calcYear()">
+      </div>
+    </div>
+    <div class="calc-result" id="calcResult">
+      <div class="calc-result-grid" id="calcGrid"></div>
+    </div>
+    <div id="calcEmpty" style="font-size:13px;color:rgba(255,255,255,.35);margin-top:4px;">Enter your child's age above ↑</div>
+  </div>
+
+  <div class="article-body">
+
+    <h2>Why is this so confusing?</h2>
+
+    <p>When you move to Portugal — or start comparing international schools — you quickly realise that every curriculum counts grades differently. A child who is 11 years old in September could be in <strong>Year 7</strong> (British/Cambridge), <strong>Grade 6</strong> (American), <strong>6º Ano</strong> (Portuguese), or <strong>MYP Year 1</strong> (IB). Same child, same age, four different names.</p>
+
+    <p>In this article we focus purely on <strong>how grades and year groups map by age</strong>.</p>
+
+    <div class="callout">
+      <strong>September cut-off:</strong> In most systems, the year group is determined by the child's age at the start of the school year. The official cut-off date varies by school, but in practice many international schools in Portugal use <strong>September 15th</strong> — meaning a child must turn the required age by September 15th to enter that year group. Always confirm the exact cut-off date directly with the school.
+    </div> We don't compare the programmes themselves here — for that, see our next guide.</p>
+
+    <div class="callout">
+      <strong>Comparing IB and Cambridge?</strong> We cover the differences in depth — curriculum, exams, university recognition — in a separate guide. <a href="/ib-vs-cambridge-which-is-better.html" style="color:#8B3A1F;font-weight:700;">Read: IB vs Cambridge — what's the difference →</a>
+    </div>
+
+    <h2>The full comparison table</h2>
+    <p>How every age maps across all four systems. Key exams are marked — full explanation below the table.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Age</th>
+            <th>🇵🇹 Portuguese</th>
+            <th>🇬🇧 Cambridge</th>
+            <th>🌍 IB</th>
+            <th>🇺🇸 American</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>3–5</td><td>Pré-escolar</td><td>Early Years</td><td>PYP (Early Years) <span class="exam-tag exam-pyp">PYP</span></td><td>Preschool</td></tr>
+          <tr><td>5–6</td><td>Pré-escolar</td><td>Year 1</td><td>PYP Grade 1</td><td>Kindergarten</td></tr>
+          <tr><td>6–7</td><td>1º Ano (1º ciclo)</td><td>Year 2</td><td>PYP Grade 2</td><td>Grade 1</td></tr>
+          <tr><td>7–8</td><td>2º Ano</td><td>Year 3</td><td>PYP Grade 3</td><td>Grade 2</td></tr>
+          <tr><td>8–9</td><td>3º Ano</td><td>Year 4</td><td>PYP Grade 4</td><td>Grade 3</td></tr>
+          <tr><td>9–10</td><td>4º Ano</td><td>Year 5</td><td>PYP Grade 5</td><td>Grade 4</td></tr>
+          <tr><td>10–11</td><td>5º Ano (2º ciclo)</td><td>Year 6</td><td>PYP Grade 6</td><td>Grade 5</td></tr>
+          <tr><td>11–12</td><td>6º Ano</td><td>Year 7</td><td>MYP 1 <span class="exam-tag exam-myp">MYP</span></td><td>Grade 6</td></tr>
+          <tr><td>12–13</td><td>7º Ano (3º ciclo)</td><td>Year 8</td><td>MYP 2</td><td>Grade 7</td></tr>
+          <tr><td>13–14</td><td>8º Ano</td><td>Year 9</td><td>MYP 3</td><td>Grade 8</td></tr>
+          <tr><td>14–15</td><td>9º Ano <span class="exam-tag exam-pt">Provas Finais</span></td><td>Year 10 <span class="exam-tag exam-igcse">IGCSE</span></td><td>MYP 4</td><td>Grade 9</td></tr>
+          <tr><td>15–16</td><td>10º Ano</td><td>Year 11 <span class="exam-tag exam-igcse">IGCSE</span></td><td>MYP 5 <span class="exam-tag exam-myp">eAssess</span></td><td>Grade 10 <span class="exam-tag exam-sat">Pre-SAT</span></td></tr>
+          <tr><td>16–17</td><td>11º Ano</td><td>Year 12 <span class="exam-tag exam-aLevel">A-Level</span></td><td>DP 1 <span class="exam-tag exam-ib">IB DP</span></td><td>Grade 11 <span class="exam-tag exam-sat">SAT/AP</span></td></tr>
+          <tr><td>17–18</td><td>12º Ano <span class="exam-tag exam-pt">Exames Nacionais</span></td><td>Year 13 <span class="exam-tag exam-aLevel">A-Level exams</span></td><td>DP 2 <span class="exam-tag exam-ib">IB exams</span></td><td>Grade 12 <span class="exam-tag exam-sat">AP/Diploma</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>The four systems you'll encounter in Portugal</h2>
+
+    <div class="system-cards">
+      <div class="system-card">
+        <div class="system-card-flag">🇬🇧</div>
+        <div class="system-card-name">British (Cambridge)</div>
+        <div class="system-card-desc">Uses "Year" groups (Y1–Y13). Key exams: IGCSEs at Year 10–11, A-Levels at Year 12–13. Many Cambridge schools in Portugal also offer the IB Diploma in Years 12–13 as an alternative to A-Levels.</div>
+        <div class="system-card-schools">St Julian's · King's College · Redbridge · BSL · Hypha</div>
+      </div>
+      <div class="system-card">
+        <div class="system-card-flag">🌍</div>
+        <div class="system-card-name">IB (International Baccalaureate)</div>
+        <div class="system-card-desc">Three programmes: PYP (ages 3–12, with internal grades), MYP (11–16), DP (16–19). IB Diploma is the gold standard for university entry. Note: many Cambridge schools also offer the IB Diploma in the final two years.</div>
+        <div class="system-card-schools">ISS Taguspark · St Dominic's · Oeiras International · TISA</div>
+      </div>
+      <div class="system-card">
+        <div class="system-card-flag">🇺🇸</div>
+        <div class="system-card-name">American</div>
+        <div class="system-card-desc">Uses "Grade" (K–G12). Key exams: SAT/ACT at G11–12, AP courses. Strong pathway to US universities.</div>
+        <div class="system-card-schools">CAISL · Tasis Portugal</div>
+      </div>
+      <div class="system-card">
+        <div class="system-card-flag">🇵🇹</div>
+        <div class="system-card-name">Portuguese national</div>
+        <div class="system-card-desc">Uses "Ano" (1º–12º). Three cycles. Key exams: Provas Finais at 9º Ano, Exames Nacionais at 12º Ano.</div>
+        <div class="system-card-schools">Some bilingual schools follow this + international curriculum</div>
+      </div>
+    </div>
+
+    <h2>Key exam moments to know</h2>
+
+    <h3>🇬🇧 British / Cambridge</h3>
+    <p><strong>IGCSEs</strong> (Years 10–11, ages 14–16) are the first major external exams. Results matter for university applications and for entry into A-Level courses. <strong>A-Levels</strong> (Years 12–13, ages 16–18) are the main university entry qualification — typically 3 subjects studied in depth.</p>
+
+    <h3>🌍 IB</h3>
+    <p>The <strong>IB Diploma Programme</strong> (DP, ages 16–19) is the flagship qualification — 6 subjects plus the Extended Essay, Theory of Knowledge, and CAS. It's highly regarded by universities worldwide. The <strong>PYP</strong> (ages 3–12) uses internal grades (Grade 1–6) rather than external exams. The <strong>MYP</strong> (ages 11–16) leads to the MYP eAssessment at age 15–16.</p>
+
+    <h3>🇺🇸 American</h3>
+    <p>The <strong>SAT</strong> and <strong>ACT</strong> are standardised tests taken in Grade 11–12, primarily for US university applications. <strong>AP (Advanced Placement)</strong> courses allow students to take college-level classes and exams while still at school.</p>
+
+    <h3>🇵🇹 Portuguese national</h3>
+    <p><strong>Provas Finais</strong> at 9º Ano (age 14–15) are national exams in Portuguese and Maths. <strong>Exames Nacionais</strong> at 12º Ano determine university entry in Portugal.</p>
+
+    <div class="callout">
+      <strong>Moving schools mid-way?</strong> Year placement when switching systems is usually assessed individually by the school — they look at the child's actual level, not just age.
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <strong>Want to go deeper on exams and programmes?</strong> How do IGCSEs compare to IB MYP? Which diploma is better for European universities? We cover all of this in our next guide. <a href="/ib-vs-cambridge-which-is-better.html" style="color:#8B3A1F;font-weight:700;">Read: IB vs Cambridge — what's the difference →</a>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="article-cta">
+    <div>
+      <div class="cta-text-title">Browse international schools in Portugal</div>
+      <div class="cta-text-sub">Filter by programme — IB, British, American, Cambridge and more.</div>
+    </div>
+    <a href="/international-private-schools-portugal.html" class="cta-btn">Browse 61 schools →</a>
+  </div>
+
+  <p style="font-size:11px;color:#bbb;text-align:center;padding-top:20px;border-top:1px solid var(--border);">Information compiled from school websites and official curriculum bodies · Last updated April 2026 · Always verify year placement directly with your school.</p>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-top">Schools</div>
+        <div class="footer-logo-line"></div>
+        <div class="footer-logo-bottom">Reviews</div>
+        <p class="footer-desc">Independent school reviews, verified data and direct applications — all in one place.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-links">
+          <a href="/">Browse schools</a>
+          <a href="/international-private-schools-portugal.html">🇵🇹 Portugal</a>
+          <a href="/about.html">About us</a>
+          <a href="mailto:editor@schools.reviews">Contact us</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Guides</div>
+        <div class="footer-links">
+          <a href="/school-year-grade-by-age-guide">School years by age</a>
+          <a href="#">IB vs British curriculum</a>
+          <a href="#">How much does school cost in Portugal?</a>
+          <a href="#">Moving to Lisbon with kids</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">Schools Reviews is an independent publication. We are not affiliated with any school or curriculum body. Always verify information directly with schools.</p>
+      <span class="footer-copy">© 2026 Schools Reviews</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const data = [
+  { age: "3–5",  pt: "Pré-escolar",   en: "Early Years", ib: "PYP (Early Years)", us: "Preschool",    exam: "" },
+  { age: "5–6",  pt: "Pré-escolar",   en: "Year 1",      ib: "PYP Grade 1",       us: "Kindergarten", exam: "" },
+  { age: "6–7",  pt: "1º Ano",        en: "Year 2",      ib: "PYP Grade 2",       us: "Grade 1",      exam: "" },
+  { age: "7–8",  pt: "2º Ano",        en: "Year 3",      ib: "PYP Grade 3",       us: "Grade 2",      exam: "" },
+  { age: "8–9",  pt: "3º Ano",        en: "Year 4",      ib: "PYP Grade 4",       us: "Grade 3",      exam: "" },
+  { age: "9–10", pt: "4º Ano",        en: "Year 5",      ib: "PYP Grade 5",       us: "Grade 4",      exam: "" },
+  { age: "10–11",pt: "5º Ano",        en: "Year 6",      ib: "PYP Grade 6",       us: "Grade 5",      exam: "" },
+  { age: "11–12",pt: "6º Ano",        en: "Year 7",      ib: "MYP 1",             us: "Grade 6",      exam: "" },
+  { age: "12–13",pt: "7º Ano",        en: "Year 8",      ib: "MYP 2",             us: "Grade 7",      exam: "" },
+  { age: "13–14",pt: "8º Ano",        en: "Year 9",      ib: "MYP 3",             us: "Grade 8",      exam: "" },
+  { age: "14–15",pt: "9º Ano",        en: "Year 10",     ib: "MYP 4",             us: "Grade 9",      exam: "Provas Finais (PT) · IGCSE start (UK)" },
+  { age: "15–16",pt: "10º Ano",       en: "Year 11",     ib: "MYP 5",             us: "Grade 10",     exam: "IGCSE exams (UK)" },
+  { age: "16–17",pt: "11º Ano",       en: "Year 12",     ib: "DP 1",              us: "Grade 11",     exam: "A-Level start · SAT (US)" },
+  { age: "17–18",pt: "12º Ano",       en: "Year 13",     ib: "DP 2",              us: "Grade 12",     exam: "Exames Nacionais (PT) · A-Level exams · IB exams · AP/SAT (US)" },
+];
+
+function calcYear() {
+  const age = parseInt(document.getElementById('childAge').value);
+  const result = document.getElementById('calcResult');
+  const empty = document.getElementById('calcEmpty');
+  const grid = document.getElementById('calcGrid');
+
+  if (!age || age < 3 || age > 18) {
+    result.classList.remove('show');
+    empty.style.display = 'block';
+    return;
+  }
+
+  const row = data.find(d => {
+    const [min, max] = d.age.split('–').map(Number);
+    return age >= min && age < max;
+  });
+
+  if (!row) {
+    result.classList.remove('show');
+    empty.style.display = 'block';
+    empty.textContent = 'Age out of school range.';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = `
+    <div class="calc-result-item calc-result-highlight">
+      <div class="calc-result-system">🇵🇹 Portuguese</div>
+      <div class="calc-result-year">${row.pt}</div>
+      <div class="calc-result-note">National curriculum</div>
+    </div>
+    <div class="calc-result-item">
+      <div class="calc-result-system">🇬🇧 British / Cambridge</div>
+      <div class="calc-result-year">${row.en}</div>
+      <div class="calc-result-note">St Julian's · King's · BSL</div>
+    </div>
+    <div class="calc-result-item">
+      <div class="calc-result-system">🌍 IB Programme</div>
+      <div class="calc-result-year">${row.ib}</div>
+      <div class="calc-result-note">CAISL · ISS · St Dominic's</div>
+    </div>
+    <div class="calc-result-item">
+      <div class="calc-result-system">🇺🇸 American</div>
+      <div class="calc-result-year">${row.us}</div>
+      <div class="calc-result-note">CAISL · Tasis Portugal</div>
+    </div>
+    ${row.exam ? `<div class="calc-result-item" style="grid-column:1/-1;background:rgba(196,99,58,.1);border-color:rgba(196,99,58,.3);">
+      <div class="calc-result-system">📋 Key exams at this stage</div>
+      <div class="calc-result-year" style="font-size:13px;font-weight:500;">${row.exam}</div>
+    </div>` : ''}
+  `;
+  result.classList.add('show');
+}
+</script>
+
+</body>
+</html>
