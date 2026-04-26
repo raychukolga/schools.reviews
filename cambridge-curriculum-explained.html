@@ -6,6 +6,14 @@
 <title>What Is the Cambridge Curriculum? IGCSE, A-Level, Exams and How to Evaluate Cambridge Schools | Schools Reviews</title>
 <meta name="description" content="Learn how the Cambridge curriculum works: IGCSE, A-Level structure, subjects, exams, grading system, university requirements, and how to compare Cambridge schools.">
 <meta name="robots" content="index, follow">
+<meta property="og:title" content="What Is the Cambridge Curriculum? IGCSE, A-Level and Exams Explained">
+<meta property="og:description" content="A complete parent's guide to the Cambridge International Curriculum — IGCSE, A-Level, grading system, and how to evaluate Cambridge schools.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://schools.reviews/cambridge-curriculum-explained">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What Is the Cambridge Curriculum? IGCSE, A-Level and Exams Explained">
+<meta name="twitter:description" content="A complete parent's guide to the Cambridge International Curriculum — IGCSE, A-Level, grading system, and how to evaluate Cambridge schools.">
+<meta name="keywords" content="Cambridge curriculum explained, IGCSE explained, A-Level explained, Cambridge school Portugal, Cambridge vs IB">
 <link rel="canonical" href="https://schools.reviews/cambridge-curriculum-explained">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
@@ -151,7 +159,32 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:48px
   .footer-grid{grid-template-columns:1fr;gap:24px;}
   footer{padding:40px 20px 24px;}
 }
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;z-index:499;box-shadow:0 4px 20px rgba(0,0,0,.1);}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:10px 0;font-size:14px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);}
+.mobile-menu a:last-child{border-bottom:none;}
+.mobile-menu-section{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin:12px 0 6px;}
+@media(max-width:768px){.hamburger{display:flex;}}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is the Cambridge Curriculum? IGCSE, A-Level and Exams Explained",
+  "description": "Learn how Cambridge IGCSE and A-Level work, grading system, university requirements, and how to compare Cambridge schools.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Schools Reviews",
+    "url": "https://schools.reviews"
+  },
+  "url": "https://schools.reviews/cambridge-curriculum-explained",
+  "dateModified": "2026-04-26"
+}
+</script>
 </head>
 <body>
 
@@ -185,8 +218,33 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:48px
       </div>
       Sign in ▾
     </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-section">Guides</div>
+  <a href="/school-year-grade-by-age-guide.html">📊 School grades by age</a>
+  <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
+  <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
+  <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
+  <div class="mobile-menu-section">Schools Reviews</div>
+  <a href="/international-private-schools-portugal.html">🇵🇹 Browse schools in Portugal</a>
+  <a href="/about.html">About us</a>
+  <a href="/">Home</a>
+</div>
+<script>
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.hamburger')&&!e.target.closest('.mobile-menu')){
+    const m=document.getElementById('mobileMenu');
+    if(m) m.classList.remove('open');
+  }
+});
+</script>
 
 <div class="article-hero">
   <div class="article-hero-inner">
