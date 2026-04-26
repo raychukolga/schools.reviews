@@ -135,7 +135,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 /* MODAL */
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(26,24,20,.55); backdrop-filter:blur(4px); z-index:2000; align-items:center; justify-content:center; padding:20px; }
 .modal-overlay.open { display:flex; }
-.modal { background:var(--white); border-radius:20px; width:100%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,.18); position:relative; }
+.modal { background:var(--white); border-radius:20px; width:100%; max-width:660px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,.18); position:relative; font-family:'DM Sans',sans-serif; }
 .modal-close { position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; border:1px solid var(--border); background:var(--white); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; color:var(--gray); }
 .modal-hero-bg { background:var(--ink); padding:28px; border-radius:20px 20px 0 0; }
 .modal-tag { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra); margin-bottom:8px; }
@@ -152,7 +152,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .act-btn.added { background:var(--terra-light); color:var(--terra); }
 .modal-body { padding:22px 28px; }
 .m-section { margin-bottom:20px; }
-.m-section-title { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gray); padding-bottom:8px; border-bottom:1px solid var(--border); margin-bottom:12px; }
+.m-section-title { font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); padding:8px 0; border-bottom:2px solid var(--ink); margin-bottom:14px; margin-top:4px; }
 .m-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .m-item-label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:.04em; margin-bottom:3px; }
 .m-item-val { font-size:13px; font-weight:600; color:var(--ink); }
@@ -428,8 +428,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
         <div class="fg-title" style="margin-top:16px;">👥 Class size</div>
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="classSize" id="cs_all" value="all" checked> All sizes</label>
-          <label class="fg-opt"><input type="radio" name="classSize" id="cs_small" value="small"> Small (below 20)</label>
-          <label class="fg-opt"><input type="radio" name="classSize" id="cs_big" value="big"> Large (20+)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_small" value="small"> Small (up to 16)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_mid" value="mid"> Middle (17–20)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_big" value="big"> Large (21+)</label>
         </div>
         <div class="fg-title" style="margin-top:16px;">📅 School age</div>
         <div class="fg-opts">
@@ -515,20 +516,24 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const schools = [
-  { id:1, name:"Carlucci American Int'l School (CAISL)", short:"CA",
+  { id:1, name:"Carlucci American International School (CAISL)", short:"CA",
     address:"R. António dos Reis 95, Linhó, 2710-301 Sintra",
-    loc:"Sintra, Lisbon", prog:"American / IB",
+    loc:"Sintra, Lisbon", prog:"American / IB Diploma",
     price:12182, priceMax:23532,
     grades:[{label:"Kindergarten",fee:12128},{label:"Grade 1",fee:14060},{label:"Grade 2",fee:14060},{label:"Grade 3",fee:15632},{label:"Grade 4",fee:15632},{label:"Grade 5",fee:15632},{label:"Grade 6",fee:17756},{label:"Grade 7",fee:17756},{label:"Grade 8",fee:17756},{label:"Grade 9",fee:23532},{label:"Grade 10",fee:23532},{label:"Grade 11",fee:23532},{label:"Grade 12",fee:23532}],
     earlyPrice:"12,128", primaryPrice:"14,060–15,632", middlePrice:"17,756", secondaryPrice:"23,532",
     appFee:null, enrollFee:"600", annualEnrollFee:"1,935 (Grades 1–5)",
     lunchIncluded:false, lunchPrice:"1,212", schoolBus:true,
-    lessonsStart:null, lessonsEnd:null,
+    lessonsStart:"8:20", lessonsEnd:"15:45",
     reviewed:true, verified:true, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7978, lng:-9.3617,
-    founded:2011, students:755,
+    founded:2011, students:755, ibAvg:34.3, ageFrom:3, ageTo:18, classSize:20,
     website:"https://www.caislisbon.org",
-    description:"The only US State Department-sponsored school in Portugal. Non-profit, all tuition reinvested.",
+    description:"The only US State Department-sponsored school in Portugal. A non-profit school — all tuition fees are reinvested directly into the school. The only international school in Portugal offering the American High School Diploma.",
+    srNote:{
+      pros:["The only school in Portugal offering the American High School Diploma — essential for families planning US university","Non-profit school — all tuition is reinvested into education, not profit","Exceptional variety of after-school activities across sports, arts, music and digital","Strong sports focus — athletics embedded in the curriculum, not just optional","Outstanding facilities: library with 40,000 books, 450-seat theatre, large sports fields"],
+      watch:["IB average 34.3 — decent but below the top schools on this list (global avg ~30)","Located in Sintra — further from Lisbon centre than most schools","Founded 2011 — younger than some of the more established schools"],
+    },
     academics:{
       mainLanguage:"English",
       extraLanguages:["Portuguese"],
@@ -1076,8 +1081,9 @@ function getFiltered(){
     if(state.boarding === 'boarding' && !s.boarding) return false;
     if(state.boarding === 'day' && s.boarding) return false;
     if(state.area && !s.loc.toLowerCase().includes(state.area.toLowerCase())) return false;
-    if(state.classSize === 'small' && (!s.classSize || s.classSize >= 20)) return false;
-    if(state.classSize === 'big' && (!s.classSize || s.classSize < 20)) return false;
+    if(state.classSize === 'small' && (!s.classSize || s.classSize > 16)) return false;
+    if(state.classSize === 'mid' && (!s.classSize || s.classSize < 17 || s.classSize > 20)) return false;
+    if(state.classSize === 'big' && (!s.classSize || s.classSize <= 20)) return false;
     if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2008)) return false;
     if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
@@ -1163,8 +1169,7 @@ function applyExpanded(){
   const isDay = document.getElementById('t_day').checked;
   const isBoarding = document.getElementById('t_boarding').checked;
   state.boarding = isBoarding && !isDay ? 'boarding' : isDay && !isBoarding ? 'day' : null;
-  state.classSize = document.querySelector('input[name="classSize"]:checked')?.value || 'all';
-  state.schoolAge = document.querySelector('input[name="schoolAge"]:checked')?.value || 'all';
+  state.classSize = document.querySelector('input[name="classSize"]:checked')?.value || 'all';  state.schoolAge = document.querySelector('input[name="schoolAge"]:checked')?.value || 'all';
   const areas = [{id:'a_lisbon',v:'Lisbon'},{id:'a_cascais',v:'Cascais'},{id:'a_sintra',v:'Sintra'},{id:'a_oeiras',v:'Oeiras'},{id:'a_porto',v:'Porto'},{id:'a_algarve',v:'Algarve'}];
   const ac = areas.filter(a=>document.getElementById(a.id)?.checked).map(a=>a.v);
   state.area = ac.length===1 ? ac[0] : null;
@@ -1179,6 +1184,7 @@ function applyExpanded(){
 function resetAll(){
   ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
   const csAll = document.getElementById('cs_all'); if(csAll) csAll.checked=true;
+  const csMid = document.getElementById('cs_mid'); if(csMid) csMid.checked=false;
   const fAll = document.getElementById('f_all'); if(fAll) fAll.checked=true;
   const agAll = document.getElementById('ag_all'); if(agAll) agAll.checked=true;
   document.getElementById('priceSlider').value=40000;
@@ -1265,7 +1271,7 @@ function openModal(id){
           <div><div class="m-item-label">Founded</div><div class="m-item-val">${s.founded||'—'}${s.founded>=2020?' 🆕':''}</div></div>
           <div><div class="m-item-label">Age range</div><div class="m-item-val">${s.ageFrom&&s.ageTo?s.ageFrom+' – '+s.ageTo+' years old':s.grades?'1 – 18 years old':'From 3+ years'}</div></div>
           <div><div class="m-item-label">Total students</div><div class="m-item-val">${s.students?s.students.toLocaleString():'—'}</div></div>
-          <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize?'Max '+s.classSize+(s.classSize<20?' <span style="color:#2E7D32;font-size:10px;">✓ Small</span>':''):'—'}</div></div>
+          <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize ? s.classSize+' <span style="font-size:10px;font-weight:600;color:'+(s.classSize<=16?'#2E7D32':s.classSize<=20?'#E67E22':'#C62828')+';">'+(s.classSize<=16?'· small':s.classSize<=20?'· medium':'· large')+'</span>' : '—'}</div></div>
           <div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart&&s.lessonsEnd?s.lessonsStart+' – '+s.lessonsEnd:'—'}</div></div>
           ${s.afterCare?`<div><div class="m-item-label">After care until</div><div class="m-item-val">${s.afterCare}</div></div>`:''}
           <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus&&s.schoolBus!==false?'<span style="color:#2E7D32">✓ Yes</span>':'<span style="color:#888">No</span>'}</div></div>
@@ -1278,7 +1284,7 @@ function openModal(id){
 
       <!-- ACADEMICS -->
       <div class="m-section">
-        <div class="m-section-title">Academics</div>
+        <div class="m-section-title" style="color:var(--blue,#0C447C);border-bottom-color:var(--blue,#0C447C);">Academics</div>
         <div style="display:flex;flex-direction:column;gap:0;">
 
           <div class="acad-row">
@@ -1301,7 +1307,7 @@ function openModal(id){
 
       <!-- AFTER SCHOOL ACTIVITIES -->
       <div class="m-section">
-        <div class="m-section-title">After school activities</div>
+        <div class="m-section-title" style="color:var(--green);border-bottom-color:var(--green);">After school activities</div>
         <div style="display:flex;flex-direction:column;gap:0;">
 
           <div class="acad-row">
@@ -1348,21 +1354,25 @@ function openModal(id){
       <!-- FEES SECTION -->
       ${hasAnyFee ? `
       <div class="m-section">
-        <div class="m-section-title">
-          Fees <span style="font-size:10px;font-weight:600;color:var(--gray);text-transform:none;letter-spacing:0;">· 2026/27</span>
+        <div class="m-section-title" style="color:var(--terra);border-bottom-color:var(--terra);">
+          Fees <span style="font-size:11px;font-weight:700;color:var(--terra);text-transform:none;letter-spacing:0;">· 2026/27</span>
         </div>
         <div class="m-grid" style="margin-bottom:12px;">
           ${s.appFee?`<div><div class="m-item-label">Application fee</div><div class="m-item-val">€${s.appFee}</div></div>`:''}
           ${s.enrollFee?`<div><div class="m-item-label">Enrollment fee (one-time)</div><div class="m-item-val">€${s.enrollFee}</div></div>`:''}
           ${s.annualEnrollFee?`<div><div class="m-item-label">Re-enrollment fee (annual)</div><div class="m-item-val">€${s.annualEnrollFee}</div></div>`:''}
-          ${s.lunchIncluded===true?`<div><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:#2E7D32">✓ Included</div></div>`:s.lunchPrice?`<div><div class="m-item-label">Lunch</div><div class="m-item-val">€${s.lunchPrice} /yr</div></div>`:''}
+          ${s.lunchIncluded===true
+            ? `<div><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:#2E7D32">✓ Included in tuition</div></div>`
+            : s.lunchPrice
+              ? `<div style="grid-column:1/-1;"><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:var(--gray);">Not included · <span style="color:var(--ink);font-weight:600;">€${s.lunchPrice} /yr</span> optionally</div></div>`
+              : `<div><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:var(--gray);">Not included in price</div></div>`}
         </div>
         ${s.grades ? `
         <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
           ${s.grades.map((g,i)=>`
             <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;${i%2===0?'background:#fff;':'background:var(--cream);'}${i<s.grades.length-1?'border-bottom:1px solid var(--border);':''}">
-              <span style="font-size:12px;color:var(--ink);">${g.label}</span>
-              <span style="font-size:12px;font-weight:600;color:var(--ink);">€${g.fee.toLocaleString()}</span>
+              <span style="font-size:12px;color:var(--ink);font-family:'DM Sans',sans-serif;">${g.label}</span>
+              <span style="font-size:12px;font-weight:700;color:var(--ink);font-family:'DM Sans',sans-serif;">€${g.fee.toLocaleString()}</span>
             </div>`).join('')}
         </div>` : (() => {
           const levels = [
@@ -1375,8 +1385,8 @@ function openModal(id){
             return `<div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
               ${levels.map((l,i)=>`
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;${i%2===0?'background:#fff;':'background:var(--cream);'}${i<levels.length-1?'border-bottom:1px solid var(--border);':''}">
-                  <span style="font-size:12px;color:var(--ink);">${l.label}</span>
-                  <span style="font-size:12px;font-weight:600;color:var(--ink);">${l.val||'—'}</span>
+                  <span style="font-size:12px;color:var(--ink);font-family:'DM Sans',sans-serif;">${l.label}</span>
+                  <span style="font-size:12px;font-weight:700;color:var(--ink);font-family:'DM Sans',sans-serif;">${l.val||'—'}</span>
                 </div>`).join('')}
             </div>`;
           }
@@ -1500,12 +1510,35 @@ function initMap(){
     if(!s.lat||!s.lng) return;
     const size=28;
     const icon=L.divIcon({className:'',html:`<div style="width:${size}px;height:${size}px;background:#1a1814;color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.25);font-family:'DM Sans',sans-serif;">${s.short.slice(0,2)}</div>`,iconSize:[size,size],iconAnchor:[size/2,size/2]});
+    const academicsScore = s.ibAvg ? s.ibAvg+' / 45' : null;
+    const facilitiesLevel = s.campus && parseInt(s.campus)>10000 ? 'Excellent' : s.students>500 ? 'Good' : s.founded && s.founded>=2020 ? 'Modern' : null;
+    const classSizeLabel = s.classSize ? (s.classSize<=16 ? 'Small' : s.classSize<=20 ? 'Medium' : 'Large') : null;
+    const classSizeColor = s.classSize ? (s.classSize<=16 ? '#2E7D32' : s.classSize<=20 ? '#E67E22' : '#C62828') : '#888';
+    const foundedLabel = s.founded ? String(s.founded) : null;
+    const ageLabel = (s.ageFrom||s.ageFrom===0) && s.ageTo ? `${s.ageFrom}–${s.ageTo} years` : s.grades ? '3–18 years' : null;
+    const mainLang = s.academics?.mainLanguage || null;
+    const academicsColor = s.ibAvg>=38?'#2E7D32':s.ibAvg>=34?'#E67E22':'#C62828';
+    const facilitiesColor = facilitiesLevel==='Excellent'?'#2E7D32':facilitiesLevel==='Modern'?'#0C447C':'#E67E22';
+
     const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`
-      <div style="font-weight:600;font-size:13px;margin-bottom:3px;">${s.name}</div>
-      <div style="font-size:11px;color:#888;margin-bottom:8px;">${s.price?'€'+s.price.toLocaleString()+'–€'+s.priceMax.toLocaleString()+' / yr':'Price on request'} · ${s.prog||'—'}</div>
-      ${s.verified?'<div style="margin-bottom:8px;font-size:10px;font-weight:700;color:#2E7D32;">✓ Verified Apr 2026</div>':''}
-      <button onclick="openModal(${s.id});this.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click();" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">More info →</button>
-    `,{offset:[0,-6],minWidth:180});
+      <div style="font-family:'DM Sans',sans-serif;min-width:200px;">
+        <div style="background:#1a1814;margin:-10px -10px 10px;padding:12px 14px 10px;border-radius:6px 6px 0 0;">
+          <div style="font-size:16px;font-weight:700;color:#fff;line-height:1.2;font-family:'DM Sans',sans-serif;">${s.name}</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:3px;">📍 ${s.loc}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Programme</span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:${s.prog?.includes('IB')&&!s.prog?.includes('Cambridge')&&!s.prog?.includes('British')&&!s.prog?.includes('American')?'#EAF3DE':s.prog?.includes('British')||s.prog?.includes('Cambridge')?'#E6F1FB':s.prog?.includes('American')?'#FFF3E0':'#f0ede9'};color:${s.prog?.includes('IB')&&!s.prog?.includes('Cambridge')&&!s.prog?.includes('British')&&!s.prog?.includes('American')?'#2E7D32':s.prog?.includes('British')||s.prog?.includes('Cambridge')?'#0C447C':s.prog?.includes('American')?'#E65100':'#888'};">${s.prog||'—'}</span></div>
+          ${mainLang?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Language</span><span style="font-size:11px;font-weight:700;color:#1a1814;">${mainLang}</span></div>`:''}
+          ${ageLabel?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Ages</span><span style="font-size:11px;font-weight:700;color:#1a1814;">${ageLabel}</span></div>`:''}
+          ${academicsScore?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">IB avg score</span><span style="font-size:11px;font-weight:700;color:${academicsColor};">${academicsScore}</span></div>`:''}
+          ${facilitiesLevel?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Facilities</span><span style="font-size:11px;font-weight:700;color:${facilitiesColor};">${facilitiesLevel}</span></div>`:''}
+          ${classSizeLabel?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Class size</span><span style="font-size:11px;font-weight:700;color:${classSizeColor};">${classSizeLabel} · ${s.classSize}</span></div>`:''}
+          ${foundedLabel?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Founded</span><span style="font-size:11px;font-weight:600;color:#1a1814;">${foundedLabel}</span></div>`:''}
+          <div style="display:flex;justify-content:space-between;padding:6px 0;"><span style="font-size:11px;color:#888;">Tuition</span><span style="font-size:11px;font-weight:700;color:#C4633A;">${s.price?'€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString()+' /yr':'On request'}</span></div>
+        </div>
+        <button onclick="openModal(${s.id});this.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click();" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;">More info →</button>
+      </div>
+    `,{offset:[0,-6],minWidth:230});
     m.on('click',()=>{
       document.querySelectorAll('.school-card').forEach(c=>c.classList.remove('highlighted'));
       const card=document.getElementById('card-'+s.id);
