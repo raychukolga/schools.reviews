@@ -201,8 +201,10 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 /* FILTER TOOLTIPS */
 .filter-help { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--border); color: var(--gray); font-size: 9px; font-weight: 700; cursor: pointer; margin-left: 5px; position: relative; text-decoration: none; vertical-align: middle; transition: background .15s; }
 .filter-help:hover { background: var(--terra-light); color: var(--terra); }
-.filter-help-tip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; font-size: 11px; font-weight: 400; line-height: 1.5; padding: 8px 12px; border-radius: 8px; white-space: nowrap; z-index: 800; pointer-events: none; }
+.filter-help-tip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; font-size: 11px; font-weight: 400; line-height: 1.5; padding: 8px 12px; border-radius: 8px; white-space: nowrap; z-index: 800; pointer-events: none; min-width: 180px; }
 .filter-help-tip::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+.filter-help-tip[style*="top:calc"] { bottom: auto; }
+.filter-help-tip[style*="top:calc"]::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--ink); }
 .filter-help:hover .filter-help-tip { display: block; }
 
 /* MOBILE MAP BLOCK */
@@ -395,15 +397,15 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       <div>
         <div class="fg-title">
           🎓 Curriculum
-          <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help"><span class="filter-help-tip">Not sure which curriculum suits your child? Read our guide →</span>?</a>
+          <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">Not sure which curriculum suits your child? Read our guide →<br><span style="font-weight:600;color:var(--terra);">IB vs Cambridge guide →</span></span>?</a>
         </div>
         <div class="fg-opts">
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="setP('all',document.querySelector('.prog-chip.active'))"> All</label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="setP('IB',null);syncProgChip('IB')"> IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip">What is the IB programme? →</span>?</a></label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="setP('British',null);syncProgChip('British')"> British <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip">What is the British/Cambridge curriculum? →</span>?</a></label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_cambridge" value="Cambridge" onchange="setP('Cambridge',null);syncProgChip('Cambridge')"> Cambridge</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="setP('American',null);syncProgChip('American')"> American</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="setP('French',null);syncProgChip('French')"> French</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="syncProgChip('British')"> British / Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_portuguese" value="Portuguese" onchange="syncProgChip('Portuguese')"> Portuguese national</label>
         </div>
       </div>
       <div>
