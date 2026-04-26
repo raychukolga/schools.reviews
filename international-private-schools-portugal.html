@@ -371,7 +371,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   <div class="filter-top-row">
     <div class="filter-main">
       <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
-      <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help" title="What's the difference?"><span class="filter-help-tip">Not sure which curriculum? Read our guide →</span>?</a>
+      <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help" style="margin-right:2px;" title="What's the difference between curricula?"><span class="filter-help-tip" style="white-space:nowrap;">Not sure which curriculum? Read our guide →</span>?</a>
       <button class="chip prog-chip active" onclick="setP('all',this)">All</button>
       <button class="chip prog-chip" onclick="setP('IB',this)">IB</button>
       <button class="chip prog-chip" onclick="setP('British',this)">British</button>
@@ -392,6 +392,20 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   <!-- EXPANDED -->
   <div class="filter-expanded" id="filterExpanded">
     <div class="filter-grid">
+      <div>
+        <div class="fg-title">
+          🎓 Curriculum
+          <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help"><span class="filter-help-tip">Not sure which curriculum suits your child? Read our guide →</span>?</a>
+        </div>
+        <div class="fg-opts">
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="setP('all',document.querySelector('.prog-chip.active'))"> All</label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="setP('IB',null);syncProgChip('IB')"> IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="setP('British',null);syncProgChip('British')"> British <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip">What is the British/Cambridge curriculum? →</span>?</a></label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_cambridge" value="Cambridge" onchange="setP('Cambridge',null);syncProgChip('Cambridge')"> Cambridge</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="setP('American',null);syncProgChip('American')"> American</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="setP('French',null);syncProgChip('French')"> French</label>
+        </div>
+      </div>
       <div>
         <div class="fg-title">📍 Location</div>
         <div class="fg-opts">
@@ -436,9 +450,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
           <label class="fg-opt"><input type="checkbox" id="l_de"> German</label>
           <label class="fg-opt"><input type="checkbox" id="l_pt"> Portuguese</label>
         </div>
-      </div>
-      <div>
-        <div class="fg-title">💶 Max tuition per year</div>
+        <div class="fg-title" style="margin-top:16px;">💶 Max tuition per year</div>
         <div style="margin-top:8px;">
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-bottom:6px;"><span>€0</span><span id="sliderVal" style="font-weight:600;color:var(--ink);">€40,000</span></div>
           <input type="range" id="priceSlider" min="0" max="40000" step="1000" value="40000" style="width:100%;accent-color:var(--terra);" oninput="document.getElementById('sliderVal').textContent='€'+parseInt(this.value).toLocaleString()">
@@ -1421,6 +1433,16 @@ function openCompare(){
   </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+}
+
+function syncProgChip(val){
+  // Sync top chips
+  document.querySelectorAll('.prog-chip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.prog-chip').forEach(c=>{
+    if((val==='all'&&c.textContent==='All')||c.textContent===val) c.classList.add('active');
+  });
+  state.prog = val;
+  render();
 }
 
 function toggleVrMore(){
