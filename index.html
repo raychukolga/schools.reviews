@@ -571,7 +571,10 @@ footer {
 #mobileMenuMain a{display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;}
 #mobileMenuMain a:last-child{border-bottom:none;}
 #mobileMenuMain .mobile-menu-section{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:12px 0 6px;}
-@media(max-width:768px){.hamburger{display:flex;}}
+@media(max-width:768px){
+  button.hamburger{display:flex!important;}
+  .nav-links{display:none!important;}
+}
 </style>
 </head>
 <body>
@@ -628,21 +631,24 @@ footer {
         </a>
       </div>
     </div>
-      <button class="hamburger" onclick="document.getElementById('mobileMenuMain').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
+  <button class="hamburger" onclick="var m=document.getElementById('mobileMenuMain');m.style.display=m.style.display==='block'?'none':'block';" aria-label="Menu" style="display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;">
+    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
+    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
+    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
+  </button>
 </nav>
-<div class="mobile-menu" id="mobileMenuMain">
-  <div class="mobile-menu-section">Browse</div>
-  <a href="/international-private-schools-portugal.html">🇵🇹 Schools in Portugal</a>
-  <div class="mobile-menu-section">Guides</div>
-  <a href="/school-year-grade-by-age-guide.html">📊 School grades by age</a>
-  <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
-  <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
-  <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
-  <div class="mobile-menu-section">About</div>
-  <a href="/about.html">About us</a>
+<div id="mobileMenuMain" style="display:none;position:fixed;top:100px;left:0;right:0;background:#fff;border-bottom:1px solid #e8e3de;padding:12px 16px;z-index:900;box-shadow:0 4px 20px rgba(0,0,0,.1);">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:4px 0 8px;">Browse</div>
+  <a href="/international-private-schools-portugal.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🇵🇹 Schools in Portugal</a>
+  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:12px 0 8px;">Guides</div>
+  <a href="/school-year-grade-by-age-guide.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">📊 School grades by age</a>
+  <a href="/ib-vs-cambridge-which-is-better.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🎓 IB vs Cambridge</a>
+  <a href="/ib-diploma-explained.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">📋 IB Diploma explained</a>
+  <a href="/cambridge-curriculum-explained.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🇬🇧 Cambridge explained</a>
+  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:12px 0 8px;">About</div>
+  <a href="/about.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;">About us</a>
+</div>
 </div>
 <script>
 document.addEventListener('click',function(e){
