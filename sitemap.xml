@@ -22,6 +22,7 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- Guides -->
   <url>
     <loc>https://schools.reviews/school-year-grade-by-age-guide.html</loc>
     <lastmod>2026-04-26</lastmod>
@@ -50,8 +51,51 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- School pages -->
+  <url>
+    <loc>https://schools.reviews/carlucci-american-international-school-portugal.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <url>
     <loc>https://schools.reviews/st-julians-school-portugal.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/tasis-portugal-school.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/the-lisboan-international-school-portugal.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/international-sharing-school-taguspark-portugal.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/beyond-international-school-portugal.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/clarity-international-school-portugal.html</loc>
     <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
