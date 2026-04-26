@@ -401,7 +401,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
         </div>
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> Full IB (ages 3–18) <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
           <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="syncProgChip('British')"> British / Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
@@ -1035,7 +1036,10 @@ function progPill(p){
 function getFiltered(){
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
-    if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
+    if(state.prog === 'IB Diploma'){
+      // Schools offering IB Diploma in final years (Cambridge/British schools with IB in their prog)
+      if(!(s.prog?.includes('IB'))) return false;
+    } else if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
     if(s.price){
       if(state.price === 'low' && s.price > 8000) return false;
       if(state.price === 'mid' && (s.price < 8000 || s.price > 15000)) return false;
@@ -1095,6 +1099,7 @@ function render(){
       </div>
       <div class="pills">
         <span class="pill ${progPill(s.prog)}">${s.prog||'—'}</span>
+        ${s.prog?.includes('IB') && (s.prog?.includes('Cambridge') || s.prog?.includes('British') || s.prog?.includes('A-Level')) ? '<span class="pill" style="background:#E6F1FB;color:#0C447C;font-size:9px;">+ IB Diploma</span>' : ''}
         ${s.boarding ? '<span class="pill p-blue">Boarding ✓</span>' : '<span class="pill p-gray">Day</span>'}
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
