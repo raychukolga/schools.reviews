@@ -207,6 +207,19 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .filter-help-tip[style*="top:calc"]::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--ink); }
 .filter-help:hover .filter-help-tip { display: block; }
 
+
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;}
+.mob-menu{display:none;position:fixed;top:106px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;z-index:499;box-shadow:0 4px 20px rgba(0,0,0,.1);}
+.mob-menu.open{display:block;}
+.mob-menu a{display:block;padding:10px 0;font-size:14px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);}
+.mob-menu a:last-child{border-bottom:none;}
+.mob-menu-section{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin:12px 0 6px;}
+@media(max-width:768px){
+  .hamburger{display:flex;}
+  .nav-links .nav-dropdown{display:none;}
+  .nav-links a:not(:last-child){display:none;}
+}
 /* MOBILE MAP BLOCK */
 #mobileMapBlock { display:none; }
 @media (max-width:768px) {
@@ -248,6 +261,20 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   function gtag(){dataLayer.push(arguments);}
   gtag("js", new Date());
   gtag("config", "G-QGB1YVCB1R");
+</script>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="International & Private Schools in Portugal — Schools Reviews">
+<meta name="twitter:description" content="61+ international schools in Portugal. IB, British, American, Cambridge. Verified fees, class sizes, reviews.">
+<meta name="keywords" content="international schools Portugal, private schools Lisbon, IB schools Lisbon, British schools Portugal, international school fees Portugal, Cascais international school">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "International Schools in Portugal",
+  "description": "Complete list of international and private schools in Portugal with verified fees, programmes and reviews.",
+  "url": "https://schools.reviews/international-private-schools-portugal.html",
+  "numberOfItems": 61
+}
 </script>
 </head>
 <body>
@@ -864,7 +891,7 @@ const schools = [
     grades:[{label:"Kindergarten",fee:9010},{label:"Grade 1",fee:9540},{label:"Grade 2",fee:10070},{label:"Grade 3",fee:10070},{label:"Grade 4",fee:10070},{label:"Grade 5",fee:10070},{label:"Grade 6",fee:11300},{label:"Grade 7",fee:11800},{label:"Grade 8",fee:11800}],
     earlyPrice:"9,010–9,540", primaryPrice:"10,070", middlePrice:"11,300–11,800", secondaryPrice:null,
     appFee:100, enrollFee:"850–1,050", annualEnrollFee:"500–525",
-    lunchIncluded:false, lunchPrice:"included up to Year 9",
+    lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"16:30",
     reviewed:false, verified:true, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:38.7400, lng:-9.2600,
@@ -909,15 +936,6 @@ const schools = [
     bg:"#E1F5EE", color:"#085041", lat:38.7300, lng:-9.3900,
     founded:1982, students:440, classSize:22,
     website:"https://www.ipsschool.org" },
-
-  { id:31, name:"Clarity International School", short:"CL",
-    address:"R. Carlos Mardel 47, 2780-164 Oeiras",
-    loc:"Oeiras", prog:"Cambridge",
-    price:null, priceMax:null,
-    reviewed:false, verified:false, boarding:false,
-    bg:"#EEEDFE", color:"#3C3489", lat:38.6900, lng:-9.3100,
-    classSize:15,
-    website:"https://clarityschool.eu" },
 
   { id:32, name:"Astoria International School", short:"AS",
     address:"Av. Alm. Gago Coutinho 88-73, 1700-031 Lisboa",
@@ -1180,7 +1198,7 @@ function render(){
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
         <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
-        <button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>
+        ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
     </div>
   `).join('') + `</div>`;
@@ -1244,6 +1262,16 @@ function focusSchool(id){
   if(card) card.classList.add('highlighted');
   if(s.lat&&s.lng&&map){ map.setView([s.lat,s.lng],13,{animate:true}); if(markers[s.id]) markers[s.id].openPopup(); }
 }
+
+const schoolPages = {
+  1: '/carlucci-american-international-school-portugal.html',
+  2: '/st-julians-school-portugal.html',
+  4: '/tasis-portugal-school.html',
+  12: '/the-lisboan-international-school-portugal.html',
+  19: '/international-sharing-school-taguspark-portugal.html',
+  28: '/beyond-international-school-portugal.html',
+  73: '/clarity-international-school-portugal.html',
+};
 
 function openModal(id){
   const s = schools.find(x=>x.id===id);
@@ -1579,7 +1607,7 @@ function initMap(){
           ${foundedLabel?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Founded</span><span style="font-size:11px;font-weight:600;color:#1a1814;">${foundedLabel}</span></div>`:''}
           <div style="display:flex;justify-content:space-between;padding:6px 0;"><span style="font-size:11px;color:#888;">Tuition</span><span style="font-size:11px;font-weight:700;color:#C4633A;">${s.price?'€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString()+' /yr':'On request'}</span></div>
         </div>
-        <button onclick="openModal(${s.id});this.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click();" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;">More info →</button>
+        ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="display:block;width:100%;background:#1a1814;color:#fff;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;text-align:center;text-decoration:none;">More info →</a>` : `<button onclick="openModal(${s.id});this.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click();" style="width:100%;background:#1a1814;color:#fff;border:none;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;">More info →</button>`}
       </div>
     `,{offset:[0,-6],minWidth:230});
     m.on('click',()=>{

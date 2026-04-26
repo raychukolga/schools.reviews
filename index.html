@@ -544,6 +544,24 @@ footer {
   gtag("js", new Date());
   gtag("config", "G-QGB1YVCB1R");
 </script>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Schools Reviews — Independent International School Reviews">
+<meta name="twitter:description" content="The most complete database of international schools. Independent video tours, verified data, honest reviews.">
+<meta name="keywords" content="international schools Portugal, private schools Lisbon, IB schools Portugal, British schools Portugal, international school reviews">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Schools Reviews",
+  "url": "https://schools.reviews",
+  "description": "Independent international school reviews — verified data, honest assessments, video tours.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://schools.reviews/international-private-schools-portugal.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -599,8 +617,30 @@ footer {
         </a>
       </div>
     </div>
+      <button class="hamburger" onclick="document.getElementById('mobileMenuMain').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenuMain">
+  <div class="mobile-menu-section">Browse</div>
+  <a href="/international-private-schools-portugal.html">🇵🇹 Schools in Portugal</a>
+  <div class="mobile-menu-section">Guides</div>
+  <a href="/school-year-grade-by-age-guide.html">📊 School grades by age</a>
+  <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
+  <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
+  <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
+  <div class="mobile-menu-section">About</div>
+  <a href="/about.html">About us</a>
+</div>
+<script>
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.hamburger')&&!e.target.closest('.mobile-menu')){
+    const m=document.getElementById('mobileMenuMain');
+    if(m) m.classList.remove('open');
+  }
+});
+</script>
 
 <!-- HERO -->
 <section class="hero">
