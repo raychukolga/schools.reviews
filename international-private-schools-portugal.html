@@ -577,7 +577,7 @@ const schools = [
   { id:2, name:"St Julian's School", short:"SJ",
     address:"Quinta Nova, Av. Jorge V 374, 2775-588 Carcavelos",
     loc:"Carcavelos, Cascais", prog:"British / IB",
-    price:12693, priceMax:19323,
+    price:12693, priceMax:29970,
     grades:[{label:"Nursery (1–2 yrs)",fee:12384},{label:"Kindergarten",fee:12384},{label:"Grade 1",fee:14868},{label:"Grade 2",fee:14868},{label:"Grade 3",fee:15786},{label:"Grade 4",fee:15786},{label:"Grade 5",fee:16707},{label:"Grade 6",fee:17907},{label:"Grade 7",fee:18579},{label:"Grade 8",fee:18579},{label:"Grade 9",fee:18579},{label:"Grade 10",fee:22809},{label:"Grade 11",fee:22809},{label:"Grade 12",fee:29097}],
     earlyPrice:"12,693", primaryPrice:"15,462–18,624", middlePrice:"19,323", secondaryPrice:"23,493–29,970",
     appFee:250, enrollFee:"750", annualEnrollFee:"5,000",
@@ -1178,7 +1178,13 @@ function render(){
     document.getElementById('schoolsList').innerHTML = `<div class="empty-state">No schools match your filters.<br><small>Try adjusting the criteria above.</small></div>`;
     return;
   }
-  document.getElementById('schoolsList').innerHTML = `<div class="cards-wrap">` + filtered.map(s=>`
+  // Schools with individual pages first, then rest
+  const sorted = [...filtered].sort((a,b) => {
+    const aHasPage = schoolPages[a.id] ? 1 : 0;
+    const bHasPage = schoolPages[b.id] ? 1 : 0;
+    return bHasPage - aHasPage;
+  });
+  document.getElementById('schoolsList').innerHTML = `<div class="cards-wrap">` + sorted.map(s=>`
     <div class="school-card ${s.verified?'verified-card':''}" id="card-${s.id}" onclick="focusSchool(${s.id})" style="cursor:pointer;">
       <div class="card-top">
         <div class="avatar" style="background:${s.bg};color:${s.color};">${s.short}</div>
