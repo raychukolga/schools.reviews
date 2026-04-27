@@ -28,6 +28,8 @@
   "url": "https://schools.reviews/st-julians-school-portugal.html"
 }
 </script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QGB1YVCB1R");</script>
@@ -124,6 +126,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:68px;di
 .grade-fee{font-size:12px;font-weight:700;color:var(--ink);}
 /* SIDEBAR */
 .sidebar{}
+.map-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--white);}
+.map-card-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);padding:10px 14px 8px;}
+.map-card-map{height:200px;width:100%;}
+.map-card-footer{padding:8px 14px;font-size:11px;border-top:1px solid var(--border);}
+.map-card-footer a{color:var(--terra);text-decoration:none;font-weight:600;}
 .sidebar-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
 .sidebar-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sidebar-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
@@ -332,6 +339,11 @@ document.addEventListener('click', function(e){
   </div>
 
   <div class="sidebar">
+    <div class="map-card">
+      <div class="map-card-label">Location</div>
+      <div class="map-card-map" id="school-map"></div>
+      <div class="map-card-footer"><a href="https://maps.google.com/?q=St+Julians+School+Carcavelos+Portugal" target="_blank">Open in Google Maps ↗</a></div>
+    </div>
     <div class="sidebar-card">
       <div class="sidebar-title">Quick facts</div>
       <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Carcavelos, Cascais</div></div>
@@ -387,5 +399,23 @@ document.addEventListener('click', function(e){
     </div>
   </div>
 </footer>
+<script>
+window.addEventListener('load', function(){
+  var map = L.map('school-map', {
+    center: [38.6833, -9.3333],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    dragging: true,
+    attributionControl: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  var icon = L.divIcon({
+    html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
+    iconSize: [12,12], iconAnchor: [6,6], className: ''
+  });
+  L.marker([38.6833, -9.3333], {icon: icon}).addTo(map);
+});
+</script>
 </body>
 </html>
