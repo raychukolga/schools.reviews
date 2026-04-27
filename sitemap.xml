@@ -96,9 +96,23 @@
 
   <url>
     <loc>https://schools.reviews/clarity-international-school-portugal.html</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/oeiras-international-school-portugal.html</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://schools.reviews/ib-schools-lisbon-2026.html</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
