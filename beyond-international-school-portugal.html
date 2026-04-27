@@ -28,6 +28,8 @@
   "url": "https://schools.reviews/beyond-international-school-portugal.html"
 }
 </script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QGB1YVCB1R");</script>
@@ -124,6 +126,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:68px;di
 .grade-fee{font-size:12px;font-weight:700;color:var(--ink);}
 /* SIDEBAR */
 .sidebar{}
+.map-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--white);}
+.map-card-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);padding:10px 14px 8px;}
+.map-card-map{height:200px;width:100%;}
+.map-card-footer{padding:8px 14px;font-size:11px;border-top:1px solid var(--border);}
+.map-card-footer a{color:var(--terra);text-decoration:none;font-weight:600;}
 .sidebar-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
 .sidebar-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sidebar-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
@@ -196,6 +203,8 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
         <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
         <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
+        <div class="menu-divider"></div>
+        <a href="/ib-schools-lisbon-2026.html">🇵🇹 IB schools in Lisbon</a>
       </div>
     </div>
     <a href="/international-private-schools-portugal.html" class="nav-back">← Portugal</a>
@@ -237,7 +246,7 @@ document.addEventListener('click', function(e){
       <h1 class="school-name">Beyond International School</h1>
       <div class="school-loc">📍 R. Soeiro Pereira Gomes 59, 2730-178 Barcarena</div>
       <div class="badge-row">
-        <span class="badge" style="background:#E6F1FB;color:#0C447C;">Cambridge</span>
+        <a href="/cambridge-curriculum-explained.html" class="badge" style="background:#E6F1FB;color:#0C447C;text-decoration:none;">Cambridge</a>
         <span class="badge badge-verified">✓ Verified Apr 2026</span>
         
       </div>
@@ -259,18 +268,28 @@ document.addEventListener('click', function(e){
       <div class="sr-cs">Coming soon</div>
     </div>
 
-    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">New bilingual Cambridge school in Barcarena. Teaching in English and Portuguese. Ages 3–12.</p>
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">Beyond International School opened in 2025 in Barcarena — and from the start it set out to do things differently. The campus is brand new and genuinely beautiful: a purpose-built environment designed with real care for how children experience a school day. For families who believe that space and surroundings matter, Beyond is one of the most visually striking new schools to open in the Lisbon area in years.</p>
+
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The school follows the <a href="/cambridge-curriculum-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Cambridge curriculum</a> and teaches bilingually — English and Portuguese — from the earliest years. This makes it a strong option for families who want their children to develop genuine fluency in both languages, not just have Portuguese as an add-on subject. The school currently covers ages 3 to 12 (Kindergarten through Grade 8).</p>
+
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">One practical detail worth noting: lunch is included in the tuition — not common among international schools in the area, and a meaningful saving over the year. Barcarena is well-placed between Lisbon, Sintra, and Cascais, accessible from the A5 and A16.</p>
 
     <div class="section">
       <div class="sec-title">Schools Reviews assessment</div>
       <div class="sr-note">
         <div class="sr-note-pros">
           <div class="sr-note-head g">✓ What we like</div>
-          <div class="no-data">Data not yet available</div>
+          <div class="sr-note-item">Brand-new, beautifully designed campus — one of the most striking new school environments in the Lisbon area</div>
+          <div class="sr-note-item">Genuinely bilingual — English and Portuguese taught equally from the start, not Portuguese as an afterthought</div>
+          <div class="sr-note-item">Lunch included in tuition — unusual and saves families a meaningful amount annually</div>
+          <div class="sr-note-item">Cambridge curriculum — internationally recognised and well-structured</div>
+          <div class="sr-note-item">Conveniently located between Lisbon, Sintra and Cascais</div>
         </div>
         <div class="sr-note-watch">
           <div class="sr-note-head a">◎ Worth noting</div>
-          <div class="no-data">Data not yet available</div>
+          <div class="sr-note-item">Opened in 2025 — very new school, still establishing routines and track record. Worth visiting in person to assess the team and culture</div>
+          <div class="sr-note-item">Currently covers only up to Grade 8 (ages 3–13) — families will need to plan a school transition for senior years</div>
+          <div class="sr-note-item">No school bus at present</div>
         </div>
       </div>
     </div>
@@ -292,13 +311,25 @@ document.addEventListener('click', function(e){
     <div class="section">
       <div class="sec-title blue">Academics</div>
       <div class="acad-wrap">
-        <div class="acad-row"><div class="acad-label">Programme</div><div class="acad-val"><strong>Cambridge</strong></div></div>
-<div class="acad-row"><div class="acad-label">Teaching language</div><div class="acad-val"><strong>English</strong></div></div>
-<div class="acad-row"><div class="acad-label">Extra languages</div><div class="acad-val">Portuguese</div></div>
+        <div class="acad-row"><div class="acad-label">Programme</div><div class="acad-val"><strong><a href="/cambridge-curriculum-explained.html" style="color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Cambridge</a></strong></div></div>
+        <div class="acad-row"><div class="acad-label">Teaching language</div><div class="acad-val"><strong>English + Portuguese (bilingual)</strong></div></div>
+        <div class="acad-row"><div class="acad-label">Ages covered</div><div class="acad-val">3–13 years (Kindergarten – Grade 8)</div></div>
+        <div class="acad-row"><div class="acad-label">Extra languages</div><div class="acad-val">Portuguese (bilingual — native level)</div></div>
       </div>
     </div>
 
-    
+    <div class="section"><div class="sec-title green">Sport & activities within curriculum</div><div class="acad-wrap">
+<div class="acad-row"><div class="acad-label">Sport</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Extra language</div><div class="acad-val">Portuguese (bilingual)</div></div>
+<div class="acad-row"><div class="acad-label">Other</div><div class="acad-val">To be edited</div></div>
+</div></div>
+
+    <div class="section"><div class="sec-title green">After school activities</div><div class="acad-wrap">
+<div class="acad-row"><div class="acad-label">Sports</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Music</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Digital / coding</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Other activities</div><div class="acad-val">To be edited</div></div>
+</div></div>
 
     <div class="section">
       <div class="sec-title terra">Fees · 2026/27</div>
@@ -318,9 +349,40 @@ document.addEventListener('click', function(e){
       <p style="font-size:11px;color:#bbb;margin-top:8px;">* Always verify fees directly with the school — they change annually.</p>
     </div>
 
+    <div class="section">
+      <div class="sec-title">Frequently asked questions</div>
+      <div class="acad-wrap" style="padding:0 16px;">
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Is Beyond International School a new school?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Yes — Beyond opened in 2025. The campus is brand-new and purpose-built. As with any new school, some aspects of school life are still developing, but the focus on environment and bilingual education is clear from the start. Visiting in person is the best way to assess the team and culture.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Is Beyond truly bilingual?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Yes — the school teaches in both English and Portuguese from the start, aiming for genuine bilingualism rather than Portuguese as a secondary subject. This makes it a strong option for families planning a longer stay in Portugal or who want their children to be integrated into Portuguese society and language.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">What ages does Beyond cater for?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The school currently covers Kindergarten through Grade 8, ages 3 to approximately 13. It does not yet have a senior school. Families with younger children who plan to be in Portugal long-term should factor in that a school move will be needed for secondary education.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">How much does Beyond International School cost?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Annual tuition ranges from €9,010 (Kindergarten) to €11,800 (Grades 7–8). Notably, lunch is included in the fees — which is not common among international schools in the area and adds real value to the overall cost comparison. Always verify current fees directly with the school.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;border-bottom:none;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Where is Beyond International School located?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The school is in Barcarena, between Lisbon, Sintra and Cascais — accessible from the A5 and A16 motorways. It is a convenient location for families living across the wider western Lisbon suburbs. There is currently no school bus service.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar">
+    <div class="map-card">
+      <div class="map-card-label">Location</div>
+      <div class="map-card-map" id="school-map"></div>
+      <div class="map-card-footer"><a href="https://maps.google.com/?q=Beyond+International+School+Barcarena+Portugal" target="_blank">Open in Google Maps ↗</a></div>
+    </div>
     <div class="sidebar-card">
       <div class="sidebar-title">Quick facts</div>
       <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Barcarena, Queluz</div></div>
@@ -375,5 +437,23 @@ document.addEventListener('click', function(e){
     </div>
   </div>
 </footer>
+<script>
+window.addEventListener('load', function(){
+  var map = L.map('school-map', {
+    center: [38.74, -9.26],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    dragging: true,
+    attributionControl: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  var icon = L.divIcon({
+    html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
+    iconSize: [12,12], iconAnchor: [6,6], className: ''
+  });
+  L.marker([38.74, -9.26], {icon: icon}).addTo(map);
+});
+</script>
 </body>
 </html>
