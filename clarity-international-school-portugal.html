@@ -28,6 +28,8 @@
   "url": "https://schools.reviews/clarity-international-school-portugal.html"
 }
 </script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QGB1YVCB1R");</script>
@@ -124,6 +126,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:68px;di
 .grade-fee{font-size:12px;font-weight:700;color:var(--ink);}
 /* SIDEBAR */
 .sidebar{}
+.map-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--white);}
+.map-card-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);padding:10px 14px 8px;}
+.map-card-map{height:200px;width:100%;}
+.map-card-footer{padding:8px 14px;font-size:11px;border-top:1px solid var(--border);}
+.map-card-footer a{color:var(--terra);text-decoration:none;font-weight:600;}
 .sidebar-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
 .sidebar-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sidebar-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
@@ -196,6 +203,8 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
         <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
         <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
+        <div class="menu-divider"></div>
+        <a href="/ib-schools-lisbon-2026.html">🇵🇹 IB schools in Lisbon</a>
       </div>
     </div>
     <a href="/international-private-schools-portugal.html" class="nav-back">← Portugal</a>
@@ -237,7 +246,7 @@ document.addEventListener('click', function(e){
       <h1 class="school-name">Clarity International School</h1>
       <div class="school-loc">📍 R. Carlos Mardel 47, 2780-164 Oeiras</div>
       <div class="badge-row">
-        <span class="badge" style="background:#E6F1FB;color:#0C447C;">Cambridge</span>
+        <a href="/cambridge-curriculum-explained.html" class="badge" style="background:#E6F1FB;color:#0C447C;text-decoration:none;">Cambridge</a>
         
         
       </div>
@@ -259,7 +268,11 @@ document.addEventListener('click', function(e){
       <div class="sr-cs">Coming soon</div>
     </div>
 
-    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">Small Cambridge school in Oeiras with a strong focus on individual attention. Ages 3–12. Maximum 15 students per class. Offers a trial week for new families.</p>
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">Clarity International School is a small, boutique Cambridge school in Oeiras — and deliberately so. With a maximum of 15 students per class, it sits at the opposite end of the spectrum from the large international schools in the area. The focus is on individual attention, close teacher-student relationships, and a learning environment where no child gets lost in the crowd.</p>
+
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The school follows the <a href="/cambridge-curriculum-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Cambridge curriculum</a> and teaches in English, with Portuguese included as part of the programme. It currently covers ages 3 to 12 — primary and lower secondary years.</p>
+
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">One genuinely distinctive feature: Clarity offers a trial week for new families. This is rare among international schools anywhere, and reflects real confidence in what the school offers day-to-day. For families who are uncertain or new to the area, it removes a significant barrier to evaluating fit before committing.</p>
 
     <div class="section">
       <div class="sec-title">Schools Reviews assessment</div>
@@ -272,7 +285,8 @@ document.addEventListener('click', function(e){
         </div>
         <div class="sr-note-watch">
           <div class="sr-note-head a">◎ Worth noting</div>
-          <div class="no-data">Data not yet available</div>
+          <div class="sr-note-item">Opened in 2025 — very new school, still building track record. The trial week is a good way to assess in person</div>
+          <div class="sr-note-item">Currently covers only ages 3–12 — families will need to plan a school transition for senior years</div>
         </div>
       </div>
     </div>
@@ -294,24 +308,67 @@ document.addEventListener('click', function(e){
     <div class="section">
       <div class="sec-title blue">Academics</div>
       <div class="acad-wrap">
-        <div class="acad-row"><div class="acad-label">Programme</div><div class="acad-val"><strong>Cambridge</strong></div></div>
-<div class="acad-row"><div class="acad-label">Teaching language</div><div class="acad-val"><strong>English</strong></div></div>
-<div class="acad-row"><div class="acad-label">Extra languages</div><div class="acad-val">Portuguese</div></div>
+        <div class="acad-row"><div class="acad-label">Programme</div><div class="acad-val"><strong><a href="/cambridge-curriculum-explained.html" style="color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Cambridge</a></strong></div></div>
+        <div class="acad-row"><div class="acad-label">Teaching language</div><div class="acad-val"><strong>English</strong></div></div>
+        <div class="acad-row"><div class="acad-label">Ages covered</div><div class="acad-val">3–12 years (Kindergarten – Grade 6)</div></div>
+        <div class="acad-row"><div class="acad-label">Class size</div><div class="acad-val"><strong style="color:var(--green);">Maximum 15 students</strong></div></div>
+        <div class="acad-row"><div class="acad-label">Extra languages</div><div class="acad-val">Portuguese</div></div>
       </div>
     </div>
 
-    
+    <div class="section"><div class="sec-title green">Sport & activities within curriculum</div><div class="acad-wrap">
+<div class="acad-row"><div class="acad-label">Sport</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Extra language</div><div class="acad-val">Portuguese</div></div>
+<div class="acad-row"><div class="acad-label">Other</div><div class="acad-val">To be edited</div></div>
+</div></div>
+
+    <div class="section"><div class="sec-title green">After school activities</div><div class="acad-wrap">
+<div class="acad-row"><div class="acad-label">Sports</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Music</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Digital / coding</div><div class="acad-val">To be edited</div></div>
+<div class="acad-row"><div class="acad-label">Other activities</div><div class="acad-val">To be edited</div></div>
+</div></div>
 
     <div class="section">
       <div class="sec-title terra">Fees · 2026/27</div>
-      
       <div style="background:var(--cream);border-radius:10px;padding:14px 16px;font-size:13px;color:#bbb;font-style:italic;">Fees not yet available — contact school directly.</div>
       <p style="font-size:11px;color:#bbb;margin-top:8px;">* Always verify fees directly with the school — they change annually.</p>
+    </div>
+
+    <div class="section">
+      <div class="sec-title">Frequently asked questions</div>
+      <div class="acad-wrap" style="padding:0 16px;">
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">What makes Clarity different from other international schools?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The defining feature is class size — a maximum of 15 students. Most international schools in the Lisbon area have classes of 18–25. Smaller classes mean more individual teacher attention, stronger relationships, and a very different daily experience for children. Clarity also offers a trial week for new families, which is genuinely unusual.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Does Clarity offer a trial week?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Yes — Clarity offers prospective families a trial week before committing. This is rare among international schools anywhere and is a genuinely useful way to assess whether the school is the right fit for your child, especially if you are new to the area or uncertain about the school.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">What curriculum does Clarity follow?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Clarity follows the <a href="/cambridge-curriculum-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Cambridge curriculum</a>, one of the most widely recognised international programmes. Teaching is in English, with Portuguese included in the programme. For a comparison with IB, see our <a href="/ib-vs-cambridge-which-is-better.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">IB vs Cambridge guide</a>.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">What ages does Clarity cater for?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The school currently covers ages 3 to 12. It does not yet have a senior school, so families should plan for a school transition for secondary education. For a full-cycle school in the same area, <a href="/oeiras-international-school-portugal.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Oeiras International School</a> covers ages up to 18.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;border-bottom:none;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Where is Clarity located?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The school is in Oeiras, between central Lisbon and Cascais. It is easily accessible from the A5 motorway and the Cascais commuter rail line.</div>
+        </div>
+      </div>
     </div>
 
   </div>
 
   <div class="sidebar">
+    <div class="map-card">
+      <div class="map-card-label">Location</div>
+      <div class="map-card-map" id="school-map"></div>
+      <div class="map-card-footer"><a href="https://maps.google.com/?q=Clarity+International+School+Oeiras+Portugal" target="_blank">Open in Google Maps ↗</a></div>
+    </div>
     <div class="sidebar-card">
       <div class="sidebar-title">Quick facts</div>
       <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Oeiras</div></div>
@@ -348,7 +405,7 @@ document.addEventListener('click', function(e){
     <div class="sec-title" style="margin-bottom:16px;">Other schools in this area</div>
     <div class="nearby-grid">
       <a href="/beyond-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">Cambridge</div><div class="nearby-name">Beyond International School</div><div class="nearby-price">€9,010 – €11,800 /yr</div></a>
-<a href="/oeiras-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">IB</div><div class="nearby-name">Oeiras International School</div><div class="nearby-price">€7,900 – €9,250 /yr</div></a>
+<a href="/oeiras-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">Full IB · Non-profit</div><div class="nearby-name">Oeiras International School</div><div class="nearby-price">€13,980 – €22,406 /yr</div></a>
 <a href="/international-private-schools-portugal.html" class="nearby-card"><div class="nearby-prog">All programmes</div><div class="nearby-name">Browse all schools in Portugal →</div><div class="nearby-price">61+ schools listed</div></a>
     </div>
   </div>
@@ -367,5 +424,23 @@ document.addEventListener('click', function(e){
     </div>
   </div>
 </footer>
+<script>
+window.addEventListener('load', function(){
+  var map = L.map('school-map', {
+    center: [38.7217, -9.3617],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    dragging: true,
+    attributionControl: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  var icon = L.divIcon({
+    html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
+    iconSize: [12,12], iconAnchor: [6,6], className: ''
+  });
+  L.marker([38.7217, -9.3617], {icon: icon}).addTo(map);
+});
+</script>
 </body>
 </html>
