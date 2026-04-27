@@ -402,7 +402,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
       <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help" style="margin-right:2px;" title="What's the difference between curricula?"><span class="filter-help-tip" style="white-space:nowrap;">Not sure which curriculum? Read our guide →</span>?</a>
       <button class="chip prog-chip active" onclick="setP('all',this)">All</button>
-      <button class="chip prog-chip" onclick="setP('IB',this)">IB</button>
+      <button class="chip prog-chip" onclick="setP('Full IB',this)">Full IB</button>
+      <button class="chip prog-chip" onclick="setP('IB Diploma',this)">IB Diploma</button>
       <button class="chip prog-chip" onclick="setP('British',this)">British / Cambridge</button>
       <button class="chip prog-chip" onclick="setP('American',this)">American</button>
       <button class="chip prog-chip" onclick="setP('French',this)">French</button>
@@ -427,7 +428,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
         </div>
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> Full IB (ages 3–18) <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="Full IB" onchange="syncProgChip('Full IB')"> Full IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
           <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
           <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="syncProgChip('British')"> British / Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
@@ -456,8 +457,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="classSize" id="cs_all" value="all" checked> All sizes</label>
           <label class="fg-opt"><input type="radio" name="classSize" id="cs_small" value="small"> Small (up to 16)</label>
-          <label class="fg-opt"><input type="radio" name="classSize" id="cs_mid" value="mid"> Middle (17–20)</label>
-          <label class="fg-opt"><input type="radio" name="classSize" id="cs_big" value="big"> Large (21+)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_mid" value="mid"> Middle (17–22)</label>
+          <label class="fg-opt"><input type="radio" name="classSize" id="cs_big" value="big"> Large (23+)</label>
         </div>
         <div class="fg-title" style="margin-top:16px;">📅 School age</div>
         <div class="fg-opts">
@@ -576,7 +577,7 @@ const schools = [
 
   { id:2, name:"St Julian's School", short:"SJ",
     address:"Quinta Nova, Av. Jorge V 374, 2775-588 Carcavelos",
-    loc:"Carcavelos, Cascais", prog:"British / IB",
+    loc:"Carcavelos, Cascais", prog:"British / IB Diploma",
     price:12693, priceMax:29970,
     grades:[{label:"Nursery (1–2 yrs)",fee:12384},{label:"Kindergarten",fee:12384},{label:"Grade 1",fee:14868},{label:"Grade 2",fee:14868},{label:"Grade 3",fee:15786},{label:"Grade 4",fee:15786},{label:"Grade 5",fee:16707},{label:"Grade 6",fee:17907},{label:"Grade 7",fee:18579},{label:"Grade 8",fee:18579},{label:"Grade 9",fee:18579},{label:"Grade 10",fee:22809},{label:"Grade 11",fee:22809},{label:"Grade 12",fee:29097}],
     earlyPrice:"12,693", primaryPrice:"15,462–18,624", middlePrice:"19,323", secondaryPrice:"23,493–29,970",
@@ -603,7 +604,7 @@ const schools = [
 
   { id:3, name:"St Peter's International School", short:"SP",
     address:"Quinta dos Barreleiros CCI 3952, 2950-420 Palmela",
-    loc:"Palmela, Setúbal", prog:"British / IB",
+    loc:"Palmela, Setúbal", prog:"British / IB Diploma",
     price:8325, priceMax:17100,
     earlyPrice:null, primaryPrice:null, middlePrice:null, secondaryPrice:null,
     appFee:null, enrollFee:"800–1,600", annualEnrollFee:null,
@@ -617,7 +618,7 @@ const schools = [
 
   { id:4, name:"Tasis Portugal", short:"TP",
     address:"Alameda do Linhó 6, Penaferrim, 2710-697 Sintra",
-    loc:"Sintra, Lisbon", prog:"American / IB / Cambridge",
+    loc:"Sintra, Lisbon", prog:"American / IB Diploma / Cambridge",
     price:13007, priceMax:24308,
     grades:[{label:"Kindergarten",fee:13070},{label:"Grade 1",fee:17290},{label:"Grade 2",fee:17290},{label:"Grade 3",fee:19246},{label:"Grade 4",fee:19246},{label:"Grade 5",fee:19246},{label:"Grade 6",fee:20028},{label:"Grade 7",fee:20028},{label:"Grade 8",fee:20028},{label:"Grade 9",fee:23093},{label:"Grade 10",fee:23093},{label:"Grade 11",fee:24308},{label:"Grade 12",fee:24308}],
     earlyPrice:"13,007", primaryPrice:"17,290", middlePrice:"19,246–20,028", secondaryPrice:"23,093–24,308",
@@ -631,7 +632,7 @@ const schools = [
     description:"Clubs included in price. American, IB and Cambridge programmes." },
 
   { id:5, name:"Deutsche Schule Lissabon", short:"DS",
-    address:"Lisbon", loc:"Lisbon", prog:"German / IB",
+    address:"Lisbon", loc:"Lisbon", prog:"German / IB Diploma",
     price:5000, priceMax:9000,
     appFee:250, enrollFee:null, annualEnrollFee:null,
     reviewed:false, verified:false, boarding:false,
@@ -656,7 +657,7 @@ const schools = [
 
   { id:7, name:"King's College School Lisbon", short:"KC",
     address:"R. Doctor Manuel Antonio Costa Matos 164, 2750-290 Cascais",
-    loc:"Cascais", prog:"Cambridge / IB / A-Level",
+    loc:"Cascais", prog:"Cambridge / IB Diploma / A-Level",
     price:12500, priceMax:27500,
     earlyPrice:"12,500", primaryPrice:"16,525–18,525", middlePrice:"19,500", secondaryPrice:"22,950–27,500",
     appFee:250, enrollFee:"3,000–5,250", annualEnrollFee:"600",
@@ -691,7 +692,7 @@ const schools = [
 
   { id:11, name:"United Lisbon International School", short:"UL",
     address:"Av. Mar. Gomes da Costa 9, 1800-255 Lisboa",
-    loc:"Parque das Nações", prog:"IB / American",
+    loc:"Parque das Nações", prog:"IB Diploma / American",
     price:11800, priceMax:24000,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7687, lng:-9.0929,
@@ -713,7 +714,7 @@ const schools = [
     description:"Opened 2025 in a restored 1908 pasta factory in Alcântara. British curriculum leading to IB Diploma." },
 
   { id:13, name:"PaRK International School", short:"PK",
-    address:"Lisbon", loc:"Lisbon", prog:"IB",
+    address:"Lisbon", loc:"Lisbon", prog:"IB Diploma",
     price:9000, priceMax:16000,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7394, lng:-9.1540,
@@ -735,7 +736,7 @@ const schools = [
 
   { id:16, name:"Redbridge School Lisbon", short:"RB",
     address:"R. Francisco Metrass 97, 1350-164 Lisboa",
-    loc:"Campo de Ourique, Lisbon", prog:"Cambridge / French / Portuguese / IB",
+    loc:"Campo de Ourique, Lisbon", prog:"Cambridge / French / Portuguese / IB Diploma",
     price:8900, priceMax:18000,
     grades:[{label:"Kindergarten",fee:8900},{label:"Grade 1",fee:10820},{label:"Grade 2",fee:10820},{label:"Grade 3",fee:10820},{label:"Grade 4",fee:10820},{label:"Grade 5",fee:10820},{label:"Grade 6",fee:10820},{label:"Grade 7",fee:12360},{label:"Grade 8",fee:12360},{label:"Grade 9",fee:12360},{label:"Grade 10",fee:12360},{label:"Grade 11",fee:12360},{label:"Grade 12",fee:13390},{label:"Grade 13",fee:13390}],
     earlyPrice:"8,900", primaryPrice:"10,820", middlePrice:"12,360–15,900", secondaryPrice:"13,390–18,000",
@@ -761,7 +762,7 @@ const schools = [
 
   { id:17, name:"St Dominic's International School", short:"SD",
     address:"R. Maria Brown 311A, 2785-816 São Domingos de Rana",
-    loc:"São Domingos de Rana, Cascais", prog:"IB",
+    loc:"São Domingos de Rana, Cascais", prog:"Full IB",
     price:11778, priceMax:23166,
     grades:[{label:"Nursery (1–2 yrs)",fee:11778},{label:"Kindergarten",fee:12100},{label:"Grade 1",fee:15000},{label:"Grade 2",fee:15000},{label:"Grade 3",fee:15000},{label:"Grade 4",fee:15777},{label:"Grade 5",fee:15777},{label:"Grade 6",fee:18111},{label:"Grade 7",fee:18111},{label:"Grade 8",fee:18111},{label:"Grade 9",fee:21666},{label:"Grade 10",fee:21666},{label:"Grade 11",fee:23166},{label:"Grade 12",fee:23166}],
     earlyPrice:"11,778–13,328", primaryPrice:"15,000–15,777", middlePrice:"18,111–21,666", secondaryPrice:"23,166",
@@ -775,7 +776,7 @@ const schools = [
     description:"Only school in Portugal offering all three IB programmes (PYP, MYP, DP). 50+ nationalities." },
 
   { id:18, name:"Oeiras International School", short:"OI",
-    address:"Oeiras", loc:"Oeiras", prog:"IB",
+    address:"Oeiras", loc:"Oeiras", prog:"Full IB",
     price:7900, priceMax:9250,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147,
@@ -784,7 +785,7 @@ const schools = [
 
   { id:19, name:"International Sharing School — Taguspark", short:"IS",
     address:"Av. Dr. Mário Soares 14, 2740-119 Porto Salvo",
-    loc:"Taguspark, Oeiras", prog:"IB",
+    loc:"Taguspark, Oeiras", prog:"Full IB",
     price:11790, priceMax:26760,
     grades:[{label:"Nursery (1–2 yrs)",fee:11790},{label:"Kindergarten",fee:12720},{label:"Grade 1",fee:15630},{label:"Grade 2",fee:16710},{label:"Grade 3",fee:17070},{label:"Grade 4",fee:18510},{label:"Grade 5",fee:18510},{label:"Grade 6",fee:19410},{label:"Grade 7",fee:20730},{label:"Grade 8",fee:21015},{label:"Grade 9",fee:23040},{label:"Grade 10",fee:23310},{label:"Grade 11",fee:25680},{label:"Grade 12",fee:26760}],
     academics:{
@@ -816,7 +817,7 @@ const schools = [
   },
 
   { id:20, name:"Colégio Planalto", short:"CP",
-    address:"Lisbon", loc:"Lisbon", prog:"Portuguese / IB",
+    address:"Lisbon", loc:"Lisbon", prog:"Portuguese / IB Diploma",
     price:6000, priceMax:10000,
     reviewed:false, verified:false, boarding:false,
     bg:"#EAF3DE", color:"#27500A", lat:38.7400, lng:-9.1700,
@@ -838,7 +839,7 @@ const schools = [
     website:"https://www.lisbon-montessori.com" },
 
   { id:23, name:"Cesário Verde Int'l School (SEK)", short:"CV",
-    address:"Lisbon", loc:"Lisbon", prog:"IB",
+    address:"Lisbon", loc:"Lisbon", prog:"IB Diploma",
     price:9000, priceMax:16000,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7180, lng:-9.1350,
@@ -913,7 +914,7 @@ const schools = [
 
   { id:29, name:"TISA — Theodore Int'l Startup Academy", short:"TI",
     address:"R. São Sebastião da Pedreira 27, 1050-010 Lisboa",
-    loc:"Lisbon City", prog:"IB PYP",
+    loc:"Lisbon City", prog:"Full IB",
     price:18000, priceMax:18000,
     earlyPrice:"18,000", primaryPrice:"18,000", middlePrice:null, secondaryPrice:null,
     appFee:null, enrollFee:null, annualEnrollFee:null,
@@ -951,7 +952,7 @@ const schools = [
 
   // Porto
   { id:40, name:"Oporto British School (OBS)", short:"OB",
-    address:"Porto", loc:"Porto", prog:"British / IB",
+    address:"Porto", loc:"Porto", prog:"British / IB Diploma",
     price:8000, priceMax:15000,
     reviewed:false, verified:false, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:41.1579, lng:-8.6291,
@@ -994,13 +995,13 @@ const schools = [
 
   // Algarve
   { id:50, name:"Nobel Int'l School Algarve — Almancil", short:"NA",
-    address:"Almancil, Algarve", loc:"Almancil, Algarve", prog:"British / IB",
+    address:"Almancil, Algarve", loc:"Almancil, Algarve", prog:"British / IB Diploma",
     price:8000, priceMax:16000,
     reviewed:false, verified:false, boarding:true,
     bg:"#E1F5EE", color:"#085041", lat:37.0700, lng:-8.0200,
     website:"https://www.nobelschool.net" },
   { id:51, name:"Nobel Int'l School Algarve — Lagoa", short:"NL",
-    address:"Lagoa, Algarve", loc:"Lagoa, Algarve", prog:"British / IB",
+    address:"Lagoa, Algarve", loc:"Lagoa, Algarve", prog:"British / IB Diploma",
     price:8000, priceMax:16000,
     reviewed:false, verified:false, boarding:false,
     bg:"#E1F5EE", color:"#085041", lat:37.1333, lng:-8.4500,
@@ -1129,9 +1130,10 @@ function progPill(p){
 function getFiltered(){
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
-    if(state.prog === 'IB Diploma'){
-      // Schools offering IB Diploma in final years (Cambridge/British schools with IB in their prog)
-      if(!(s.prog?.includes('IB'))) return false;
+    if(state.prog === 'Full IB'){
+      if(s.prog !== 'Full IB') return false;
+    } else if(state.prog === 'IB Diploma'){
+      if(!(s.prog?.includes('IB Diploma'))) return false;
     } else if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
     if(s.price){
       if(state.price === 'low' && s.price > 8000) return false;
@@ -1143,8 +1145,8 @@ function getFiltered(){
     if(state.boarding === 'day' && s.boarding) return false;
     if(state.area && !s.loc.toLowerCase().includes(state.area.toLowerCase())) return false;
     if(state.classSize === 'small' && (!s.classSize || s.classSize > 16)) return false;
-    if(state.classSize === 'mid' && (!s.classSize || s.classSize < 17 || s.classSize > 20)) return false;
-    if(state.classSize === 'big' && (!s.classSize || s.classSize <= 20)) return false;
+    if(state.classSize === 'mid' && (!s.classSize || s.classSize < 17 || s.classSize > 22)) return false;
+    if(state.classSize === 'big' && (!s.classSize || s.classSize <= 22)) return false;
     if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2008)) return false;
     if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
@@ -1348,7 +1350,7 @@ function openModal(id){
           <div><div class="m-item-label">Founded</div><div class="m-item-val">${s.founded||'—'}${s.founded>=2020?' 🆕':''}</div></div>
           <div><div class="m-item-label">Age range</div><div class="m-item-val">${s.ageFrom&&s.ageTo?s.ageFrom+' – '+s.ageTo+' years old':s.grades?'1 – 18 years old':'From 3+ years'}</div></div>
           <div><div class="m-item-label">Total students</div><div class="m-item-val">${s.students?s.students.toLocaleString():'—'}</div></div>
-          <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize ? s.classSize+' <span style="font-size:10px;font-weight:600;color:'+(s.classSize<=16?'#2E7D32':s.classSize<=20?'#E67E22':'#C62828')+';">'+(s.classSize<=16?'· small':s.classSize<=20?'· medium':'· large')+'</span>' : '—'}</div></div>
+          <div><div class="m-item-label">Class size</div><div class="m-item-val">${s.classSize ? s.classSize+' <span style="font-size:10px;font-weight:600;color:'+(s.classSize<=16?'#2E7D32':s.classSize<=22?'#E67E22':'#C62828')+';">'+(s.classSize<=16?'· small':s.classSize<=22?'· medium':'· large')+'</span>' : '—'}</div></div>
           <div><div class="m-item-label">School hours</div><div class="m-item-val">${s.lessonsStart&&s.lessonsEnd?s.lessonsStart+' – '+s.lessonsEnd:'—'}</div></div>
           ${s.afterCare?`<div><div class="m-item-label">After care until</div><div class="m-item-val">${s.afterCare}</div></div>`:''}
           <div><div class="m-item-label">School bus</div><div class="m-item-val">${s.schoolBus&&s.schoolBus!==false?'<span style="color:#2E7D32">✓ Yes</span>':'<span style="color:#888">No</span>'}</div></div>
@@ -1589,8 +1591,8 @@ function initMap(){
     const icon=L.divIcon({className:'',html:`<div style="width:${size}px;height:${size}px;background:#1a1814;color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.25);font-family:'DM Sans',sans-serif;">${s.short.slice(0,2)}</div>`,iconSize:[size,size],iconAnchor:[size/2,size/2]});
     const academicsScore = s.ibAvg ? s.ibAvg+' / 45' : null;
     const facilitiesLevel = s.facilities || (s.campus && parseInt(s.campus)>10000 ? 'Excellent' : s.students>500 ? 'Good' : null);
-    const classSizeLabel = s.classSize ? (s.classSize<=16 ? 'Small' : s.classSize<=20 ? 'Medium' : 'Large') : null;
-    const classSizeColor = s.classSize ? (s.classSize<=16 ? '#2E7D32' : s.classSize<=20 ? '#E67E22' : '#C62828') : '#888';
+    const classSizeLabel = s.classSize ? (s.classSize<=16 ? 'Small' : s.classSize<=22 ? 'Medium' : 'Large') : null;
+    const classSizeColor = s.classSize ? (s.classSize<=16 ? '#2E7D32' : s.classSize<=22 ? '#E67E22' : '#C62828') : '#888';
     const foundedLabel = s.founded ? String(s.founded) : null;
     const ageLabel = (s.ageFrom||s.ageFrom===0) && s.ageTo ? `${s.ageFrom}–${s.ageTo} years` : s.grades ? '3–18 years' : null;
     const mainLang = s.academics?.mainLanguage || null;
