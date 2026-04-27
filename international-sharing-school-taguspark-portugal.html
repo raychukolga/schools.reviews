@@ -29,6 +29,8 @@
 }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QGB1YVCB1R");</script>
 <style>
@@ -125,6 +127,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:68px;di
 /* SIDEBAR */
 .sidebar{}
 .sidebar-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.map-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--white);}
+.map-card-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);padding:10px 14px 8px;}
+.map-card-map{height:200px;width:100%;}
+.map-card-footer{padding:8px 14px;font-size:11px;border-top:1px solid var(--border);}
+.map-card-footer a{color:var(--terra);text-decoration:none;font-weight:600;}
 .sidebar-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sidebar-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
 .sidebar-row:last-child{border-bottom:none;}
@@ -237,10 +244,11 @@ document.addEventListener('click', function(e){
       <h1 class="school-name">International Sharing School — Taguspark</h1>
       <div class="school-loc">📍 Av. Dr. Mário Soares 14, 2740-119 Porto Salvo</div>
       <div class="badge-row">
-        <span class="badge" style="background:#EAF3DE;color:#2E7D32;">IB</span>
+        <a href="/ib-diploma-explained.html" class="badge" style="background:#EAF3DE;color:#2E7D32;text-decoration:none;">IB</a>
         
         
       </div>
+      <a href="/international-private-schools-portugal.html?school=19" style="font-size:12px;color:var(--terra);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-top:2px;">🗺 See on map</a>
     </div>
     <div class="hero-price-block">
       <div class="price-label">Annual tuition</div>
@@ -259,22 +267,25 @@ document.addEventListener('click', function(e){
       <div class="sr-cs">Coming soon</div>
     </div>
 
-    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">A modern well-equipped campus, conveniently located between Lisbon and Cascais — easy to reach from the city, Oeiras, and the Cascais line. One of the very few true full-cycle schools in Portugal: from age 1 to 18, meaning once you enrol your child, the school question is closed for good. The range of after-school activities is exceptional. The school also runs summer camps open to non-enrolled children — a great way to try before you commit.</p>
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">International Sharing School at Taguspark is one of the very few schools in Portugal offering the full <a href="/ib-diploma-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">IB continuum</a> — PYP, MYP and Diploma — from age 3 through to 18. Out of more than 60 international schools in Portugal, only three offer this uninterrupted IB pathway. For families planning a long-term stay, that means one school decision, no mid-journey transitions, no curriculum switches.</p>
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The campus is spacious and modern — classrooms are large and the facilities feel well-maintained. It sits in the Taguspark technology park in Porto Salvo, just off the A5 motorway, making it easy to reach from Lisbon (around 20 minutes by car), Oeiras, Cascais, and Sintra. The school runs its own bus network covering most of the Lisbon metro area.</p>
+    <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">The after-school offering is one of the broadest among Lisbon-area international schools — from sailing and horse riding to robotics and graffiti. The school also runs summer camps open to non-enrolled children, which is a practical way to test the environment before committing.</p>
 
     <div class="section">
       <div class="sec-title">Schools Reviews assessment</div>
       <div class="sr-note">
         <div class="sr-note-pros">
           <div class="sr-note-head g">✓ What we like</div>
-          <div class="sr-note-item">Full 1–18 school — one decision for the entire journey</div>
+          <div class="sr-note-item">Full 3–18 school — one decision for the entire journey</div>
 <div class="sr-note-item">Outstanding variety of after-school activities and summer camps</div>
 <div class="sr-note-item">Summer camps open to non-enrolled children — try before you commit</div>
 <div class="sr-note-item">Well-located between Lisbon, Oeiras and Cascais</div>
         </div>
         <div class="sr-note-watch">
           <div class="sr-note-head a">◎ Worth noting</div>
-          <div class="sr-note-item">Large class sizes — up to 25 students per class</div>
-<div class="sr-note-item">Relatively new school (opened 2017) — no graduates yet who started from Nursery. Note: the Sharing School network has a sister campus in Madeira operating since 1980</div>
+          <div class="sr-note-item">Large class sizes — up to 25 students per class, among the highest for international schools in the Lisbon area</div>
+<div class="sr-note-item">No graduates yet who enrolled from Nursery — that said, the school has been running for nearly a decade (since 2017) and is well past its early years</div>
+<div class="sr-note-item">IB Diploma exam results are not published — the school does not disclose average scores, which makes it harder to benchmark academically</div>
         </div>
       </div>
     </div>
@@ -284,7 +295,7 @@ document.addEventListener('click', function(e){
       <div class="profile-grid">
         <div class="profile-item"><div class="profile-label">Founded</div><div class="profile-val">2017</div></div>
 <div class="profile-item"><div class="profile-label">Programme</div><div class="profile-val">IB</div></div>
-<div class="profile-item"><div class="profile-label">Ages</div><div class="profile-val">1–18 years</div></div>
+<div class="profile-item"><div class="profile-label">Ages</div><div class="profile-val">3–18 years</div></div>
 <div class="profile-item"><div class="profile-label">Students</div><div class="profile-val">600</div></div>
 <div class="profile-item"><div class="profile-label">Class size</div><div class="profile-val"><span style="color:#C62828">Large · 25</span></div></div>
 <div class="profile-item"><div class="profile-label">School hours</div><div class="profile-val">8:30 – 16:00</div></div>
@@ -330,13 +341,44 @@ document.addEventListener('click', function(e){
       <p style="font-size:11px;color:#bbb;margin-top:8px;">* Always verify fees directly with the school — they change annually.</p>
     </div>
 
+    <div class="section">
+      <div class="sec-title">Frequently asked questions</div>
+      <div class="acad-wrap" style="padding:0 16px;">
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Is International Sharing School fully IB?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Yes — it is one of only three international schools in Portugal offering the complete IB continuum: Primary Years Programme (PYP), Middle Years Programme (MYP), and <a href="/ib-diploma-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">IB Diploma</a> (DP). Most international schools in Portugal offer only the IB Diploma at the senior level.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">How far is the school from Lisbon?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">The school is located in Porto Salvo, Oeiras — approximately 20 minutes from central Lisbon by car via the A5. It is accessible from Lisbon, Oeiras, Cascais, and Sintra. The school operates its own bus routes covering the main residential areas along the Lisbon–Cascais corridor.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">How much does International Sharing School cost per year?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Annual tuition starts at €11,790 for Nursery and rises to €26,760 for Grade 12. There is also a one-time enrollment fee of €1,200 and an annual re-enrollment fee of €600. Always verify current fees directly with the school.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">What are the class sizes?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">Classes at ISS Taguspark are large — up to 25 students, which is among the highest for international schools in the Lisbon area. If smaller classes are a priority, you can filter by class size on the <a href="/international-private-schools-portugal.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Portugal schools listing</a> to find schools with smaller groups.</div>
+        </div>
+        <div class="acad-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0;border-bottom:none;">
+          <div style="font-size:13px;font-weight:600;color:var(--ink);">Does ISS Taguspark publish IB exam results?</div>
+          <div style="font-size:13px;color:#555;line-height:1.7;">No — the school does not publicly disclose its IB Diploma average scores. This is worth noting if academic benchmarking matters to you. Schools that do publish results include <a href="/oeiras-international-school-portugal.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Oeiras International School</a> (average 36 out of 45, top 10 in Europe).</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar">
+    <div class="map-card">
+      <div class="map-card-label">Location</div>
+      <div class="map-card-map" id="school-map"></div>
+      <div class="map-card-footer"><a href="https://maps.google.com/?q=Av.+Dr.+Mário+Soares+14,+2740-119+Porto+Salvo" target="_blank">Open in Google Maps ↗</a></div>
+    </div>
     <div class="sidebar-card">
       <div class="sidebar-title">Quick facts</div>
       <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Taguspark, Oeiras</div></div>
-<div class="sidebar-row"><div class="sidebar-key">Ages</div><div class="sidebar-val">1–18 years</div></div>
+<div class="sidebar-row"><div class="sidebar-key">Ages</div><div class="sidebar-val">3–18 years</div></div>
 <div class="sidebar-row"><div class="sidebar-key">Programme</div><div class="sidebar-val">IB</div></div>
 <div class="sidebar-row"><div class="sidebar-key">Language</div><div class="sidebar-val">English</div></div>
 <div class="sidebar-row"><div class="sidebar-key">Class size</div><div class="sidebar-val">Large · 25</div></div>
@@ -345,7 +387,7 @@ document.addEventListener('click', function(e){
 
     <div class="apply-card">
       <div class="sidebar-title">Apply to this school</div>
-      <p style="font-size:12px;color:var(--gray);line-height:1.5;">Direct application through Schools Reviews — coming soon.</p>
+      <p style="font-size:12px;color:var(--gray);line-height:1.5;">To apply, contact the school directly via their admissions office. Direct applications through Schools Reviews will be added soon.</p>
       <div class="apply-btn">Apply · to be added</div>
       <div class="apply-note">Feature coming soon</div>
     </div>
@@ -368,8 +410,8 @@ document.addEventListener('click', function(e){
   <div style="max-width:900px;margin:0 auto;">
     <div class="sec-title" style="margin-bottom:16px;">Other schools in this area</div>
     <div class="nearby-grid">
-      <a href="/oeiras-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">IB</div><div class="nearby-name">Oeiras International School</div><div class="nearby-price">€7,900 – €9,250 /yr</div></a>
-<a href="/tasis-portugal-portugal.html" class="nearby-card"><div class="nearby-prog">American / IB / Cambridge</div><div class="nearby-name">Tasis Portugal</div><div class="nearby-price">€13,007 – €24,308 /yr</div></a>
+      <a href="/oeiras-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">Full IB · Non-profit</div><div class="nearby-name">Oeiras International School</div><div class="nearby-price">€13,980 – €22,406 /yr</div></a>
+<a href="/tasis-portugal-school.html" class="nearby-card"><div class="nearby-prog">American / IB / Cambridge</div><div class="nearby-name">TASIS Portugal</div><div class="nearby-price">€13,007 – €24,308 /yr</div></a>
 <a href="/international-private-schools-portugal.html" class="nearby-card"><div class="nearby-prog">All programmes</div><div class="nearby-name">Browse all schools in Portugal →</div><div class="nearby-price">61+ schools listed</div></a>
     </div>
   </div>
@@ -388,5 +430,23 @@ document.addEventListener('click', function(e){
     </div>
   </div>
 </footer>
+<script>
+window.addEventListener('load', function(){
+  const map = L.map('school-map', {
+    center: [38.7073, -9.2966],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    dragging: true,
+    attributionControl: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  const icon = L.divIcon({
+    html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
+    iconSize: [12,12], iconAnchor: [6,6], className: ''
+  });
+  L.marker([38.7073, -9.2966], {icon}).addTo(map);
+});
+</script>
 </body>
 </html>
