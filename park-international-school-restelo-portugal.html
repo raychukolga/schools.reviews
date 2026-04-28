@@ -322,16 +322,13 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <div class="fee-item"><div class="fee-label">School bus (annual)</div><div class="fee-val">€2,390–2,528</div></div>
       </div>
       <div class="grades-table">
+        <div class="grade-row" style="background:#EAF3DE;"><div class="grade-label" style="font-weight:700;color:#2E7D32;">Bilingual programme (EN+PT)</div><div class="grade-fee" style="color:#2E7D32;">Nursery – Grade 4 only</div></div>
         <div class="grade-row"><div class="grade-label">Nursery / Toddler (1–2 yrs)</div><div class="grade-fee">€9,830</div></div>
-        <div class="grade-row"><div class="grade-label">Pre-school (3–5 yrs)</div><div class="grade-fee">€9,830</div></div>
+        <div class="grade-row"><div class="grade-label">Kindergarten (3–5 yrs)</div><div class="grade-fee">€9,830</div></div>
         <div class="grade-row"><div class="grade-label">Grade 1</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 2</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 3</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 4</div><div class="grade-fee">€12,700</div></div>
-        <div class="grade-row"><div class="grade-label">Grade 5</div><div class="grade-fee">€12,700</div></div>
-        <div class="grade-row"><div class="grade-label">Grade 6</div><div class="grade-fee">€12,700</div></div>
-        <div class="grade-row"><div class="grade-label">Grade 7</div><div class="grade-fee">€12,700</div></div>
-        <div class="grade-row"><div class="grade-label">Grade 8</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 9 (IGCSE yr 1)</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 10 (IGCSE yr 2)</div><div class="grade-fee">€12,700</div></div>
         <div class="grade-row"><div class="grade-label">Grade 11 (A Levels / IB yr 1)</div><div class="grade-fee">€16,000</div></div>
@@ -420,8 +417,8 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
   <div style="max-width:900px;margin:0 auto;">
     <div class="sec-title" style="margin-bottom:16px;">Other schools in this area</div>
     <div class="nearby-grid">
-      <a href="/park-international-school-alfragide-portugal.html" class="nearby-card"><div class="nearby-prog">Bilingual · Cambridge · IB · Ages 1–18</div><div class="nearby-name">PaRK International School — Alfragide</div><div class="nearby-price">€9,830 – €16,000 /yr</div></a>
-      <a href="/park-international-school-restelo-portugal.html" class="nearby-card"><div class="nearby-prog">Bilingual · Cambridge · IB · Ages 1–18</div><div class="nearby-name">PaRK International School — Restelo</div><div class="nearby-price">€9,830 – €16,000 /yr</div></a>
+      <a href="/park-international-school-alfragide-portugal.html" class="nearby-card"><div class="nearby-prog">Bilingual · Cambridge · IB · Ages 1–18</div><div class="nearby-name">PaRK International School — Alfragide</div><div class="nearby-price">€9,830 – €22,200 /yr</div></a>
+      <a href="/park-international-school-restelo-portugal.html" class="nearby-card"><div class="nearby-prog">Bilingual · Cambridge · IB · Ages 1–18</div><div class="nearby-name">PaRK International School — Restelo</div><div class="nearby-price">€9,830 – €22,200 /yr</div></a>
       <a href="/the-lisboan-international-school-portugal.html" class="nearby-card"><div class="nearby-prog">IB World School</div><div class="nearby-name">The Lisboan International School</div><div class="nearby-price">From €10,500 /yr</div></a>
       <a href="/international-private-schools-portugal.html" class="nearby-card"><div class="nearby-prog">All programmes</div><div class="nearby-name">Browse all schools in Portugal →</div><div class="nearby-price">61+ schools listed</div></a>
     </div>
@@ -444,10 +441,10 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
 <script>
 window.addEventListener('load', function(){
   var map = L.map('school-map', {
-    center: [38.7067, -9.2031],
-    zoom: 14,
+    center: [38.7097, -9.197],
+    zoom: 12,
     zoomControl: true,
-    scrollWheelZoom: false,
+    scrollWheelZoom: true,
     dragging: true,
     attributionControl: false
   });
@@ -456,7 +453,14 @@ window.addEventListener('load', function(){
     html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
     iconSize: [12,12], iconAnchor: [6,6], className: ''
   });
-  L.marker([38.7067, -9.2031], {icon: icon}).addTo(map);
+  var activeIcon = L.divIcon({
+    html: '<div style="width:14px;height:14px;background:#0C447C;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);"></div>',
+    iconSize: [14,14], iconAnchor: [7,7], className: ''
+  });
+  L.marker([38.7394, -9.2180], {icon: icon}).addTo(map).bindPopup('<strong>Alfragide</strong><br>Estrada de Alfragide 94');
+  L.marker([38.7394, -9.1540], {icon: icon}).addTo(map).bindPopup('<strong>Praça de Espanha</strong><br>Lisboa');
+  L.marker([38.7097, -9.1970], {icon: icon}).addTo(map).bindPopup('<strong>Restelo</strong><br>Lisboa');
+  L.marker([38.7097, -9.197], {icon: activeIcon}).addTo(map).bindPopup('<strong>Restelo</strong> — current campus').openPopup();
 });
 </script>
 </body>
