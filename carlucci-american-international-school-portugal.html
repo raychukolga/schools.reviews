@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlucci American International School (CAISL) — Fees, Review & Profile 2026 | Schools Reviews</title>
-<meta name="description" content="Independent review of Carlucci American International School (CAISL) in Sintra, Lisbon. American / IB Diploma curriculum. Fees from €12,182/yr. Verified data, honest assessment.">
+<title>CAISL — Carlucci American International School Lisbon: Review & Fees 2026</title>
+<meta name="description" content="CAISL review 2026. Only American school in Portugal. US High School Diploma + IB. Fees €12,128–€23,532/yr. Sport included in tuition. Large campus in Sintra. Verified data.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://schools.reviews/carlucci-american-international-school-portugal.html">
 <meta property="og:title" content="Carlucci American International School (CAISL) — Independent Review & Fees 2026">
@@ -28,6 +28,8 @@
   "url": "https://schools.reviews/carlucci-american-international-school-portugal.html"
 }
 </script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGB1YVCB1R"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QGB1YVCB1R");</script>
@@ -124,6 +126,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:68px;di
 .grade-fee{font-size:12px;font-weight:700;color:var(--ink);}
 /* SIDEBAR */
 .sidebar{}
+.map-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--white);}
+.map-card-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);padding:10px 14px 8px;}
+.map-card-map{height:200px;width:100%;}
+.map-card-footer{padding:8px 14px;font-size:11px;border-top:1px solid var(--border);}
+.map-card-footer a{color:var(--terra);text-decoration:none;font-weight:600;}
 .sidebar-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
 .sidebar-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sidebar-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
@@ -196,6 +203,9 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
         <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
         <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
+        <div class="menu-divider"></div>
+        <a href="/ib-schools-lisbon-2026.html">🇵🇹 IB schools in Lisbon</a>
+        <a href="/international-schools-lisbon.html">🏫 Int'l schools in Lisbon</a>
       </div>
     </div>
     <a href="/international-private-schools-portugal.html" class="nav-back">← Portugal</a>
@@ -373,6 +383,11 @@ document.addEventListener('click', function(e){
   </div>
 
   <div class="sidebar">
+    <div class="map-card">
+      <div class="map-card-label">Location</div>
+      <div class="map-card-map" id="school-map"></div>
+      <div class="map-card-footer"><a href="https://maps.google.com/?q=CAISL+Linho+Sintra+Portugal" target="_blank">Open in Google Maps ↗</a></div>
+    </div>
     <div class="sidebar-card">
       <div class="sidebar-title">Quick facts</div>
       <div class="sidebar-row"><div class="sidebar-key">Location</div><div class="sidebar-val">Sintra, Lisbon</div></div>
@@ -428,5 +443,23 @@ document.addEventListener('click', function(e){
     </div>
   </div>
 </footer>
+<script>
+window.addEventListener('load', function(){
+  var map = L.map('school-map', {
+    center: [38.7978, -9.3617],
+    zoom: 14,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    dragging: true,
+    attributionControl: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  var icon = L.divIcon({
+    html: '<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',
+    iconSize: [12,12], iconAnchor: [6,6], className: ''
+  });
+  L.marker([38.7978, -9.3617], {icon: icon}).addTo(map);
+});
+</script>
 </body>
 </html>
