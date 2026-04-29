@@ -579,89 +579,7 @@ footer {
 </head>
 <body>
 
-<!-- BETA BANNER -->
-<div class="beta-bar">
-  <span class="beta-dot"></span>
-  <strong>We're building something new.</strong> School data is being added and verified — some profiles are still incomplete.
-</div>
-
-<!-- NAV -->
-<nav>
-  <a href="/" class="logo">
-    <span class="logo-top">Schools</span>
-    <div class="logo-line"></div>
-    <span class="logo-bottom">Reviews</span>
-  </a>
-  <div class="nav-links">
-    <a href="/about.html">About us</a>
-    <div class="nav-dropdown">
-      <a href="#">Guides ▾</a>
-      <div class="nav-dropdown-menu">
-        <a href="/school-year-grade-by-age-guide.html">📊 School grades by age</a>
-        <div class="menu-divider"></div>
-        <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>
-        <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>
-        <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>
-        <div class="menu-divider"></div>
-        <a href="/ib-schools-lisbon-2026.html">🇵🇹 IB schools in Lisbon</a>
-      </div>
-    </div>
-    <a href="mailto:editor@schools.reviews">Contact us</a>
-    <div class="nav-signin-wrap">
-      <a href="#" class="nav-signin">
-        <div class="nav-signin-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
-        Sign in
-        <span class="nav-signin-chevron">▾</span>
-      </a>
-      <div class="nav-signin-menu">
-        <a href="/parent-dashboard.html">
-          <div class="nav-signin-menu-ico" style="background:var(--terra-light);">👨‍👩‍👧</div>
-          <div>
-            <div>I'm a parent</div>
-            <div class="nav-signin-menu-sub">Find schools for my child</div>
-          </div>
-        </a>
-        <div class="nav-signin-menu-divider"></div>
-        <a href="/school-dashboard.html">
-          <div class="nav-signin-menu-ico" style="background:#E8F5EE;">🏫</div>
-          <div>
-            <div>I represent a school</div>
-            <div class="nav-signin-menu-sub">Manage our listing</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <button class="hamburger" onclick="var m=document.getElementById('mobileMenuMain');m.style.display=m.style.display==='block'?'none':'block';" aria-label="Menu" style="display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;">
-    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
-    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
-    <span style="display:block;width:20px;height:2px;background:#1a1814;border-radius:2px;"></span>
-  </button>
-</nav>
-<div id="mobileMenuMain" style="display:none;position:fixed;top:100px;left:0;right:0;background:#fff;border-bottom:1px solid #e8e3de;padding:12px 16px;z-index:900;box-shadow:0 4px 20px rgba(0,0,0,.1);">
-  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:4px 0 8px;">Browse</div>
-  <a href="/international-private-schools-portugal.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🇵🇹 Schools in Portugal</a>
-  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:12px 0 8px;">Guides</div>
-  <a href="/school-year-grade-by-age-guide.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">📊 School grades by age</a>
-  <a href="/ib-vs-cambridge-which-is-better.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🎓 IB vs Cambridge</a>
-  <a href="/ib-diploma-explained.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">📋 IB Diploma explained</a>
-  <a href="/cambridge-curriculum-explained.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🇬🇧 Cambridge explained</a>
-  <a href="/ib-schools-lisbon-2026.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;border-bottom:1px solid #e8e3de;">🇵🇹 IB schools in Lisbon</a>
-  <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4633A;margin:12px 0 8px;">About</div>
-  <a href="/about.html" style="display:block;padding:10px 0;font-size:14px;color:#1a1814;text-decoration:none;">About us</a>
-</div>
-</div>
-<script>
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.hamburger')&&!e.target.closest('.mobile-menu')){
-    const m=document.getElementById('mobileMenuMain');
-    if(m) m.classList.remove('open');
-  }
-});
-</script>
-
+<script src="/nav.js"></script>
 <!-- HERO -->
 <section class="hero">
   <h1>International schools,<br><em>reviewed independently.</em></h1>
@@ -842,43 +760,7 @@ document.addEventListener('click',function(e){
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo-top">Schools</div>
-        <div class="footer-logo-line"></div>
-        <div class="footer-logo-bottom">Reviews</div>
-        <p class="footer-desc">Independent school reviews, verified data and direct applications — all in one place.</p>
-      </div>
-      <div>
-        <div class="footer-col-title">Navigate</div>
-        <div class="footer-links">
-          <a href="#">Browse schools</a>
-          <a href="#">How it works</a>
-          <a href="/about.html">About us</a>
-          <a href="/parent-dashboard.html">For parents</a>
-          <a href="/school-dashboard.html">For schools</a>
-          <a href="mailto:editor@schools.reviews">Contact us</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Countries</div>
-        <div class="footer-links">
-          <a href="/international-private-schools-portugal.html">🇵🇹 Portugal</a>
-          <a href="/international-private-schools-spain.html">🇪🇸 Spain</a>
-          <a href="/international-private-schools-france.html">🇫🇷 France</a>
-          <a href="#">🇩🇪 Germany · 🇮🇹 Italy · 🇭🇷 Croatia</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-disclaimer">School data is compiled from publicly available sources including school websites, the IB Organization, and third-party directories. Schools Reviews does not guarantee the accuracy or completeness of this information. Fees, programmes, and school details change frequently — always verify directly with the school before making any decisions.</p>
-      <span class="footer-copy">© 2026 Schools Reviews</span>
-    </div>
-  </div>
-</footer>
-
+<script src="/footer.js"></script>
 <!-- HOW IT WORKS MODAL -->
 <div class="modal-overlay" id="hiwOverlay" onclick="closeHIW(event)">
   <div class="hiw-modal" style="position:relative;">
