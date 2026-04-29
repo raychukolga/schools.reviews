@@ -868,6 +868,66 @@ const schools = [
     website:"https://hyphaportugal.com",
     description:"Forest school in Sintra Natural Park. 3+ hours outdoors daily. 56 students, 17 nationalities. Bilingual EN+PT. Lunch included." },
 
+  { id:33, name:"Prime School — Lisbon", short:"PL",
+    address:"Rua Carlos Lobo de Ávila, 4, 1700-099 Lisboa",
+    loc:"Alvalade, Lisbon", prog:"Cambridge / A Levels",
+    price:17480, priceMax:22160,
+    grades:[{label:"Year 9 (age 13–14)",fee:17480},{label:"Year 10 (age 14–15)",fee:18550},{label:"Year 11 IGCSE (age 15–16)",fee:20910},{label:"Year 12 A Levels (age 16–17)",fee:21945},{label:"Year 13 A Levels (age 17–18)",fee:22160}],
+    appFee:850, enrollFee:"3,800", annualEnrollFee:"600",
+    lunchIncluded:false, lunchPrice:1800,
+    lessonsStart:"8:30", lessonsEnd:"15:30",
+    reviewed:false, verified:true, boarding:true,
+    bg:"#E6F1FB", color:"#0C447C", lat:38.7560, lng:-9.1440,
+    founded:2003, students:400, classSize:15,
+    ageFrom:13, ageTo:18,
+    academics:{ mainLanguage:"English", extraLanguages:["Portuguese","Spanish","French","Chinese","German"] },
+    website:"https://www.primeschool.pt",
+    description:"Cambridge IGCSE and A Levels. Boarding from age 13 (all-inclusive). 55% of IGCSE students achieve A*. ISO 9001 certified. 67+ nationalities.",
+    srNote:{
+      pros:["Strong academic results — 55% IGCSE A*, 75% A*–A; A Levels 30% A*, 60% A*–A","Boarding from age 13 — all-inclusive (meals, books, uniforms, transport, pocket money, insurance)","ISO 9001 certified — first international school in Portugal with this certification","Trial day available — child spends a full school day before enrolment commitment","Sibling discounts — 15% (2nd child), 25% (3rd), 40% (4th)","67+ nationalities across ~400 students"],
+      watch:[]
+    } },
+
+  { id:34, name:"Prime School — Estoril", short:"PE",
+    address:"Rua Antoine de Saint-Exupéry, Alapraia, 2765 Estoril",
+    loc:"Alapraia, Estoril", prog:"Cambridge / A Levels",
+    price:15955, priceMax:22160,
+    grades:[{label:"Year 7 (age 11–12)",fee:15955},{label:"Year 8 (age 12–13)",fee:17405},{label:"Year 9 (age 13–14)",fee:17480},{label:"Year 10 (age 14–15)",fee:18550},{label:"Year 11 IGCSE (age 15–16)",fee:20910},{label:"Year 12 A Levels (age 16–17)",fee:21945},{label:"Year 13 A Levels (age 17–18)",fee:22160}],
+    appFee:850, enrollFee:"3,800", annualEnrollFee:"600",
+    lunchIncluded:false, lunchPrice:1800,
+    lessonsStart:"8:30", lessonsEnd:"15:30",
+    reviewed:false, verified:true, boarding:false,
+    bg:"#E6F1FB", color:"#0C447C", lat:38.7000, lng:-9.3870,
+    founded:2003, students:400, classSize:15,
+    ageFrom:11, ageTo:18,
+    academics:{ mainLanguage:"English", extraLanguages:["Portuguese","Spanish","French","Chinese","German"] },
+    website:"https://www.primeschool.pt",
+    description:"Cambridge IGCSE and A Levels, ages 11–18. Part of Prime School network (3 campuses). Free inter-campus transport. 67+ nationalities.",
+    srNote:{
+      pros:["Strong academic results — 55% IGCSE A*, 75% A*–A; A Levels 30% A*, 60% A*–A","Trial day available — child spends a full school day before enrolment commitment","Free inter-campus shuttle to Lisbon and Sintra campuses","ISO 9001 certified — first international school in Portugal with this certification","Sibling discounts — 15% (2nd child), 25% (3rd), 40% (4th)"],
+      watch:[]
+    } },
+
+  { id:35, name:"Prime School — Sintra", short:"PS",
+    address:"Rua Mestre Neves, 20, Sintra",
+    loc:"Portela, Sintra", prog:"Cambridge",
+    price:9253, priceMax:14334,
+    grades:[{label:"Kindergarten (age 3–5)",fee:9253},{label:"Year 1 (age 5–6)",fee:10324},{label:"Year 2 (age 6–7)",fee:11707},{label:"Year 3 (age 7–8)",fee:12140},{label:"Year 4 (age 8–9)",fee:12202},{label:"Year 5 (age 9–10)",fee:12418},{label:"Year 6 (age 10–11)",fee:12681},{label:"Year 7 (age 11–12)",fee:13083},{label:"Year 8 (age 12–13)",fee:14273},{label:"Year 9 (age 13–14)",fee:14334}],
+    appFee:850, enrollFee:"3,800", annualEnrollFee:"600",
+    lunchIncluded:false, lunchPrice:1800,
+    lessonsStart:"8:30", lessonsEnd:"15:30",
+    reviewed:false, verified:true, boarding:false,
+    bg:"#E6F1FB", color:"#0C447C", lat:38.7717, lng:-9.3890,
+    founded:2003, students:400, classSize:15,
+    ageFrom:3, ageTo:14,
+    academics:{ mainLanguage:"English", extraLanguages:["Portuguese"] },
+    website:"https://www.primeschool.pt",
+    description:"Cambridge bilingual school (EN+PT), ages 3–14. Lovely outdoor space with garden. Part of Prime School network. Free inter-campus transport.",
+    srNote:{
+      pros:["Bilingual English + Portuguese from Preschool","Outdoor space with garden, rabbits and guinea pigs — lovely for young children","Free inter-campus shuttle to Estoril and Lisbon campuses","Trial day available — child spends a full school day before enrolment commitment","ISO 9001 certified — first international school in Portugal with this certification"],
+      watch:[]
+    } },
+
   { id:28, name:"Beyond International School", short:"BI",
     address:"R. Soeiro Pereira Gomes 59, 2730-178 Barcarena",
     loc:"Barcarena, Queluz", prog:"Cambridge",
@@ -1272,6 +1332,9 @@ const schoolPages = {
   27: '/hypha-international-school-portugal.html',
   28: '/beyond-international-school-portugal.html',
   73: '/clarity-international-school-portugal.html',
+  33: '/prime-school-lisbon-portugal.html',
+  34: '/prime-school-estoril-portugal.html',
+  35: '/prime-school-sintra-portugal.html',
 };
 
 function openModal(id){
