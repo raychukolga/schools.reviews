@@ -362,12 +362,17 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
     <div class="filter-main">
       <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
       <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help" style="margin-right:2px;" title="What's the difference between curricula?"><span class="filter-help-tip" style="white-space:nowrap;">Not sure which curriculum? Read our guide →</span>?</a>
-      <button class="chip prog-chip active" onclick="setP('all',this)">All</button>
-      <button class="chip prog-chip" onclick="setP('Full IB',this)">Full IB</button>
-      <button class="chip prog-chip" onclick="setP('IB Diploma',this)">IB Diploma</button>
-      <button class="chip prog-chip" onclick="setP('British',this)">British / Cambridge</button>
-      <button class="chip prog-chip" onclick="setP('American',this)">American</button>
-      <button class="chip prog-chip" onclick="setP('French',this)">French</button>
+      <button class="chip prog-chip active" data-val="all" onclick="setP('all',this)">All</button>
+      <button class="chip prog-chip" data-val="IB" onclick="setP('IB',this)">IB</button>
+      <button class="chip prog-chip" data-val="Cambridge" onclick="setP('Cambridge',this)">Cambridge</button>
+      <button class="chip prog-chip" data-val="IEYC" onclick="setP('IEYC',this)">IEYC/IPC</button>
+      <button class="chip prog-chip" data-val="American" onclick="setP('American',this)">American</button>
+      <button class="chip prog-chip" data-val="French" onclick="setP('French',this)">French</button>
+      <button class="chip prog-chip" data-val="German" onclick="setP('German',this)">German</button>
+      <button class="chip prog-chip" data-val="Portuguese" onclick="setP('Portuguese',this)">Portuguese</button>
+      <button class="chip prog-chip" data-val="Montessori" onclick="setP('Montessori',this)">Montessori</button>
+      <button class="chip prog-chip" data-val="Waldorf" onclick="setP('Waldorf',this)">Waldorf</button>
+      <button class="chip prog-chip" data-val="Forest School" onclick="setP('Forest School',this)">Forest School</button>
       <button class="chip price-chip active" onclick="setPr('all',this)">All prices</button>
       <button class="chip price-chip" onclick="setPr('low',this)">Under €8k</button>
       <button class="chip price-chip" onclick="setPr('mid',this)">€8–15k</button>
@@ -389,12 +394,18 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         </div>
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="Full IB" onchange="syncProgChip('Full IB')"> Full IB <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> IB (any) <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_full" value="Full IB" onchange="syncProgChip('Full IB')"> <span style="color:var(--gray);">↳ Full IB (Pre-K–18)</span></label>
           <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_british" value="British" onchange="syncProgChip('British')"> British / Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_cambridge" value="Cambridge" onchange="syncProgChip('Cambridge')"> Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_ieyc" value="IEYC" onchange="syncProgChip('IEYC')"> IEYC/IPC</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_german" value="German" onchange="syncProgChip('German')"> German</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_portuguese" value="Portuguese" onchange="syncProgChip('Portuguese')"> Portuguese national</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_montessori" value="Montessori" onchange="syncProgChip('Montessori')"> Montessori</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_waldorf" value="Waldorf" onchange="syncProgChip('Waldorf')"> Waldorf</label>
+          <label class="fg-opt"><input type="radio" name="progExp" id="pe_forest" value="Forest School" onchange="syncProgChip('Forest School')"> Forest School</label>
         </div>
       </div>
       <div>
@@ -911,7 +922,7 @@ const schools = [
 
   { id:27, name:"Hypha International School", short:"HY",
     address:"R. Dr. Sá Carneiro 80, 2705-000 Sintra",
-    loc:"Colares, Sintra", prog:"Cambridge",
+    loc:"Colares, Sintra", prog:"Cambridge / Forest School",
     price:10900, priceMax:14900,
     earlyPrice:"10,900", primaryPrice:"12,800–14,900", middlePrice:null, secondaryPrice:null,
     appFee:50, enrollFee:"1,500", annualEnrollFee:"850",
@@ -1172,10 +1183,16 @@ function progPill(p){
 function getFiltered(){
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
-    if(state.prog === 'Full IB'){
+    if(state.prog === 'IB'){
+      if(!s.prog?.includes('IB')) return false;
+    } else if(state.prog === 'Full IB'){
       if(s.prog !== 'Full IB') return false;
     } else if(state.prog === 'IB Diploma'){
       if(!(s.prog?.includes('IB Diploma'))) return false;
+    } else if(state.prog === 'Cambridge'){
+      if(!s.prog?.toLowerCase().includes('cambridge') && !s.prog?.toLowerCase().includes('british')) return false;
+    } else if(state.prog === 'IEYC'){
+      if(!s.prog?.toLowerCase().includes('ieyc') && !s.prog?.toLowerCase().includes('ipc')) return false;
     } else if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
     if(s.price){
       if(state.price === 'low' && s.price > 8000) return false;
@@ -1614,10 +1631,9 @@ function openCompare(){
 }
 
 function syncProgChip(val){
-  // Sync top chips
   document.querySelectorAll('.prog-chip').forEach(c=>c.classList.remove('active'));
   document.querySelectorAll('.prog-chip').forEach(c=>{
-    if((val==='all'&&c.textContent==='All')||c.textContent===val) c.classList.add('active');
+    if((c.dataset.val||c.textContent.trim()) === val) c.classList.add('active');
   });
   state.prog = val;
   render();
