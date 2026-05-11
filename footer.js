@@ -5,9 +5,11 @@
     '  <div class="footer-inner">\n' +
     '    <div class="footer-grid">\n' +
     '      <div>\n' +
-    '        <div class="footer-logo-top">Schools</div>\n' +
-    '        <div class="footer-logo-line"></div>\n' +
-    '        <div class="footer-logo-bottom">Reviews</div>\n' +
+    '        <div class="footer-logo">\n' +
+    '          <div class="footer-logo-top">Schools</div>\n' +
+    '          <div class="footer-logo-line"></div>\n' +
+    '          <div class="footer-logo-bottom">REVIEWS</div>\n' +
+    '        </div>\n' +
     '        <p class="footer-desc">Independent school reviews, verified data and direct applications — all in one place.</p>\n' +
     '      </div>\n' +
     '      <div>\n' +
