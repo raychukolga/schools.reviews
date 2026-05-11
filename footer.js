@@ -23,12 +23,13 @@
     '        </div>\n' +
     '      </div>\n' +
     '      <div>\n' +
-    '        <div class="footer-col-title">Countries</div>\n' +
+    '        <div class="footer-col-title">Guides</div>\n' +
     '        <div class="footer-links">\n' +
-    '          <a href="/international-private-schools-portugal.html">🇵🇹 Portugal</a>\n' +
-    '          <a href="/international-private-schools-spain.html">🇪🇸 Spain</a>\n' +
-    '          <a href="/international-private-schools-france.html">🇫🇷 France</a>\n' +
-    '          <a href="#">🇩🇪 Germany · 🇮🇹 Italy · 🇭🇷 Croatia</a>\n' +
+    '          <a href="/ib-vs-cambridge-which-is-better.html">IB vs Cambridge</a>\n' +
+    '          <a href="/ib-diploma-explained.html">IB Diploma explained</a>\n' +
+    '          <a href="/cambridge-curriculum-explained.html">Cambridge explained</a>\n' +
+    '          <a href="/international-school-accreditations-guide.html">Accreditations explained</a>\n' +
+    '          <a href="/school-year-grade-by-age-guide.html">School grades by age</a>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +

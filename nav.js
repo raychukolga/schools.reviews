@@ -51,6 +51,7 @@
     '        <a href="/ib-vs-cambridge-which-is-better.html">🎓 IB vs Cambridge</a>\n' +
     '        <a href="/ib-diploma-explained.html">📋 IB Diploma explained</a>\n' +
     '        <a href="/cambridge-curriculum-explained.html">🇬🇧 Cambridge explained</a>\n' +
+    '        <a href="/international-school-accreditations-guide.html">✅ Accreditations explained</a>\n' +
     '        <div class="menu-divider"></div>\n' +
     '        <a href="/ib-schools-lisbon-2026.html">🇵🇹 IB schools in Lisbon</a>\n' +
     '        <a href="/international-schools-lisbon.html">🏫 Int’l schools in Lisbon</a>\n' +
