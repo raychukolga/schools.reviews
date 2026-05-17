@@ -365,7 +365,6 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
       <button class="chip prog-chip active" data-val="all" onclick="setP('all',this)">All</button>
       <button class="chip prog-chip" data-val="IB" onclick="setP('IB',this)">IB</button>
       <button class="chip prog-chip" data-val="Cambridge" onclick="setP('Cambridge',this)">Cambridge</button>
-      <button class="chip prog-chip" data-val="IEYC" onclick="setP('IEYC',this)">IEYC/IPC</button>
       <button class="chip prog-chip" data-val="American" onclick="setP('American',this)">American</button>
       <button class="chip prog-chip" data-val="French" onclick="setP('French',this)">French</button>
       <button class="chip prog-chip" data-val="German" onclick="setP('German',this)">German</button>
@@ -398,7 +397,6 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
           <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_full" value="Full IB" onchange="syncProgChip('Full IB')"> <span style="color:var(--gray);">↳ Full IB (Pre-K–18)</span></label>
           <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
           <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_cambridge" value="Cambridge" onchange="syncProgChip('Cambridge')"> Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_ieyc" value="IEYC" onchange="syncProgChip('IEYC')"> IEYC/IPC</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
           <label class="fg-opt"><input type="radio" name="progExp" id="pe_german" value="German" onchange="syncProgChip('German')"> German</label>
@@ -1197,8 +1195,6 @@ function getFiltered(){
       if(!(s.prog?.includes('IB Diploma'))) return false;
     } else if(state.prog === 'Cambridge'){
       if(!s.prog?.toLowerCase().includes('cambridge') && !s.prog?.toLowerCase().includes('british')) return false;
-    } else if(state.prog === 'IEYC'){
-      if(!s.prog?.toLowerCase().includes('ieyc') && !s.prog?.toLowerCase().includes('ipc')) return false;
     } else if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
     if(s.price){
       if(state.price === 'low' && s.price > 8000) return false;
