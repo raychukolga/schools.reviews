@@ -1144,7 +1144,7 @@ const schools = [
     appFee:null, enrollFee:null, annualEnrollFee:900,
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"16:00",
-    reviewed:false, verified:false, boarding:false,
+    reviewed:true, verified:true, verDate:'May 2026', boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147,
     founded:2025, ageFrom:3, ageTo:12, classSize:15,
     website:null,
@@ -1257,7 +1257,7 @@ function render(){
         </div>
         <div class="badges">
           ${s.reviewed ? '<span class="rev-badge">★ Reviewed</span>' : ''}
-          ${s.verified ? '<span class="ver-badge">✓ Apr 2026</span>' : ''}
+          ${s.verified ? `<span class="ver-badge">✓ ${s.verDate||'Apr 2026'}</span>` : ''}
         </div>
       </div>
       <div class="pills">
@@ -1376,7 +1376,7 @@ function openModal(id){
       <div class="modal-badges">
         <span class="mbadge mb-prog">${s.prog||'—'}</span>
         ${s.boarding?'<span class="mbadge mb-boarding">Boarding ✓</span>':''}
-        ${s.verified?'<span class="mbadge mb-verified">✓ Verified Apr 2026</span>':''}
+        ${s.verified?`<span class="mbadge mb-verified">✓ Verified ${s.verDate||'Apr 2026'}</span>`:''}
         ${s.reviewed?'<span class="mbadge mb-reviewed">★ Reviewed</span>':''}
       </div>
       <div class="modal-actions">
