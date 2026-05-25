@@ -157,7 +157,7 @@
       '.nearby-grid{grid-template-columns:1fr;}',
       '.footer-grid{grid-template-columns:1fr;gap:20px;}',
       'footer{padding:32px 16px 20px;}',
-      '.sr-mobile-bar{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -16px 20px;padding:0 16px 4px;}',
+      '.sr-mobile-bar{display:flex;align-items:flex-start;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -16px 20px;padding:0 16px 4px;}',
       '.sr-mobile-bar::-webkit-scrollbar{display:none;}',
       '.sr-mobile-bar .map-card{flex:0 0 220px;margin-bottom:0;}',
       '.sr-mobile-bar .sidebar-card{flex:0 0 220px;margin-bottom:0;}',
