@@ -276,24 +276,41 @@ document.addEventListener('DOMContentLoaded', function () {
     mapCard.parentNode.insertBefore(card, mapCard.nextSibling);
   }
 
-  // Mobile layout: photos + map in a horizontal strip right after assessment
+  // Mobile layout: photos + map strip after assessment, save/compare after fees
   function buildMobileBar() {
     if (document.querySelector('.sr-mobile-bar')) return;
     var mainCol = document.querySelector('.main-col');
     var sidebar = document.querySelector('.sidebar');
     if (!mainCol || !sidebar) return;
+
+    // Photos + map after assessment
     var firstSection = mainCol.querySelector('.section');
     var mMapCard = sidebar.querySelector('.map-card');
     var mPhotoCard = null;
     sidebar.querySelectorAll('.sidebar-card').forEach(function (c) {
       if (!mPhotoCard && c.querySelector('img')) mPhotoCard = c;
     });
-    if (!firstSection || (!mMapCard && !mPhotoCard)) return;
-    var bar = document.createElement('div');
-    bar.className = 'sr-mobile-bar';
-    if (mPhotoCard) bar.appendChild(mPhotoCard);
-    if (mMapCard) bar.appendChild(mMapCard);
-    mainCol.insertBefore(bar, firstSection.nextElementSibling);
+    if (firstSection && (mMapCard || mPhotoCard)) {
+      var bar = document.createElement('div');
+      bar.className = 'sr-mobile-bar';
+      if (mPhotoCard) bar.appendChild(mPhotoCard);
+      if (mMapCard) bar.appendChild(mMapCard);
+      mainCol.insertBefore(bar, firstSection.nextElementSibling);
+    }
+
+    // Save/compare card after fees section
+    var scCard = sidebar.querySelector('.sr-save-compare-card');
+    if (scCard) {
+      var feesSection = null;
+      mainCol.querySelectorAll('.section').forEach(function (s) {
+        var t = s.querySelector('.sec-title');
+        if (t && /fees/i.test(t.textContent)) feesSection = s;
+      });
+      if (feesSection) {
+        scCard.style.cssText = '';
+        mainCol.insertBefore(scCard, feesSection.nextElementSibling);
+      }
+    }
   }
   if (window.matchMedia('(max-width:768px)').matches) buildMobileBar();
 });
