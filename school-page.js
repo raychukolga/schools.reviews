@@ -203,9 +203,9 @@ document.addEventListener('DOMContentLoaded', function () {
     hero.appendChild(strip);
   }
 
-  // Save / Compare buttons — injected before .apply-card in sidebar
-  var applyCard = document.querySelector('.apply-card');
-  if (applyCard && !document.querySelector('.sr-save-compare-card')) {
+  // Save / Compare buttons — injected after map card (above photos)
+  var mapCard = document.querySelector('.map-card');
+  if (mapCard && !document.querySelector('.sr-save-compare-card')) {
     var schoolName = (document.querySelector('.school-name') || {}).textContent || document.title;
     var schoolUrl = window.location.pathname;
     var saved = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     card.appendChild(saveBtn);
     card.appendChild(cmpBtn);
-    applyCard.parentNode.insertBefore(card, applyCard);
+    mapCard.parentNode.insertBefore(card, mapCard.nextSibling);
   }
 });
 
