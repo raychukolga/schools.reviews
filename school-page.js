@@ -31,7 +31,7 @@
       '.school-hero{background:var(--white);border-bottom:1px solid var(--border);padding:32px 40px 28px;}',
       '.breadcrumb{font-size:11px;color:var(--gray);margin-bottom:16px;}',
       '.breadcrumb a{color:var(--terra);text-decoration:none;}',
-      '.hero-inner{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:flex-start;max-width:900px;}',
+      '.hero-inner{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:flex-start;max-width:1140px;}',
       '.school-monogram{width:52px;height:52px;background:var(--ink);color:var(--white);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;font-family:"DM Sans",sans-serif;}',
       '.school-name{font-family:"Cormorant Garamond",serif;font-size:34px;font-weight:600;color:var(--ink);line-height:1.1;margin-bottom:6px;}',
       '.school-loc{font-size:13px;color:var(--gray);margin-bottom:14px;}',
@@ -42,8 +42,9 @@
       '.price-label{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}',
       '.price-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600;color:var(--terra);line-height:1;}',
       '.price-sub{font-size:11px;color:var(--gray);margin-top:4px;}',
-      '.page-wrap{max-width:900px;margin:0 auto;padding:32px 40px 80px;display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:flex-start;}',
+      '.page-wrap{max-width:1200px;margin:0 auto;padding:32px 40px 80px;display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:flex-start;}',
       '.main-col{}',
+      '.sidebar{position:sticky;top:88px;}',
       '.section{margin-bottom:28px;}',
       '.sec-title{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);padding-bottom:9px;border-bottom:2px solid var(--ink);margin-bottom:14px;}',
       '.sec-title.blue{color:var(--blue);border-bottom-color:var(--blue);}',
@@ -173,8 +174,97 @@
       '.campus-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}',
       '.campus-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--terra);margin-bottom:4px;}',
       '.campus-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}',
-      '.campus-desc{font-size:12px;color:#555;line-height:1.6;}'
+      '.campus-desc{font-size:12px;color:#555;line-height:1.6;}',
+      '.faq-item{border-bottom:1px solid var(--border);}',
+      '.faq-item:last-child{border-bottom:none;}',
+      '.faq-q{font-size:13px;font-weight:600;color:var(--ink);padding:13px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}',
+      '.faq-q:hover{color:var(--terra);}',
+      '.faq-icon{font-size:16px;color:var(--gray);flex-shrink:0;margin-left:12px;transition:color .15s;}',
+      '.faq-a{font-size:13px;color:#555;line-height:1.7;padding-bottom:13px;display:none;}',
+      '.current-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);border:1px solid #b8ddb8;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--green);margin-bottom:14px;}'
     ].join('\n');
     document.head.appendChild(css);
   }
 })();
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Terracotta editorial strip — injected into .school-hero
+  var hero = document.querySelector('.school-hero');
+  if (hero && !hero.querySelector('.sr-editorial-strip')) {
+    var strip = document.createElement('div');
+    strip.className = 'sr-editorial-strip';
+    strip.style.cssText = 'margin-top:16px;margin-left:-40px;margin-right:-40px;margin-bottom:-28px;padding:10px 40px;background:var(--terra);display:flex;align-items:center;justify-content:center;gap:8px;';
+    strip.innerHTML = '<span style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5);display:inline-block;flex-shrink:0;"></span>'
+      + '<span style="font-size:12px;font-weight:600;color:white;letter-spacing:0.05em;">Independent editorial· Schools do not pay for reviews · Verified by Schools Reviews May 2026</span>'
+      + '<span style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5);display:inline-block;flex-shrink:0;"></span>';
+    hero.appendChild(strip);
+  }
+
+  // Save / Compare buttons — injected before .apply-card in sidebar
+  var applyCard = document.querySelector('.apply-card');
+  if (applyCard && !document.querySelector('.sr-save-compare-card')) {
+    var schoolName = (document.querySelector('.school-name') || {}).textContent || document.title;
+    var schoolUrl = window.location.pathname;
+    var saved = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
+    var isSaved = saved.some(function (s) { return s.url === schoolUrl; });
+
+    var card = document.createElement('div');
+    card.className = 'sidebar-card sr-save-compare-card';
+    card.style.cssText = 'padding:12px 14px;';
+
+    var saveBtn = document.createElement('button');
+    saveBtn.id = 'sr-save-btn';
+    saveBtn.textContent = isSaved ? '♥ Saved' : '♡ Save school';
+    saveBtn.style.cssText = 'width:100%;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:600;font-family:"DM Sans",sans-serif;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--ink);margin-bottom:7px;transition:background .15s,color .15s;';
+    if (isSaved) {
+      saveBtn.style.background = 'var(--terra-light)';
+      saveBtn.style.borderColor = '#e8c4b0';
+      saveBtn.style.color = 'var(--terra)';
+    }
+    saveBtn.addEventListener('click', function () {
+      var list = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
+      var idx = list.findIndex(function (s) { return s.url === schoolUrl; });
+      if (idx >= 0) {
+        list.splice(idx, 1);
+        saveBtn.textContent = '♡ Save school';
+        saveBtn.style.background = 'var(--white)';
+        saveBtn.style.borderColor = 'var(--border)';
+        saveBtn.style.color = 'var(--ink)';
+      } else {
+        list.push({ name: schoolName, url: schoolUrl });
+        saveBtn.textContent = '♥ Saved';
+        saveBtn.style.background = 'var(--terra-light)';
+        saveBtn.style.borderColor = '#e8c4b0';
+        saveBtn.style.color = 'var(--terra)';
+      }
+      localStorage.setItem('sr_saved_schools', JSON.stringify(list));
+    });
+
+    var cmpBtn = document.createElement('button');
+    cmpBtn.textContent = '⇄ Add to compare';
+    cmpBtn.style.cssText = 'width:100%;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:600;font-family:"DM Sans",sans-serif;cursor:pointer;border:1.5px solid #0C447C;background:#E6F1FB;color:#0C447C;transition:background .15s;';
+    cmpBtn.addEventListener('click', function () {
+      var compareUrl = '/international-private-schools-portugal.html';
+      var favourites = JSON.parse(localStorage.getItem('sr_favourites') || '[]');
+      var slug = schoolUrl.replace(/^\//, '').replace(/\.html$/, '');
+      if (!favourites.includes(slug)) {
+        favourites.push(slug);
+        localStorage.setItem('sr_favourites', JSON.stringify(favourites));
+      }
+      window.location.href = compareUrl + '#compare';
+    });
+
+    card.appendChild(saveBtn);
+    card.appendChild(cmpBtn);
+    applyCard.parentNode.insertBefore(card, applyCard);
+  }
+});
+
+function toggleFaq(el) {
+  var answer = el.nextElementSibling;
+  var icon = el.querySelector('.faq-icon');
+  if (!answer) return;
+  var isOpen = answer.style.display === 'block';
+  answer.style.display = isOpen ? 'none' : 'block';
+  if (icon) icon.textContent = isOpen ? '+' : '−';
+}
