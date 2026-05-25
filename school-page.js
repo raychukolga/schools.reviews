@@ -161,6 +161,8 @@
       '.sr-mobile-bar::-webkit-scrollbar{display:none;}',
       '.sr-mobile-bar .map-card{flex:0 0 220px;margin-bottom:0;display:flex;flex-direction:column;}',
       '.sr-mobile-bar .map-card .map-card-map{flex:1;height:auto;min-height:120px;}',
+      '.sr-mobile-bar .map-card:only-child{flex:1;}',
+      '.sr-mobile-bar .map-card:only-child .map-card-map{height:200px;}',
       '.sr-mobile-bar .sidebar-card{flex:0 0 220px;margin-bottom:0;}',
       '}',
       '.campus-banner{background:var(--blue-light);border:1.5px solid #b8d4ef;border-radius:12px;padding:14px 18px;margin-bottom:20px;}',
