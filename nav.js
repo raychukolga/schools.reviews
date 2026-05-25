@@ -12,6 +12,14 @@
     css.textContent =
       '.nav-back{text-decoration:none;color:var(--gray,#888);font-size:13px;transition:color .2s}' +
       '.nav-back:hover{color:var(--ink,#1a1814)}' +
+      '.nav-action-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;transition:all .15s;border:1.5px solid transparent;}' +
+      '.nav-saved-btn{background:var(--terra-light,#F5EDE8);border-color:#e8c4b0;color:#8B3A1F;}' +
+      '.nav-saved-btn.has-items{background:var(--terra,#C4633A);border-color:var(--terra,#C4633A);color:#fff;}' +
+      '.nav-saved-btn:hover{background:var(--terra,#C4633A);border-color:var(--terra,#C4633A);color:#fff;}' +
+      '.nav-compare-btn{background:#E6F1FB;border-color:#b8d0ef;color:#0C447C;}' +
+      '.nav-compare-btn.has-items{background:#0C447C;border-color:#0C447C;color:#fff;}' +
+      '.nav-compare-btn:hover{background:#0C447C;border-color:#0C447C;color:#fff;}' +
+      '._nav_count{font-size:11px;opacity:.8;}' +
       '#_nav_menu{display:none;position:fixed;top:68px;left:0;right:0;background:#fff;' +
         'border-bottom:1px solid #e8e3de;padding:12px 16px;z-index:900;box-shadow:0 4px 20px rgba(0,0,0,.1)}' +
       '#_nav_menu.open{display:block}' +
@@ -58,6 +66,8 @@
     '      </div>\n' +
     '    </div>\n' +
     (backLink ? '    ' + backLink + '\n' : '') +
+    '    <a href="/international-private-schools-portugal.html" id="_nav_saved_btn" class="nav-action-btn nav-saved-btn nav-hide-mobile">♡ Saved <span id="_nav_saved_count" class="_nav_count"></span></a>\n' +
+    '    <a href="/international-private-schools-portugal.html#compare" id="_nav_compare_btn" class="nav-action-btn nav-compare-btn nav-hide-mobile">⇄ Compare <span id="_nav_cmp_count" class="_nav_count"></span></a>\n' +
     '    <a href="#" class="nav-signin nav-hide-mobile">' +
       '<div class="nav-signin-icon">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2">' +
@@ -97,6 +107,28 @@
   } else {
     document.body.insertAdjacentHTML('afterbegin', html);
   }
+
+  // Update saved / compare counters from localStorage
+  function updateNavCounts() {
+    var saved = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
+    var compare = JSON.parse(localStorage.getItem('sr_compare_queue') || '[]');
+
+    var savedBtn = document.getElementById('_nav_saved_btn');
+    var savedCount = document.getElementById('_nav_saved_count');
+    var cmpBtn = document.getElementById('_nav_compare_btn');
+    var cmpCount = document.getElementById('_nav_cmp_count');
+
+    if (savedBtn && savedCount) {
+      savedCount.textContent = saved.length > 0 ? '(' + saved.length + ')' : '';
+      savedBtn.classList.toggle('has-items', saved.length > 0);
+    }
+    if (cmpBtn && cmpCount) {
+      cmpCount.textContent = compare.length > 0 ? '(' + compare.length + ')' : '';
+      cmpBtn.classList.toggle('has-items', compare.length > 0);
+    }
+  }
+  updateNavCounts();
+  window.addEventListener('storage', updateNavCounts);
 
   var hamburger = document.getElementById('_nav_hamburger');
   var menu = document.getElementById('_nav_menu');
