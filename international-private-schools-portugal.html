@@ -1195,7 +1195,7 @@ const schools = [
 
 const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null };
 const compareList = new Set();
-const favourites = new Set();
+const favourites = new Set(JSON.parse(localStorage.getItem('sr_favourites')||'[]'));
 
 function fmt(v){ return v ? '€'+v : '—'; }
 function val(v){ return v || '—'; }
@@ -1635,6 +1635,7 @@ function toggleFav(id){
   const btn=document.getElementById('favBtn');
   if(favourites.has(id)){favourites.delete(id);btn.textContent='♡ Save';}
   else{favourites.add(id);btn.textContent='♥ Saved';}
+  localStorage.setItem('sr_favourites',JSON.stringify([...favourites]));
 }
 function toggleCmp(id){
   const btn=document.getElementById('cmpBtn');
@@ -1653,40 +1654,64 @@ function updateCmpBar(){
   document.getElementById('compareLabel').textContent=compareList.size+' selected: '+names;
 }
 function clearCompare(){compareList.clear();updateCmpBar();}
+const ALL_CMP_FIELDS=[
+  {id:'prog',   l:'Programme',        v:s=>s.prog||'—'},
+  {id:'lang',   l:'Teaching language',v:s=>s.prog&&(s.prog.includes('French')||s.prog.includes('Français'))?'French':s.prog&&s.prog.includes('German')?'German':'English'},
+  {id:'class',  l:'Class size',       v:s=>s.classSize?'Max '+s.classSize:'—'},
+  {id:'founded',l:'Founded',          v:s=>s.founded||'—'},
+  {id:'ibavg',  l:'Exam result (IB avg)',v:s=>s.ibAvg?s.ibAvg+' / 45':'—'},
+  {id:'price',  l:'Annual tuition',   v:s=>s.price?`€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}`:'On request'},
+  {id:'enroll', l:'Enrollment fee',   v:s=>s.enrollFee?'€'+s.enrollFee:'—'},
+  {id:'lunch',  l:'Lunch',            v:s=>s.lunchIncluded?'✓ Included':s.lunchPrice?'Not incl. · €'+s.lunchPrice+'/yr':'—'},
+];
+let activeCmpFields=new Set(JSON.parse(localStorage.getItem('sr_cmp_fields')||JSON.stringify(ALL_CMP_FIELDS.map(f=>f.id))));
+
 function openCompare(){
   const list=[...compareList].map(id=>schools.find(s=>s.id===id));
-  const fields=[
-    {l:'Annual tuition',v:s=>s.price?`€${s.price.toLocaleString()}–€${s.priceMax.toLocaleString()}`:'On request'},
-    {l:'Early Years',v:s=>s.earlyPrice?'€'+s.earlyPrice:'—'},
-    {l:'Primary',v:s=>s.primaryPrice?'€'+s.primaryPrice:'—'},
-    {l:'Middle',v:s=>s.middlePrice?'€'+s.middlePrice:'—'},
-    {l:'Secondary',v:s=>s.secondaryPrice?'€'+s.secondaryPrice:'—'},
-    {l:'Application fee',v:s=>s.appFee?'€'+s.appFee:'—'},
-    {l:'Enrollment fee',v:s=>s.enrollFee?'€'+s.enrollFee:'—'},
-    {l:'Lunch',v:s=>s.lunchIncluded?'✓ Included':s.lunchPrice?'€'+s.lunchPrice:'—'},
-    {l:'Boarding',v:s=>s.boarding?'✓ Yes':'✗ No'},
-    {l:'Founded',v:s=>s.founded||'—'},
-    {l:'Class size',v:s=>s.classSize?'Max '+s.classSize:'—'},
-    {l:'Verified',v:s=>s.verified?'✓':'—'},
-  ];
   const overlay=document.createElement('div');
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;';
-  overlay.innerHTML=`<div style="background:#fff;border-radius:16px;max-width:860px;width:100%;max-height:88vh;overflow:auto;position:relative;">
-    <div style="padding:20px 24px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
-      <div style="font-size:17px;font-weight:700;">Comparing ${list.length} schools</div>
-      <button onclick="this.closest('div[style]').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;">✕</button>
-    </div>
-    <div style="overflow-x:auto;"><table style="border-collapse:collapse;width:100%;">
+
+  function renderTable(){
+    const active=ALL_CMP_FIELDS.filter(f=>activeCmpFields.has(f.id));
+    return `<div style="overflow-x:auto;"><table style="border-collapse:collapse;width:100%;">
       <thead><tr>
-        <th style="padding:10px 16px;text-align:left;font-size:11px;color:#888;background:#fafafa;min-width:130px;">Feature</th>
-        ${list.map(s=>`<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:700;background:#fafafa;min-width:150px;">${s.name}</th>`).join('')}
+        <th style="padding:10px 16px;text-align:left;font-size:11px;color:#888;background:#fafafa;min-width:140px;"></th>
+        ${list.map(s=>`<th style="padding:10px 16px;text-align:left;font-size:13px;font-weight:700;background:#fafafa;min-width:170px;line-height:1.3;">${s.name}</th>`).join('')}
       </tr></thead>
-      <tbody>${fields.map(f=>`<tr>
+      <tbody>${active.map(f=>`<tr>
         <td style="padding:9px 16px;font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #f5f5f5;white-space:nowrap;">${f.l}</td>
-        ${list.map(s=>`<td style="padding:9px 16px;font-size:12px;border-bottom:1px solid #f5f5f5;">${f.v(s)}</td>`).join('')}
+        ${list.map(s=>`<td style="padding:9px 16px;font-size:13px;border-bottom:1px solid #f5f5f5;">${f.v(s)}</td>`).join('')}
       </tr>`).join('')}</tbody>
-    </table></div>
+    </table></div>`;
+  }
+
+  function renderCustomize(){
+    return ALL_CMP_FIELDS.map(f=>`
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;padding:4px 0;">
+        <input type="checkbox" data-fid="${f.id}" ${activeCmpFields.has(f.id)?'checked':''} style="accent-color:#C4633A;width:14px;height:14px;">
+        ${f.l}
+      </label>`).join('');
+  }
+
+  overlay.innerHTML=`<div style="background:#fff;border-radius:16px;max-width:900px;width:100%;max-height:90vh;overflow:auto;position:relative;">
+    <div style="padding:18px 24px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div style="font-size:17px;font-weight:700;">Comparing ${list.length} schools</div>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;line-height:1;">✕</button>
+    </div>
+    <div style="padding:12px 24px;border-bottom:1px solid #f0f0f0;background:#fafafa;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:8px;">Показывать параметры</div>
+      <div id="cmpCustomize" style="display:flex;flex-wrap:wrap;gap:4px 20px;">${renderCustomize()}</div>
+    </div>
+    <div id="cmpTable">${renderTable()}</div>
   </div>`;
+
+  overlay.querySelector('#cmpCustomize').addEventListener('change',e=>{
+    const fid=e.target.dataset.fid;
+    if(e.target.checked) activeCmpFields.add(fid); else activeCmpFields.delete(fid);
+    localStorage.setItem('sr_cmp_fields',JSON.stringify([...activeCmpFields]));
+    overlay.querySelector('#cmpTable').innerHTML=renderTable();
+  });
+
   document.body.appendChild(overlay);
   overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
 }
