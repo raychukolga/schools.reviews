@@ -244,17 +244,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     var cmpBtn = document.createElement('button');
-    cmpBtn.textContent = '⇄ Add to compare';
+    var queue = JSON.parse(localStorage.getItem('sr_compare_queue') || '[]');
+    var inQueue = queue.includes(schoolUrl);
+    cmpBtn.textContent = inQueue ? '✓ In compare' : '⇄ Add to compare';
     cmpBtn.style.cssText = 'width:100%;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:600;font-family:"DM Sans",sans-serif;cursor:pointer;border:1.5px solid #0C447C;background:#E6F1FB;color:#0C447C;transition:background .15s;';
+    if (inQueue) { cmpBtn.style.background = '#0C447C'; cmpBtn.style.color = 'white'; }
     cmpBtn.addEventListener('click', function () {
-      var compareUrl = '/international-private-schools-portugal.html';
-      var favourites = JSON.parse(localStorage.getItem('sr_favourites') || '[]');
-      var slug = schoolUrl.replace(/^\//, '').replace(/\.html$/, '');
-      if (!favourites.includes(slug)) {
-        favourites.push(slug);
-        localStorage.setItem('sr_favourites', JSON.stringify(favourites));
+      var q = JSON.parse(localStorage.getItem('sr_compare_queue') || '[]');
+      if (q.includes(schoolUrl)) {
+        q = q.filter(function(u){ return u !== schoolUrl; });
+        cmpBtn.textContent = '⇄ Add to compare';
+        cmpBtn.style.background = '#E6F1FB';
+        cmpBtn.style.color = '#0C447C';
+      } else {
+        if (q.length >= 4) { alert('Максимум 4 школы для сравнения'); return; }
+        q.push(schoolUrl);
+        cmpBtn.textContent = '✓ In compare';
+        cmpBtn.style.background = '#0C447C';
+        cmpBtn.style.color = 'white';
       }
-      window.location.href = compareUrl + '#compare';
+      localStorage.setItem('sr_compare_queue', JSON.stringify(q));
     });
 
     card.appendChild(saveBtn);

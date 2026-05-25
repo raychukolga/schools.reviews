@@ -1414,6 +1414,15 @@ const schoolPages = {
   132: '/park-international-school-restelo-portugal.html',
 };
 
+// Load compare queue saved from individual school pages
+(function(){
+  const queue = JSON.parse(localStorage.getItem('sr_compare_queue')||'[]');
+  if (!queue.length) return;
+  const urlToId = {};
+  Object.entries(schoolPages).forEach(([id, url]) => { urlToId[url] = Number(id); });
+  queue.forEach(url => { const id = urlToId[url]; if (id && compareList.size < 4) compareList.add(id); });
+})();
+
 function openModal(id){
   const s = schools.find(x=>x.id===id);
   if(!s) return;
@@ -1786,6 +1795,7 @@ function initMap(){
 }
 
 render();
+updateCmpBar();
 window.addEventListener('load', initMap);
 
 // Open school from URL param e.g. ?school=18
