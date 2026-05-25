@@ -141,6 +141,7 @@
       '.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:16px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}',
       '.footer-disclaimer{font-size:11px;line-height:1.7;max-width:640px;}',
       '.footer-copy{font-size:11px;white-space:nowrap;}',
+      '.sr-mobile-bar{display:none;}',
       '@media(max-width:768px){',
       'nav{padding:0 16px;height:56px;}',
       '.nav-links{gap:12px;}',
@@ -156,6 +157,10 @@
       '.nearby-grid{grid-template-columns:1fr;}',
       '.footer-grid{grid-template-columns:1fr;gap:20px;}',
       'footer{padding:32px 16px 20px;}',
+      '.sr-mobile-bar{display:flex;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -16px 20px;padding:0 16px 4px;}',
+      '.sr-mobile-bar::-webkit-scrollbar{display:none;}',
+      '.sr-mobile-bar .map-card{flex:0 0 220px;margin-bottom:0;}',
+      '.sr-mobile-bar .sidebar-card{flex:0 0 220px;margin-bottom:0;}',
       '}',
       '.campus-banner{background:var(--blue-light);border:1.5px solid #b8d4ef;border-radius:12px;padding:14px 18px;margin-bottom:20px;}',
       '.campus-banner-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}',
@@ -270,6 +275,27 @@ document.addEventListener('DOMContentLoaded', function () {
     card.appendChild(cmpBtn);
     mapCard.parentNode.insertBefore(card, mapCard.nextSibling);
   }
+
+  // Mobile layout: photos + map in a horizontal strip right after assessment
+  function buildMobileBar() {
+    if (document.querySelector('.sr-mobile-bar')) return;
+    var mainCol = document.querySelector('.main-col');
+    var sidebar = document.querySelector('.sidebar');
+    if (!mainCol || !sidebar) return;
+    var firstSection = mainCol.querySelector('.section');
+    var mMapCard = sidebar.querySelector('.map-card');
+    var mPhotoCard = null;
+    sidebar.querySelectorAll('.sidebar-card').forEach(function (c) {
+      if (!mPhotoCard && c.querySelector('img')) mPhotoCard = c;
+    });
+    if (!firstSection || (!mMapCard && !mPhotoCard)) return;
+    var bar = document.createElement('div');
+    bar.className = 'sr-mobile-bar';
+    if (mPhotoCard) bar.appendChild(mPhotoCard);
+    if (mMapCard) bar.appendChild(mMapCard);
+    mainCol.insertBefore(bar, firstSection.nextElementSibling);
+  }
+  if (window.matchMedia('(max-width:768px)').matches) buildMobileBar();
 });
 
 function toggleFaq(el) {
