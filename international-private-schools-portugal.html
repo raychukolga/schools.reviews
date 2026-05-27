@@ -443,6 +443,8 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <div class="fg-opts">
           <label class="fg-opt"><input type="checkbox" id="st_intl"> International</label>
           <label class="fg-opt"><input type="checkbox" id="st_nat"> National private</label>
+          <label class="fg-opt"><input type="checkbox" id="f_boutique"> Boutique</label>
+          <label class="fg-opt"><input type="checkbox" id="f_largecampus"> Large campus &amp; facilities</label>
         </div>
         <div class="fg-title" style="margin-top:16px;">🌐 Language</div>
         <div class="fg-opts">
@@ -450,6 +452,7 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
           <label class="fg-opt"><input type="checkbox" id="l_fr"> French</label>
           <label class="fg-opt"><input type="checkbox" id="l_de"> German</label>
           <label class="fg-opt"><input type="checkbox" id="l_pt"> Portuguese</label>
+          <label class="fg-opt"><input type="checkbox" id="l_bilingual_pt"> Bilingual PT–EN</label>
         </div>
         <div class="fg-title" style="margin-top:16px;">💶 Max tuition per year</div>
         <div style="margin-top:8px;">
@@ -523,7 +526,7 @@ const schools = [
     appFee:null, enrollFee:"600", annualEnrollFee:"1,935 (Grades 1–5)",
     lunchIncluded:false, lunchPrice:"1,212", schoolBus:true,
     lessonsStart:"8:20", lessonsEnd:"15:45",
-    reviewed:true, verified:true, boarding:false,
+    reviewed:true, verified:true, boarding:false, largeCampus:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7978, lng:-9.3617,
     founded:2011, students:755, ibAvg:34.3, ageFrom:3, ageTo:18, classSize:20, facilities:"Excellent",
     website:"https://www.caislisbon.org",
@@ -554,7 +557,7 @@ const schools = [
     appFee:250, enrollFee:"750", annualEnrollFee:"5,000",
     lunchIncluded:false, lunchPrice:"1,017–1,459", schoolBus:true,
     lessonsStart:"8:20", lessonsEnd:"4:00",
-    reviewed:true, verified:true, boarding:false,
+    reviewed:true, verified:true, boarding:false, largeCampus:true,
     bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333,
     founded:1932, classSize:22, ibAvg:34.5, examRequired:true, facilities:"Excellent",
     website:"https://www.stjulians.com",
@@ -580,7 +583,7 @@ const schools = [
     appFee:null, enrollFee:"800–1,600", annualEnrollFee:null,
     lunchIncluded:false, lunchPrice:"2,115", schoolBus:true,
     lessonsStart:null, lessonsEnd:null,
-    reviewed:false, verified:false, boarding:true,
+    reviewed:false, verified:false, boarding:true, largeCampus:true,
     bg:"#FAEEDA", color:"#633806", lat:38.5667, lng:-8.9000,
     founded:1993, students:1500, campus:"37,000 m²",
     website:"https://www.st-peters-school.com",
@@ -595,7 +598,7 @@ const schools = [
     appFee:100, enrollFee:"3,000–5,000", annualEnrollFee:"750",
     lunchIncluded:true, lunchPrice:null, schoolBus:true,
     lessonsStart:"8:30", lessonsEnd:"15:45",
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, boutique:true,
     bg:"#FAEEDA", color:"#633806", lat:38.7502, lng:-9.3601,
     founded:2020, ageFrom:3, ageTo:18,
     academics:{ mainLanguage:"English", extraLanguages:["Portuguese","Spanish","French","Mandarin"] },
@@ -644,7 +647,7 @@ const schools = [
     appFee:250, enrollFee:"3,000–5,250", annualEnrollFee:"600",
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"Depend on grade 8:20-9:00", lessonsEnd:"4:00",
-    reviewed:false, verified:false, boarding:true,
+    reviewed:false, verified:false, boarding:true, largeCampus:true,
     bg:"#E1F5EE", color:"#085041", lat:38.6979, lng:-9.4215,
     founded:2023,
     website:"https://www.cascais.kingscollegeschool.pt",
@@ -698,7 +701,7 @@ const schools = [
     appFee:850, enrollFee:"3,800", annualEnrollFee:"600",
     lunchIncluded:false, lunchPrice:1800,
     lessonsStart:"8:30", lessonsEnd:"15:30",
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7717, lng:-9.3890,
     founded:2003, students:400, classSize:15,
     ageFrom:3, ageTo:14,
@@ -742,7 +745,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:18,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false,
+    reviewed:true, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7394, lng:-9.2180,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -755,7 +758,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:8,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false,
+    reviewed:true, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7394, lng:-9.1540,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -768,7 +771,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:8,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false,
+    reviewed:true, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7097, lng:-9.1970,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -932,7 +935,7 @@ const schools = [
     earlyPrice:"10,900", primaryPrice:"12,800–14,900", middlePrice:null, secondaryPrice:null,
     appFee:50, enrollFee:"1,500", annualEnrollFee:"850",
     lunchIncluded:true, lunchPrice:null, schoolBus:"yes",
-    reviewed:false, verified:false, boarding:false,
+    reviewed:false, verified:false, boarding:false, boutique:true, bilingualPt:true,
     bg:"#EAF3DE", color:"#27500A", lat:38.8050, lng:-9.4600,
     founded:2023, students:56, classSize:12, campus:"7,000 m²",
     ageFrom:3, ageTo:10,
@@ -952,7 +955,7 @@ const schools = [
     appFee:100, enrollFee:"850–1,050", annualEnrollFee:"500–525",
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"16:30",
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, boutique:true, bilingualPt:true,
     bg:"#E1F5EE", color:"#085041", lat:38.7400, lng:-9.2600,
     founded:2025, ageFrom:3, ageTo:12,
     website:"https://beyondschool.pt",
@@ -978,7 +981,7 @@ const schools = [
     appFee:null, enrollFee:null, annualEnrollFee:null,
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"17:50",
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, boutique:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7217, lng:-9.1389,
     founded:2023, classSize:12,
     website:"https://tisaschool.pt",
@@ -1003,7 +1006,7 @@ const schools = [
     earlyPrice:"5,940", primaryPrice:null, middlePrice:null, secondaryPrice:null,
     appFee:null, enrollFee:"495", annualEnrollFee:null,
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, bilingualPt:true,
     bg:"#E1F5EE", color:"#085041", lat:38.7480, lng:-9.1250,
     website:"https://colegioeuropeu-astoria.com",
     description:"Bilingual Portuguese/English school. From 1 year old. Lunch included." },
@@ -1089,7 +1092,7 @@ const schools = [
   { id:55, name:"Eden Montessori International School", short:"EM",
     address:"EN 125 Fontainhas, 8200-560 Albufeira, Algarve", loc:"Albufeira, Algarve", prog:"Montessori / IB PYP",
     price:6340, priceMax:9090,
-    reviewed:false, verified:true, boarding:true,
+    reviewed:false, verified:true, boarding:true, boutique:true,
     bg:"#FEF5E7", color:"#7D6608", lat:37.1239, lng:-8.2175,
     founded:2018, website:"https://edenmontessori.pt" },
   { id:56, name:"Montalvo International School", short:"MI",
@@ -1153,7 +1156,7 @@ const schools = [
     appFee:null, enrollFee:null, annualEnrollFee:900,
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"16:00",
-    reviewed:true, verified:true, verDate:'May 2026', boarding:false,
+    reviewed:true, verified:true, verDate:'May 2026', boarding:false, boutique:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147,
     founded:2025, ageFrom:3, ageTo:12, classSize:15,
     website:null,
@@ -1193,7 +1196,7 @@ const schools = [
     website:"https://colegiobernardetteromeira.pt" },
 ];
 
-const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null };
+const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
 const compareList = new Set();
 const favourites = new Set(JSON.parse(localStorage.getItem('sr_favourites')||'[]'));
 
@@ -1238,6 +1241,9 @@ function getFiltered(){
     if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
     if(state.lang && s.prog && !s.prog.toLowerCase().includes(state.lang.toLowerCase())) return false;
+    if(state.boutique && !s.boutique) return false;
+    if(state.largeCampus && !s.largeCampus) return false;
+    if(state.bilingualPt && !s.bilingualPt) return false;
     if(state.search && !s.name.toLowerCase().includes(state.search) && !s.loc.toLowerCase().includes(state.search)) return false;
     if(state.ageGroup && state.ageGroup !== 'all'){
       const ag = state.ageGroup;
@@ -1332,20 +1338,23 @@ function applyExpanded(){
   const langs = [{id:'l_en',v:'English'},{id:'l_fr',v:'French'},{id:'l_de',v:'German'},{id:'l_pt',v:'Portuguese'}];
   const lc = langs.filter(l=>document.getElementById(l.id)?.checked).map(l=>l.v);
   state.lang = lc.length===1 ? lc[0] : null;
+  state.boutique = document.getElementById('f_boutique')?.checked || false;
+  state.largeCampus = document.getElementById('f_largecampus')?.checked || false;
+  state.bilingualPt = document.getElementById('l_bilingual_pt')?.checked || false;
   const ag = document.querySelector('input[name="ageGroup"]:checked')?.value || 'all';
   state.ageGroup = ag;
   document.getElementById('filterExpanded').classList.remove('open');
   render();
 }
 function resetAll(){
-  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
+  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt','f_boutique','f_largecampus','l_bilingual_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
   const csAll = document.getElementById('cs_all'); if(csAll) csAll.checked=true;
   const csMid = document.getElementById('cs_mid'); if(csMid) csMid.checked=false;
   const fAll = document.getElementById('f_all'); if(fAll) fAll.checked=true;
   const agAll = document.getElementById('ag_all'); if(agAll) agAll.checked=true;
   document.getElementById('priceSlider').value=40000;
   document.getElementById('sliderVal').textContent='€40,000';
-  Object.assign(state,{maxPrice:40000,boarding:null,area:null,classSize:'all',schoolAge:'all',lang:null,ageGroup:'all'});
+  Object.assign(state,{maxPrice:40000,boarding:null,area:null,classSize:'all',schoolAge:'all',lang:null,ageGroup:'all',boutique:false,largeCampus:false,bilingualPt:false});
   render();
 }
 
