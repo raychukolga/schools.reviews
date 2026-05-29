@@ -46,7 +46,7 @@
       '.price-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600;color:var(--terra);line-height:1;}',
       '.price-sub{font-size:11px;color:var(--gray);margin-top:4px;}',
       '.page-wrap{max-width:1200px;margin:0 auto;padding:32px 40px 80px;display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:flex-start;}',
-      '.main-col{}',
+      '.main-col{min-width:0;}',
       '.sidebar{position:sticky;top:88px;}',
       '.section{margin-bottom:28px;}',
       '.sec-title{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);padding-bottom:9px;border-bottom:2px solid var(--ink);margin-bottom:14px;}',
