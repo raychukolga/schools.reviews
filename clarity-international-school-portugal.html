@@ -101,16 +101,45 @@
       <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge</p>
     </div>
 
-    <div id="_photo_lb" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;cursor:zoom-out;align-items:center;justify-content:center;">
-      <img id="_photo_lb_img" style="max-width:92vw;max-height:92vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);">
+    <div id="_photo_lb" onclick="lbBgClick(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+      <button onclick="lbNav(-1)" style="position:absolute;left:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8249;</button>
+      <img id="_photo_lb_img" style="max-width:84vw;max-height:90vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);cursor:default;" onclick="event.stopPropagation()">
+      <button onclick="lbNav(1)" style="position:absolute;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8250;</button>
+      <button onclick="document.getElementById('_photo_lb').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;">✕</button>
     </div>
     <script>
+    var _lb_photos = [
+      '/images/clarity/school-entrance.jpg',
+      '/images/clarity/primary-classroom.jpg',
+      '/images/clarity/preschool-classroom.jpg',
+      '/images/clarity/classroom-welcome.jpg',
+      '/images/clarity/teacher-lesson.jpg',
+      '/images/clarity/outdoor-play.jpg',
+      '/images/clarity/art-wall.jpg',
+      '/images/clarity/school-event.jpg',
+      '/images/clarity/lunch-menu.jpg'
+    ];
+    var _lb_idx = 0;
     function openPhoto(el){
-      var lb=document.getElementById('_photo_lb');
-      document.getElementById('_photo_lb_img').src=el.src;
-      lb.style.display='flex';
+      _lb_idx = _lb_photos.indexOf(el.src.replace(location.origin,''));
+      if(_lb_idx < 0) _lb_idx = 0;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+      document.getElementById('_photo_lb').style.display = 'flex';
     }
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('_photo_lb').style.display='none';});
+    function lbNav(dir){
+      _lb_idx = (_lb_idx + dir + _lb_photos.length) % _lb_photos.length;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+    }
+    function lbBgClick(e){
+      if(e.target === document.getElementById('_photo_lb')) document.getElementById('_photo_lb').style.display='none';
+    }
+    document.addEventListener('keydown',function(e){
+      var lb = document.getElementById('_photo_lb');
+      if(lb.style.display==='none') return;
+      if(e.key==='Escape') lb.style.display='none';
+      if(e.key==='ArrowRight') lbNav(1);
+      if(e.key==='ArrowLeft') lbNav(-1);
+    });
     </script>
 
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">Clarity International School is a small, boutique Cambridge school in Oeiras — and deliberately so. With a maximum of 15 students per class, it sits at the opposite end of the spectrum from the large international schools in the area. The focus is on individual attention, close teacher-student relationships, and a learning environment where no child gets lost in the crowd.</p>
@@ -224,21 +253,6 @@
       <div class="map-card-footer"><a href="https://maps.google.com/?q=Clarity+International+School+Oeiras+Portugal" target="_blank">Open in Google Maps ↗</a></div>
     </div>
 
-    <div class="sidebar-card" style="padding:12px 14px;">
-      <div class="sidebar-title">School photos</div>
-      <div id="clarity-gallery" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;border-radius:8px;overflow:hidden;">
-        <img src="/images/clarity/school-entrance.jpg" alt="Clarity — entrance" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/classroom-welcome.jpg" alt="Clarity — classroom" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/teacher-lesson.jpg" alt="Clarity — lesson" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/art-wall.jpg" alt="Clarity — art wall" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/outdoor-play.jpg" alt="Clarity — outdoor" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/lunch-menu.jpg" alt="Clarity — lunch menu" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/preschool-classroom.jpg" alt="Clarity — preschool" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/primary-classroom.jpg" alt="Clarity — primary" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-        <img src="/images/clarity/school-event.jpg" alt="Clarity — event" style="width:100%;height:76px;object-fit:cover;display:block;cursor:pointer;">
-      </div>
-      <div style="font-size:10px;color:var(--gray);margin-top:7px;text-align:center;">9 photos · Clarity International School</div>
-    </div>
 
     <div class="apply-card">
       <div class="sidebar-title">Apply to this school</div>
