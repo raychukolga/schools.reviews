@@ -85,6 +85,34 @@
       </div>
     </div>
 
+    <div class="section" style="padding-bottom:4px;">
+      <div class="sec-title">School photos</div>
+      <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;">
+        <img src="/images/clarity/school-entrance.jpg"    onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/primary-classroom.jpg"  onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/preschool-classroom.jpg" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/classroom-welcome.jpg"  onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/teacher-lesson.jpg"     onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/outdoor-play.jpg"       onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/art-wall.jpg"           onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/school-event.jpg"       onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+        <img src="/images/clarity/lunch-menu.jpg"         onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;flex-shrink:0;object-fit:cover;" title="Click to enlarge">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge</p>
+    </div>
+
+    <div id="_photo_lb" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;cursor:zoom-out;align-items:center;justify-content:center;">
+      <img id="_photo_lb_img" style="max-width:92vw;max-height:92vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);">
+    </div>
+    <script>
+    function openPhoto(el){
+      var lb=document.getElementById('_photo_lb');
+      document.getElementById('_photo_lb_img').src=el.src;
+      lb.style.display='flex';
+    }
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('_photo_lb').style.display='none';});
+    </script>
+
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">Clarity International School is a small, boutique Cambridge school in Oeiras — and deliberately so. With a maximum of 15 students per class, it sits at the opposite end of the spectrum from the large international schools in the area. The focus is on individual attention, close teacher-student relationships, and a learning environment where no child gets lost in the crowd.</p>
 
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The school follows the <a href="/cambridge-curriculum-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">Cambridge curriculum</a> and teaches in English, with Portuguese included as part of the programme. It currently covers ages 3 to 12 — primary and lower secondary years.</p>
