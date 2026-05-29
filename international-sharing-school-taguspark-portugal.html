@@ -86,6 +86,46 @@
       </div>
     </div>
 
+    <div class="section" style="padding-bottom:4px;">
+      <div class="sec-title">School photos</div>
+      <div style="overflow-x:auto;overflow-y:visible;white-space:nowrap;padding-bottom:8px;">
+        <img src="/images/iss/students-library.jpg" onclick="issOpenPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/iss/stem-workshop.jpg"    onclick="issOpenPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge</p>
+    </div>
+
+    <div id="_iss_lb" onclick="issLbBgClick(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+      <button onclick="issLbNav(-1)" style="position:absolute;left:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8249;</button>
+      <img id="_iss_lb_img" style="max-width:84vw;max-height:90vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);cursor:default;" onclick="event.stopPropagation()">
+      <button onclick="issLbNav(1)" style="position:absolute;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8250;</button>
+      <button onclick="document.getElementById('_iss_lb').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;">✕</button>
+    </div>
+    <script>
+    var _iss_photos = ['/images/iss/students-library.jpg','/images/iss/stem-workshop.jpg'];
+    var _iss_idx = 0;
+    function issOpenPhoto(el){
+      _iss_idx = _iss_photos.indexOf(el.src.replace(location.origin,''));
+      if(_iss_idx < 0) _iss_idx = 0;
+      document.getElementById('_iss_lb_img').src = _iss_photos[_iss_idx];
+      document.getElementById('_iss_lb').style.display = 'flex';
+    }
+    function issLbNav(dir){
+      _iss_idx = (_iss_idx + dir + _iss_photos.length) % _iss_photos.length;
+      document.getElementById('_iss_lb_img').src = _iss_photos[_iss_idx];
+    }
+    function issLbBgClick(e){
+      if(e.target === document.getElementById('_iss_lb')) document.getElementById('_iss_lb').style.display='none';
+    }
+    document.addEventListener('keydown',function(e){
+      var lb = document.getElementById('_iss_lb');
+      if(lb.style.display==='none') return;
+      if(e.key==='Escape') lb.style.display='none';
+      if(e.key==='ArrowRight') issLbNav(1);
+      if(e.key==='ArrowLeft') issLbNav(-1);
+    });
+    </script>
+
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">International Sharing School is one of the very few schools in Portugal offering the full <a href="/ib-diploma-explained.html" style="color:var(--terra);text-decoration:none;border-bottom:1px solid #e8c4b0;">IB continuum</a> — PYP, MYP and Diploma — from age 3 through to 18. Out of more than 60 international schools in Portugal, only three offer this uninterrupted IB pathway. For families planning a long-term stay, that means one school decision, no mid-journey transitions, no curriculum switches.</p>
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The campus is spacious and modern — classrooms are large and the facilities feel well-maintained. It sits in the Taguspark technology park in Porto Salvo, just off the A5 motorway, making it easy to reach from Lisbon (around 20 minutes by car), Oeiras, Cascais, and Sintra. The school runs its own bus network covering most of the Lisbon metro area.</p>
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">The after-school offering is one of the broadest among Lisbon-area international schools — from sailing and horse riding to robotics and graffiti. The school also runs summer camps open to non-enrolled children, which is a practical way to test the environment before committing.</p>
