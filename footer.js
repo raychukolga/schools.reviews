@@ -20,6 +20,7 @@
     '          <a href="/parent-dashboard.html">For parents</a>\n' +
     '          <a href="/school-dashboard.html">For schools</a>\n' +
     '          <a href="mailto:editor@schools.reviews">Contact us</a>\n' +
+    '          <a href="/terms.html">Terms of Use</a>\n' +
     '        </div>\n' +
     '      </div>\n' +
     '      <div>\n' +
@@ -39,7 +40,7 @@
         ' Schools Reviews does not guarantee the accuracy or completeness of this information.' +
         ' Fees, programmes, and school details change frequently —' +
         ' always verify directly with the school before making any decisions.</p>\n' +
-    '      <span class="footer-copy">© 2026 Schools Reviews</span>\n' +
+    '      <span class="footer-copy">© 2026 Schools Reviews. All rights reserved. · <a href="/terms.html" style="color:inherit;">Terms of Use</a></span>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</footer>';

@@ -39,6 +39,14 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- Terms of Use -->
+  <url>
+    <loc>https://schools.reviews/terms.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- Guides -->
   <url>
     <loc>https://schools.reviews/school-year-grade-by-age-guide.html</loc>
