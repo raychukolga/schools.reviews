@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Рабочие заметки — не публикуются на сайте
+PROJECT_STATUS.md
+index-design-brief.md
+
+# Исходники логотипа и соцсетей (сайт их не использует)
+logo/
