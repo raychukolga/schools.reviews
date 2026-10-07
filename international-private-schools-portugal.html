@@ -178,7 +178,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vr-badge { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--terra-light); color:var(--terra); padding:4px 10px; border-radius:20px; }
 .vr-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 .vr-card { background:var(--cream); border:1.5px dashed var(--border); border-radius:12px; overflow:hidden; position:relative; }
-.vr-thumb { height:110px; background:linear-gradient(135deg,#f0ede8,#e8e3de); display:flex; align-items:center; justify-content:center; position:relative; }
+.vr-thumb { aspect-ratio:16/9; background:linear-gradient(135deg,#f0ede8,#e8e3de); display:flex; align-items:center; justify-content:center; position:relative; }
 .vr-play { width:42px; height:42px; background:rgba(196,99,58,.15); border:2px solid var(--terra); border-radius:50%; display:flex; align-items:center; justify-content:center; }
 .vr-cs-tag { position:absolute; top:8px; left:8px; font-size:9px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--ink); color:#fff; padding:3px 8px; border-radius:4px; }
 .vr-info { padding:10px 12px; }
@@ -321,18 +321,18 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
   </div>
   <div class="vr-grid">
     <a href="/clarity-international-school-portugal.html" class="vr-card" style="text-decoration:none;display:block;">
-      <div class="vr-thumb" style="background:url('https://img.youtube.com/vi/MqpRO40ZGrw/hqdefault.jpg') center/cover no-repeat;">
+      <div class="vr-thumb" style="background:url('https://img.youtube.com/vi/MqpRO40ZGrw/maxresdefault.jpg') center/cover no-repeat;">
         <div class="vr-play" style="background:rgba(255,255,255,.9);border-color:transparent;"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">Clarity International School</div><div class="vr-loc">Oeiras</div></div>
     </a>
     <a href="/international-sharing-school-taguspark-portugal.html" class="vr-card" style="text-decoration:none;display:block;">
-      <div class="vr-thumb" style="background:url('https://img.youtube.com/vi/USWwX7_RX6s/hqdefault.jpg') center/cover no-repeat;">
+      <div class="vr-thumb" style="background:url('https://img.youtube.com/vi/USWwX7_RX6s/maxresdefault.jpg') center/cover no-repeat;">
         <div class="vr-play" style="background:rgba(255,255,255,.9);border-color:transparent;"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">International Sharing School</div><div class="vr-loc">Taguspark, Oeiras</div></div>
     </a>
-    <div class="vr-card">
+    <div class="vr-card vr-card-extra">
       <div class="vr-thumb">
         <div class="vr-cs-tag">Coming soon</div>
         <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
@@ -345,12 +345,6 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
         <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">King's College Lisbon</div><div class="vr-loc">Cascais</div></div>
-    </div>
-    <div class="vr-card vr-card-extra">
-      <div class="vr-thumb" style="background:linear-gradient(135deg,#faf8f5,#f0ede8);border:none;cursor:default;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      </div>
-      <div class="vr-info"><div class="vr-school-name" style="color:var(--gray);">More reviews</div><div class="vr-loc">Filming in 2025</div></div>
     </div>
   </div>
   <button class="vr-show-more" id="vrShowMore" onclick="toggleVrMore()">Show more ↓</button>
