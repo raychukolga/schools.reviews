@@ -94,7 +94,12 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .apply-btn { background:var(--ink); color:var(--white); border:none; border-radius:8px; padding:8px 20px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
 
 /* SPLIT */
-.split { display:grid; grid-template-columns:500px 1fr; height:calc(100vh - var(--sr-head-h,183px)); min-height:500px; }
+/* Карта стоит неподвижно, пока прокручиваешь её собственную высоту (--sr-map-hold),
+   затем уезжает и пускает подвал. Обёртка резервирует этот путь в потоке —
+   без неё липкий блок перекрывался бы подвалом. */
+:root { --sr-map-hold: 1; }
+.split-wrap { height:calc((1 + var(--sr-map-hold)) * (100vh - var(--sr-head-h,183px))); min-height:500px; }
+.split { display:grid; grid-template-columns:500px 1fr; position:sticky; top:var(--sr-head-h,183px); height:calc(100vh - var(--sr-head-h,183px)); min-height:500px; }
 .list-panel { border-right:1px solid var(--border); overflow-y:auto; background:#f3f0eb; }
 .list-header { padding:12px 16px; font-size:12px; color:var(--gray); border-bottom:1px solid var(--border); background:var(--cream); position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; }
 .cards-wrap { padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
@@ -245,6 +250,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .filter-bar { padding:0 16px; }
   .filter-grid { grid-template-columns:1fr 1fr; padding:16px; gap:14px; }
   .filter-footer { padding:10px 16px; }
+  .split-wrap { height:auto; }
   .split { display:block; position:static; height:auto; }
   .list-panel { height:auto; overflow-y:visible; }
   .map-panel { display:none !important; }
@@ -481,6 +487,8 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
 </div>
 
 <!-- SPLIT -->
+<!-- .split-wrap задаёт, сколько карта стоит неподвижно, прежде чем уехать и пустить подвал -->
+<div class="split-wrap">
 <div class="split">
   <div class="list-panel">
     <div class="list-header">
@@ -494,6 +502,7 @@ footer{background:#2C2825;color:rgba(255,255,255,.5);font-size:12px;padding:40px
       <div class="leg-row"><div class="leg-dot" style="background:var(--ink)"></div><span>Schools</span></div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- MODAL -->
