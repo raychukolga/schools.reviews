@@ -1,3 +1,13 @@
+// ── Базовая карта ───────────────────────────────────────────────────────────
+// Ключ Carto для тайлов (получен на carto.com/basemaps/apikey, ограничен доменом).
+// Без ключа Carto отдаёт серые квадраты с надписью API KEY REQUIRED.
+window.SR_CARTO_KEY = 'cb1_4e5z_1_49bdfdea1bd8f373702d5720';
+
+window.srTileUrl = function () {
+  var base = 'https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png';
+  return window.SR_CARTO_KEY ? base + '?key=' + window.SR_CARTO_KEY : base;
+};
+
 (function () {
   var s = document.currentScript;
   var backHref = s && s.dataset.backHref;

@@ -294,7 +294,7 @@
 <script>
 window.addEventListener('load', function(){
   var map = L.map('school-map', {center:[38.7717,-9.3890],zoom:14,zoomControl:true,scrollWheelZoom:false,attributionControl:false});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+  L.tileLayer(window.srTileUrl()).addTo(map);
   var icon = L.divIcon({html:'<div style="width:12px;height:12px;background:#C4633A;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);"></div>',iconSize:[12,12],iconAnchor:[6,6],className:''});
   L.marker([38.7717,-9.3890],{icon:icon}).addTo(map);
 });

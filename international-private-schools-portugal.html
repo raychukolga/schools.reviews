@@ -1758,7 +1758,7 @@ function initMap(){
   const isMobile = window.innerWidth <= 768;
   const containerId = isMobile ? 'mobileMap' : 'map';
   map = L.map(containerId, {zoomControl:false}).setView([39.5,-8.0],7);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © Carto',subdomains:'abcd',maxZoom:19}).addTo(map);
+  L.tileLayer(window.srTileUrl(),{attribution:'© OpenStreetMap © Carto',subdomains:'abcd',maxZoom:19}).addTo(map);
   L.control.zoom({position:'bottomleft'}).addTo(map);
   schools.forEach(s=>{
     if(!s.lat||!s.lng) return;
