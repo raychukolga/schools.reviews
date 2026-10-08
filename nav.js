@@ -158,3 +158,43 @@ window.srTileUrl = function () {
     }
   });
 })();
+
+// ── Высота залипающей шапки ──────────────────────────────────────────────────
+// Полосы (nav, поиск, фильтры) прилипают друг под другом, а блок с картой
+// занимает остаток экрана. Высоты меряем, а не вписываем числами: они зависят
+// от шрифта, зума и переноса чипов, и любое расхождение даёт либо щель, сквозь
+// которую проезжает контент, либо обрезанную снизу карту.
+(function () {
+  function h(el) { return el ? el.getBoundingClientRect().height : 0; }
+
+  function measure() {
+    var filterBar = document.querySelector('.filter-bar');
+    var navH = h(document.querySelector('nav'));
+    var searchH = h(document.querySelector('.search-bar-top'));
+    // раскрывающаяся панель лежит внутри .filter-bar — она оверлей, не часть шапки
+    var filterH = h(filterBar) - h(document.querySelector('.filter-expanded'));
+    var st = document.documentElement.style;
+    st.setProperty('--sr-nav-h', Math.round(navH) + 'px');
+    st.setProperty('--sr-search-h', Math.round(searchH) + 'px');
+    st.setProperty('--sr-head-h', Math.round(navH + searchH + filterH) + 'px');
+  }
+
+  function init() {
+    measure();
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(measure);
+      ['nav', '.search-bar-top', '.filter-bar'].forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (el) ro.observe(el);
+      });
+    }
+    window.addEventListener('resize', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
