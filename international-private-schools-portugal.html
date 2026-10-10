@@ -66,17 +66,24 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vt-title { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:56px; line-height:1.02; color:var(--ink); margin:0; }
 .vt-title em { font-style:italic; color:var(--terra); }
 .vt-sub { font-family:'DM Sans',sans-serif; font-size:17px; line-height:1.55; color:#4A433D; max-width:580px; margin:18px 0 0; }
+.country-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra); margin-bottom:6px; }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:600; color:var(--ink); line-height:1.15; }
+.hero-meta { flex:0 0 auto; font-size:12px; color:var(--gray); text-align:right; }
+.hero-meta-loc { display:block; }
+.hero-meta-sep { display:none; }
+.hero-meta strong { display:block; font-size:22px; font-weight:700; color:var(--ink); }
+
 @media(max-width:1024px){
   .vt-promo { order:3; flex:1 1 100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:24px; }
 }
 @media(max-width:640px){
   .vt-title { font-size:38px; }
   .vt-sub { font-size:16px; }
+  /* счётчик одной строкой под заголовком: правое выравнивание без колонок теряет смысл */
+  .hero-meta { flex:1 1 100%; text-align:left; }
+  .hero-meta strong { display:inline; font-size:12px; }
+  .hero-meta-loc, .hero-meta-sep { display:inline; }
 }
-.country-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra); margin-bottom:6px; }
-.page-title { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:600; color:var(--ink); line-height:1.15; }
-.hero-meta { flex:0 0 auto; font-size:12px; color:var(--gray); text-align:right; }
-.hero-meta strong { display:block; font-size:22px; font-weight:700; color:var(--ink); }
 
 /* FILTER BAR */
 .filter-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 40px; position:sticky; top:calc(var(--sr-nav-h,68px) + var(--sr-search-h,48px)); z-index:400; }
@@ -317,7 +324,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
     </div>
     <div class="hero-meta">
       <strong id="heroCount">75</strong>
-      schools listed<br>Lisbon · Porto · Algarve
+      schools listed<span class="hero-meta-sep"> · </span><span class="hero-meta-loc">Lisbon · Porto · Algarve</span>
     </div>
   </div>
 </div>
