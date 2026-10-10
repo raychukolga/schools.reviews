@@ -56,10 +56,26 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .breadcrumb { font-size:11px; color:var(--gray); margin-bottom:12px; }
 .breadcrumb a { color:var(--terra); text-decoration:none; }
 .breadcrumb a:hover { text-decoration:underline; }
-.hero-row { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; }
+.hero-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:40px; }
+.hero-head { flex:1 1 300px; }
+
+/* Промо видеотуров в hero. #A84F2A — затемнённая терракота: у --terra
+   на белом фоне не хватает контраста для мелкого текста и ссылок. */
+.vt-promo { flex:2 1 460px; border-left:1px solid var(--border); padding-left:40px; }
+.vt-badge { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.12em; color:#A84F2A; background:#FBEDE6; padding:7px 12px; border-radius:999px; margin-bottom:18px; }
+.vt-title { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:56px; line-height:1.02; color:var(--ink); margin:0; }
+.vt-title em { font-style:italic; color:var(--terra); }
+.vt-sub { font-family:'DM Sans',sans-serif; font-size:17px; line-height:1.55; color:#4A433D; max-width:580px; margin:18px 0 0; }
+@media(max-width:1024px){
+  .vt-promo { order:3; flex:1 1 100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:24px; }
+}
+@media(max-width:640px){
+  .vt-title { font-size:38px; }
+  .vt-sub { font-size:16px; }
+}
 .country-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra); margin-bottom:6px; }
 .page-title { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:600; color:var(--ink); line-height:1.15; }
-.hero-meta { font-size:12px; color:var(--gray); text-align:right; flex-shrink:0; }
+.hero-meta { flex:0 0 auto; font-size:12px; color:var(--gray); text-align:right; }
 .hero-meta strong { display:block; font-size:22px; font-weight:700; color:var(--ink); }
 
 /* FILTER BAR */
@@ -287,9 +303,17 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 <div class="page-hero">
   <div class="breadcrumb"><a href="/">Home</a> → Portugal</div>
   <div class="hero-row">
-    <div>
+    <div class="hero-head">
       <div class="country-label">🇵🇹 Portugal</div>
       <h1 class="page-title">International & Private<br>Schools in Portugal</h1>
+    </div>
+    <div class="vt-promo">
+      <div class="vt-badge">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2l7 4-7 4z" fill="currentColor"/></svg>
+        INDEPENDENT VIDEO TOURS
+      </div>
+      <p class="vt-title">Walk through the school <em>before you visit.</em></p>
+      <p class="vt-sub">Verified information on every international school in Portugal — and video tours filmed the way a parent would see them.</p>
     </div>
     <div class="hero-meta">
       <strong id="heroCount">75</strong>
