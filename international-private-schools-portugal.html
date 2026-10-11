@@ -737,6 +737,7 @@ const schools = [
     price:12390, priceMax:25200,
     reviewed:false, verified:true, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7639, lng:-9.0954,
+    ibAvg:32.2,
     founded:2021,
     website:"https://www.unitedlisbon.com",
     description:"IEYC / IPC in early and primary years, IB Diploma in senior school. NEASC accredited. IB avg 32.2 (2024, first cohort). Modern campus in Park of Nations, 6,500 m² outdoor spaces. Part of Dukes Education group." },
@@ -846,6 +847,7 @@ const schools = [
     classSize:32, examRequired:true,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6917, lng:-9.3561,
+    ibAvg:30.6,
     founded:1964,
     website:"https://www.dominics.org",
     description:"Full IB continuum — PYP, MYP and Diploma. 50+ nationalities." },
@@ -855,6 +857,7 @@ const schools = [
     price:13980, priceMax:22406,
     reviewed:true, verified:true, boarding:false,
     bg:"#EAF3DE", color:"#2E7D32", lat:38.6936, lng:-9.3147,
+    ibAvg:36,
     founded:2010,
     website:"https://www.oeirasinternationalschool.com" },
 
@@ -882,6 +885,7 @@ const schools = [
     classSize:20,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7050, lng:-9.3000,
+    ibAvg:31.7,
     founded:2017, students:600,
     website:"https://taguspark.sharingschool.org",
     description:"A modern well-equipped campus, conveniently located between Lisbon and Cascais — easy to reach from the city, Oeiras, and the Cascais line. One of the very few true full-cycle schools in Portugal: from age 1 to 18, meaning once you enrol your child, the school question is closed for good. The range of after-school activities is exceptional. The school also runs summer camps open to non-enrolled children — a great way to try before you commit.",
@@ -1790,7 +1794,7 @@ function initMap(){
     const foundedLabel = s.founded ? String(s.founded) : null;
     const ageLabel = (s.ageFrom||s.ageFrom===0) && s.ageTo ? `${s.ageFrom}–${s.ageTo} years` : s.grades ? '3–18 years' : null;
     const mainLang = s.academics?.mainLanguage || null;
-    const academicsColor = s.ibAvg>=38?'#2E7D32':s.ibAvg>=34?'#E67E22':'#C62828';
+    const academicsColor = '#1a1814'; // без цветовой оценки: балл показываем нейтрально
     const facilitiesColor = facilitiesLevel==='Excellent'?'#2E7D32':facilitiesLevel==='Modern'?'#0C447C':'#E67E22';
 
     const m=L.marker([s.lat,s.lng],{icon}).addTo(map).bindPopup(`
