@@ -844,7 +844,7 @@ const schools = [
     earlyPrice:"11,778–13,328", primaryPrice:"15,000–15,777", middlePrice:"18,111–21,666", secondaryPrice:"23,166",
     appFee:null, enrollFee:"5,250", annualEnrollFee:"1,178–2,316",
     lunchIncluded:false, lunchPrice:"1,450", schoolBus:true,
-    classSize:32, examRequired:true,
+    classSize:22, examRequired:true,
     reviewed:false, verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6917, lng:-9.3561,
     ibAvg:30.6,
@@ -1790,7 +1790,7 @@ function initMap(){
     const academicsScore = s.ibAvg ? s.ibAvg+' / 45' : null;
     const facilitiesLevel = s.facilities || (s.campus && parseInt(s.campus)>10000 ? 'Excellent' : s.students>500 ? 'Good' : null);
     const classSizeLabel = s.classSize ? (s.classSize<=16 ? 'Small' : s.classSize<=22 ? 'Medium' : 'Large') : null;
-    const classSizeColor = s.classSize ? (s.classSize<=16 ? '#2E7D32' : s.classSize<=22 ? '#E67E22' : '#C62828') : '#888';
+    const classSizeColor = '#1a1814'; // без цветовой оценки, как и у балла IB
     const foundedLabel = s.founded ? String(s.founded) : null;
     const ageLabel = (s.ageFrom||s.ageFrom===0) && s.ageTo ? `${s.ageFrom}–${s.ageTo} years` : s.grades ? '3–18 years' : null;
     const mainLang = s.academics?.mainLanguage || null;
