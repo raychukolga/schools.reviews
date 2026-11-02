@@ -544,29 +544,29 @@ const schools = [
     price:12182, priceMax:23532,
     grades:[{label:"Kindergarten",fee:12128},{label:"Grade 1",fee:14060},{label:"Grade 2",fee:14060},{label:"Grade 3",fee:15632},{label:"Grade 4",fee:15632},{label:"Grade 5",fee:15632},{label:"Grade 6",fee:17756},{label:"Grade 7",fee:17756},{label:"Grade 8",fee:17756},{label:"Grade 9",fee:23532},{label:"Grade 10",fee:23532},{label:"Grade 11",fee:23532},{label:"Grade 12",fee:23532}],
     earlyPrice:"12,128", primaryPrice:"14,060–15,632", middlePrice:"17,756", secondaryPrice:"23,532",
-    appFee:null, enrollFee:"600", annualEnrollFee:"1,935 (Grades 1–5)",
+    appFee:null, enrollFee:"600", annualEnrollFee:null, buildingFee:"1,935 · annually for the first 5 years (Grades 1–12)",
     lunchIncluded:false, lunchPrice:"1,212", schoolBus:true,
     lessonsStart:"8:20", lessonsEnd:"15:45",
-    reviewed:true, verified:true, boarding:false, largeCampus:true,
+    reviewed:true, verified:true, verDate:"Nov 2026", boarding:false, largeCampus:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.76829, lng:-9.3797387,
-    founded:2011, students:755, ibAvg:34.3, ageFrom:3, ageTo:18, classSize:20, facilities:"Excellent",
+    founded:2011, students:755, ibAvg:34, ageFrom:3, ageTo:18, classSize:20, facilities:"Excellent",
     website:"https://www.caislisbon.org",
     description:"The only US State Department-sponsored school in Portugal. A non-profit school — all tuition fees are reinvested directly into the school. The only international school in Portugal offering the American High School Diploma.",
     srNote:{
       pros:["The only school in Portugal offering the American High School Diploma — essential for families planning US university","Non-profit school — all tuition is reinvested into education, not profit","Exceptional variety of after-school activities across sports, arts, music and digital","Strong sports focus — athletics embedded in the curriculum, not just optional","Outstanding facilities: library with 40,000 books, 450-seat theatre, large sports fields"],
-      watch:["IB average 34.3 — decent but below the top schools on this list (global avg ~30)","Located in Sintra — further from Lisbon centre than most schools","Founded 2011 — younger than some of the more established schools"],
+      watch:["IB average 34 in 2026 (global avg 30.8), 100% pass rate — solid, though below the top schools on this list","Located in Sintra — further from Lisbon centre than most schools","Founded 2011 — younger than some of the more established schools"],
     },
     academics:{
       mainLanguage:"English",
       extraLanguages:["Portuguese"],
-      afterSchoolLanguages:["Chinese","Portuguese"],
-      sportsIncluded:["Basketball","Soccer","Cross country","Volleyball","Swimming","Track and field","Softball"],
-      sportsExtra:["Ballet","Gymnastics","Hip-hop","Yoga"],
+      afterSchoolLanguages:["Chinese"],
+      sportsIncluded:["Basketball","Soccer","Cross country","Volleyball","Track and field","Softball"],
+      sportsExtra:["Basketball","Ballet","Capoeira","Fitness Club","Flag Football","Gymnastics","Hip-hop","Move Smart","Soccer","Volleyball","Yoga"],
       musicIncluded:[],
       musicExtra:["DJing","Drums","Choir","Guitar","Piano","Voice"],
       chess:null,
-      extraActivities:["Ceramics","Arts","Chess","Cooking","Film makers club","Eco club","Fashion design"],
-      computerSkills:["Digital design & programming","Robotics"],
+      extraActivities:["After-Hours Care with Camp Go","Ceramics","Chess","Community Service","Cooking Club","Cross Stitching Club","Drama Club","Dungeons & Dragons","Ecolution","Experimental Art Club","Games Club","Girl Scouts","Graphic Novel & Comics","Homework Clinic","Lego Club","Scrapbooking","We Farm"],
+      computerSkills:["Minikinos Stop Motion Filmmaking","Robothink"],
     } },
 
   { id:2, name:"St Julian's School", short:"SJ",
@@ -1617,6 +1617,7 @@ function openModal(id){
           ${s.appFee?`<div><div class="m-item-label">Application fee</div><div class="m-item-val">€${s.appFee}</div></div>`:''}
           ${s.enrollFee?`<div><div class="m-item-label">Enrollment fee (one-time)</div><div class="m-item-val">€${s.enrollFee}</div></div>`:''}
           ${s.annualEnrollFee?`<div><div class="m-item-label">Re-enrollment fee (annual)</div><div class="m-item-val">€${s.annualEnrollFee}</div></div>`:''}
+          ${s.buildingFee?`<div><div class="m-item-label">Building fee (annual)</div><div class="m-item-val">€${s.buildingFee}</div></div>`:''}
           ${s.lunchIncluded===true
             ? `<div><div class="m-item-label">Lunch</div><div class="m-item-val" style="color:#2E7D32">✓ Included in tuition</div></div>`
             : s.lunchPrice
