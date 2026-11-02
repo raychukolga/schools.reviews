@@ -54,7 +54,7 @@ window.srTileUrl = function () {
       ' School data is being added and verified — some profiles are still incomplete.' +
     '</div>\n' +
     '<nav>\n' +
-    '  <a href="/" class="logo">' +
+    '  <a href="/international-private-schools-portugal.html" class="logo">' +
       '<span class="logo-top">Schools</span>' +
       '<div class="logo-line"></div>' +
       '<span class="logo-bottom">Reviews</span>' +
@@ -108,7 +108,7 @@ window.srTileUrl = function () {
     '  <a href="/international-schools-lisbon.html" class="_nm_link">🏫 Int’l schools in Lisbon</a>\n' +
     '  <div class="_nm_sec">Schools Reviews</div>\n' +
     '  <a href="/about.html" class="_nm_link">About us</a>\n' +
-    '  <a href="/" class="_nm_link" style="border-bottom:none">Browse all countries</a>\n' +
+    '  <a href="/international-private-schools-portugal.html" class="_nm_link" style="border-bottom:none">All schools in Portugal</a>\n' +
     '</div>';
 
   if (s) {
