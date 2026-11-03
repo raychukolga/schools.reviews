@@ -1226,6 +1226,15 @@ const schools = [
     website:"https://colegiobernardetteromeira.pt" },
 ];
 
+// Порядок показа в листинге: эти школы идут первыми в указанном порядке,
+// остальные — следом, как стоят в массиве выше. Меняется только здесь.
+// CAISL, Oeiras IS, Sharing, United Lisbon, TASIS, Hypha, IPS Cascais, BSL, Prime ×3
+const TOP_ORDER = [1, 18, 19, 11, 4, 27, 30, 6, 8, 9, 10];
+schools.sort((a, b) => {
+  const ia = TOP_ORDER.indexOf(a.id), ib = TOP_ORDER.indexOf(b.id);
+  return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
+});
+
 const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
 const compareList = new Set();
 const favourites = new Set(JSON.parse(localStorage.getItem('sr_favourites')||'[]'));
