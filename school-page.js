@@ -9,8 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var strip = document.createElement('div');
     strip.className = 'sr-editorial-strip';
     strip.style.cssText = 'margin-top:16px;margin-left:-40px;margin-right:-40px;margin-bottom:-28px;padding:10px 40px;background:var(--terra);display:flex;align-items:center;justify-content:center;gap:8px;';
+    // Дата берётся из зелёной плашки «✓ Verified Mon YYYY» на этой же странице,
+    // чтобы полоса и плашка не расходились. Нет плашки — нет и даты.
+    var badge = document.querySelector('.badge-verified');
+    var verMatch = badge && badge.textContent.match(/[A-Z][a-z]{2} \d{4}/);
+    var stripText = 'Independent editorial · Schools do not pay for reviews'
+      + (verMatch ? ' · Verified by Schools Reviews ' + verMatch[0] : '');
     strip.innerHTML = '<span style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5);display:inline-block;flex-shrink:0;"></span>'
-      + '<span style="font-size:12px;font-weight:600;color:white;letter-spacing:0.05em;">Independent editorial· Schools do not pay for reviews · Verified by Schools Reviews May 2026</span>'
+      + '<span style="font-size:12px;font-weight:600;color:white;letter-spacing:0.05em;">' + stripText + '</span>'
       + '<span style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5);display:inline-block;flex-shrink:0;"></span>';
     hero.appendChild(strip);
   }
