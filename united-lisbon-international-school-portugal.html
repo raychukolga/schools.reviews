@@ -89,6 +89,52 @@
       </div>
     </div>
 
+    <div class="section" style="padding-bottom:4px;">
+      <div class="sec-title">School photos</div>
+      <div style="overflow-x:auto;overflow-y:visible;white-space:nowrap;padding-bottom:8px;">
+        <img src="/images/ulis/reception-thumb.jpg" data-full="/images/ulis/reception.jpg" alt="Reception and welcome area" title="Reception and welcome area" loading="lazy" onclick="ulisOpenPhoto(0)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/primary-classroom-thumb.jpg" data-full="/images/ulis/primary-classroom.jpg" alt="Primary classroom" title="Primary classroom" loading="lazy" onclick="ulisOpenPhoto(1)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/science-lab-thumb.jpg" data-full="/images/ulis/science-lab.jpg" alt="Science lab" title="Science lab" loading="lazy" onclick="ulisOpenPhoto(2)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/science-lesson-thumb.jpg" data-full="/images/ulis/science-lesson.jpg" alt="Physics lesson" title="Physics lesson" loading="lazy" onclick="ulisOpenPhoto(3)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/music-room-thumb.jpg" data-full="/images/ulis/music-room.jpg" alt="Music room" title="Music room" loading="lazy" onclick="ulisOpenPhoto(4)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/canteen-thumb.jpg" data-full="/images/ulis/canteen.jpg" alt="Early years canteen" title="Early years canteen" loading="lazy" onclick="ulisOpenPhoto(5)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/sports-hall-thumb.jpg" data-full="/images/ulis/sports-hall.jpg" alt="Indoor sports hall" title="Indoor sports hall" loading="lazy" onclick="ulisOpenPhoto(6)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/rooftop-pitch-thumb.jpg" data-full="/images/ulis/rooftop-pitch.jpg" alt="Rooftop football pitch" title="Rooftop football pitch" loading="lazy" onclick="ulisOpenPhoto(7)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/auditorium-thumb.jpg" data-full="/images/ulis/auditorium.jpg" alt="Auditorium" title="Auditorium" loading="lazy" onclick="ulisOpenPhoto(8)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/auditorium-stage-thumb.jpg" data-full="/images/ulis/auditorium-stage.jpg" alt="Auditorium and stage" title="Auditorium and stage" loading="lazy" onclick="ulisOpenPhoto(9)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/lobby-thumb.jpg" data-full="/images/ulis/lobby.jpg" alt="Lobby" title="Lobby" loading="lazy" onclick="ulisOpenPhoto(10)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+        <img src="/images/ulis/boarding-games-room-thumb.jpg" data-full="/images/ulis/boarding-games-room.jpg" alt="Boarding house games room (render, opening Sep 2027)" title="Boarding house games room (render, opening Sep 2027)" loading="lazy" onclick="ulisOpenPhoto(11)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge · Photos courtesy of the school</p>
+    </div>
+
+    <div id="_ulis_lb" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+      <button onclick="ulisLbNav(-1)" style="position:absolute;left:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8249;</button>
+      <img id="_ulis_lb_img" alt="" style="max-width:84vw;max-height:90vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);cursor:default;">
+      <button onclick="ulisLbNav(1)" style="position:absolute;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8250;</button>
+      <button onclick="document.getElementById('_ulis_lb').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;">✕</button>
+    </div>
+    <script>
+    var _ulis_photos = ['/images/ulis/reception.jpg','/images/ulis/primary-classroom.jpg','/images/ulis/science-lab.jpg','/images/ulis/science-lesson.jpg','/images/ulis/music-room.jpg','/images/ulis/canteen.jpg','/images/ulis/sports-hall.jpg','/images/ulis/rooftop-pitch.jpg','/images/ulis/auditorium.jpg','/images/ulis/auditorium-stage.jpg','/images/ulis/lobby.jpg','/images/ulis/boarding-games-room.jpg'];
+    var _ulis_idx = 0;
+    function ulisOpenPhoto(i){
+      _ulis_idx = i;
+      document.getElementById('_ulis_lb_img').src = _ulis_photos[i];
+      document.getElementById('_ulis_lb').style.display = 'flex';
+    }
+    function ulisLbNav(dir){
+      _ulis_idx = (_ulis_idx + dir + _ulis_photos.length) % _ulis_photos.length;
+      document.getElementById('_ulis_lb_img').src = _ulis_photos[_ulis_idx];
+    }
+    document.addEventListener('keydown',function(e){
+      var lb = document.getElementById('_ulis_lb');
+      if(lb.style.display==='none') return;
+      if(e.key==='Escape') lb.style.display='none';
+      if(e.key==='ArrowRight') ulisLbNav(1);
+      if(e.key==='ArrowLeft') ulisLbNav(-1);
+    });
+    </script>
+
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">United Lisbon International School is an international school in Park of Nations, Lisbon, founded in 2021. The school follows the IEYC and IPC curricula in early and primary years, and the IB Diploma Programme in senior school, with English as the primary language of instruction.</p>
 
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The campus is modern and well-equipped, with 6,500 m² of outdoor spaces and play areas. The school accepts students from age 3 to 18, with approximately 640 students. Additional languages offered include Portuguese, Spanish, French and Mandarin. Boarding will be available from September 2027.</p>
@@ -217,13 +263,6 @@ Grade 6 to 10 - Violin, Viola, Cello, Piano, Classical Guitar, Electric Guitar, 
       <div class="map-card-footer"><a href="https://maps.google.com/?q=United%20Lisbon%20International%20School%20Portugal" target="_blank">Open in Google Maps ↗</a></div>
     </div>
 
-    <div class="sidebar-card" style="padding:12px 14px;">
-      <div class="sidebar-title">School photos</div>
-      <div style="background:var(--cream);border:1.5px dashed var(--border);border-radius:8px;height:80px;display:flex;align-items:center;justify-content:center;">
-        <div style="text-align:center;opacity:0.4;">
-          <div style="font-size:20px;">📷</div>
-          <div style="font-size:10px;color:#bbb;margin-top:3px;font-weight:600;letter-spacing:0.05em;">Coming soon</div>
-        </div>
       </div>
     </div>
 
