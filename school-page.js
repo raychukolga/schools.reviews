@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
     hero.appendChild(strip);
   }
 
+  // «✓ Data current Mon YYYY» в ценах — тоже по дате зелёной плашки
+  if (verMatch) {
+    document.querySelectorAll('.current-badge').forEach(function (el) {
+      el.textContent = el.textContent.replace(/[A-Z][a-z]{2} \d{4}/, verMatch[0]);
+    });
+  }
+
   // Save / Compare buttons — injected after map card (above photos)
   var mapCard = document.querySelector('.map-card');
   if (mapCard && !document.querySelector('.sr-save-compare-card')) {
