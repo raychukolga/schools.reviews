@@ -890,7 +890,7 @@ const schools = [
     appFee:200, enrollFee:"1,200", annualEnrollFee:"600",
     lunchIncluded:false, lunchPrice:null,
     classSize:20,
-    reviewed:true, video:"TewIVMl7dsY", verified:false, boarding:false,
+    reviewed:true, video:"TewIVMl7dsY", verified:true, verDate:"Nov 2026", boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7398869, lng:-9.3068867,
     ibAvg:31.7,
     founded:2017, students:600,
@@ -1275,9 +1275,18 @@ const schools = [
 
 // Порядок показа в листинге: эти школы идут первыми в указанном порядке,
 // остальные — следом, как стоят в массиве выше. Меняется только здесь.
-// CAISL, Oeiras IS, Sharing, United Lisbon, TASIS, Hypha, IPS Cascais, BSL, Prime ×3
+// Сверху — школы, обновлённые в самом свежем месяце (verDate), затем
+// CAISL, Oeiras IS, Sharing, United Lisbon, TASIS, Hypha, IPS Cascais, BSL, Prime ×3, затем остальные
 const TOP_ORDER = [1, 18, 19, 11, 4, 27, 30, 6, 8, 9, 10];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const verKey = s => {
+  const m = s.verified && /^([A-Z][a-z]{2}) (\d{4})$/.exec(s.verDate || '');
+  return m ? Number(m[2]) * 12 + MONTHS.indexOf(m[1]) : -1;
+};
+const LATEST_VER = Math.max(...schools.map(verKey));
 schools.sort((a, b) => {
+  const fa = verKey(a) === LATEST_VER ? 0 : 1, fb = verKey(b) === LATEST_VER ? 0 : 1;
+  if (fa !== fb) return fa - fb;
   const ia = TOP_ORDER.indexOf(a.id), ib = TOP_ORDER.indexOf(b.id);
   return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
 });
