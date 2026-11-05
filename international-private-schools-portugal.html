@@ -381,7 +381,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 <div class="filter-bar">
   <div class="filter-top-row">
     <div class="filter-main">
-      <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Reviewed</button>
+      <button class="chip reviewed-chip" onclick="toggleReviewed(this)">★ Visited by us</button>
       <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help" style="margin-right:2px;" title="What's the difference between curricula?"><span class="filter-help-tip" style="white-space:nowrap;">Not sure which curriculum? Read our guide →</span>?</a>
       <button class="chip prog-chip active" data-val="all" onclick="setP('all',this)">All</button>
       <button class="chip prog-chip" data-val="IB" onclick="setP('IB',this)">IB</button>
@@ -547,7 +547,7 @@ const schools = [
     appFee:null, enrollFee:"600", annualEnrollFee:null, buildingFee:"1,935 · annually for the first 5 years (Grades 1–12)",
     lunchIncluded:false, lunchPrice:"1,212", schoolBus:true,
     lessonsStart:"8:20", lessonsEnd:"15:45",
-    reviewed:true, verified:true, verDate:"Nov 2026", boarding:false, largeCampus:true,
+    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false, largeCampus:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.76829, lng:-9.3797387,
     founded:2011, students:755, ibAvg:34, ageFrom:3, ageTo:18, classSize:20, facilities:"Excellent",
     website:"https://www.caislisbon.org",
@@ -578,7 +578,7 @@ const schools = [
     appFee:250, enrollFee:"750", annualEnrollFee:"5,000",
     lunchIncluded:false, lunchPrice:"1,017–1,459", schoolBus:true,
     lessonsStart:"8:20", lessonsEnd:"4:00",
-    reviewed:true, verified:true, boarding:false, largeCampus:true,
+    reviewed:false, verified:true, boarding:false, largeCampus:true,
     bg:"#E1F5EE", color:"#085041", lat:38.6833, lng:-9.3333,
     founded:1932, classSize:22, ibAvg:34.5, examRequired:true, facilities:"Excellent",
     website:"https://www.stjulians.com",
@@ -772,7 +772,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:18,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false, bilingualPt:true,
+    reviewed:false, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7354257, lng:-9.2255805,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -785,7 +785,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:8,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false, bilingualPt:true,
+    reviewed:false, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7385487, lng:-9.1618457,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -798,7 +798,7 @@ const schools = [
     schoolBus:true, ageFrom:1, ageTo:8,
     appFee:100, enrollFee:"950–1,350", annualEnrollFee:"600–710",
     lunchIncluded:false, classSize:20,
-    reviewed:true, verified:true, boarding:false, bilingualPt:true,
+    reviewed:false, verified:true, boarding:false, bilingualPt:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7083057, lng:-9.2160984,
     founded:2010, facilities:"Good",
     website:"https://www.park-is.com" },
@@ -862,7 +862,7 @@ const schools = [
   { id:18, name:"Oeiras International School", short:"OI",
     address:"R. Antero de Quental 7, 2730-013 Oeiras", loc:"Oeiras", prog:"Full IB",
     price:13980, priceMax:22406,
-    reviewed:true, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false,
     bg:"#EAF3DE", color:"#2E7D32", lat:38.7262294, lng:-9.2771806,
     ibAvg:36,
     founded:2010,
@@ -890,7 +890,7 @@ const schools = [
     appFee:200, enrollFee:"1,200", annualEnrollFee:"600",
     lunchIncluded:false, lunchPrice:null,
     classSize:20,
-    reviewed:false, verified:false, boarding:false,
+    reviewed:true, video:"TewIVMl7dsY", verified:false, boarding:false,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7398869, lng:-9.3068867,
     ibAvg:31.7,
     founded:2017, students:600,
@@ -1187,7 +1187,7 @@ const schools = [
     appFee:null, enrollFee:null, annualEnrollFee:900,
     lunchIncluded:true, lunchPrice:null, schoolBus:null,
     lessonsStart:"8:30", lessonsEnd:"16:00",
-    reviewed:true, verified:true, verDate:'May 2026', boarding:false, boutique:true,
+    reviewed:true, video:"MqpRO40ZGrw", verified:true, verDate:'May 2026', boarding:false, boutique:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.6936, lng:-9.3147,
     founded:2025, ageFrom:3, ageTo:12, classSize:15,
     website:null,
@@ -1328,7 +1328,7 @@ function render(){
           <div class="card-loc">📍 ${s.loc}</div>
         </div>
         <div class="badges">
-          ${s.reviewed ? '<span class="rev-badge">★ Reviewed</span>' : ''}
+          ${s.reviewed ? '<span class="rev-badge">★ Visited by us</span>' : ''}
           ${s.verified ? `<span class="ver-badge">✓ ${s.verDate||'Apr 2026'}</span>` : ''}
         </div>
       </div>
@@ -1493,7 +1493,7 @@ function openModal(id){
         <span class="mbadge mb-prog">${s.prog||'—'}</span>
         ${s.boarding?`<span class="mbadge mb-boarding">${s.boardingFrom ? 'Boarding from '+s.boardingFrom : 'Boarding ✓'}</span>`:''}
         ${s.verified?`<span class="mbadge mb-verified">✓ Verified ${s.verDate||'Apr 2026'}</span>`:''}
-        ${s.reviewed?'<span class="mbadge mb-reviewed">★ Reviewed</span>':''}
+        ${s.reviewed?'<span class="mbadge mb-reviewed">★ Visited by us</span>':''}
       </div>
       <div class="modal-actions">
         <button id="favBtn" class="act-btn" onclick="toggleFav(${id})">${isFav?'♥ Saved':'♡ Save'}</button>
@@ -1666,11 +1666,15 @@ function openModal(id){
       </div>` : ''}
       <div class="m-section">
         <div class="m-section-title">Independent review</div>
-        <div class="video-ph">
+        ${s.video
+          ? `<a href="https://youtu.be/${s.video}" target="_blank" rel="noopener" style="display:block;position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:url('https://img.youtube.com/vi/${s.video}/hqdefault.jpg') center/cover no-repeat;">
+            <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span style="width:52px;height:52px;border-radius:50%;background:rgba(196,99,58,.92);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" fill="#fff"/></svg></span></span>
+          </a>
+          <div style="margin-top:10px;background:#F5EDE8;border-radius:8px;padding:10px 12px;font-size:12px;color:#8B3A1F;">★ We've visited this school — watch our video tour.</div>`
+          : `<div class="video-ph">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="#ccc" stroke="none"/></svg>
-          <span style="font-size:11px;color:#bbb;">${s.reviewed?'Video review — coming soon':'Not yet visited'}</span>
-        </div>
-        ${s.reviewed?'<div style="margin-top:10px;background:#F5EDE8;border-radius:8px;padding:10px 12px;font-size:12px;color:#8B3A1F;">★ We\'ve visited this school. Full video review coming soon.</div>':''}
+          <span style="font-size:11px;color:#bbb;">Not yet visited</span>
+        </div>`}
       </div>
     </div>
     <div class="modal-footer-area">
