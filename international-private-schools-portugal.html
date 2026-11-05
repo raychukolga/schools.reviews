@@ -945,11 +945,19 @@ const schools = [
     website:"https://www.stjameslisbon.com" },
 
   { id:25, name:"Greene's College Oxford — Estoril", short:"GC",
-    address:"Estoril", loc:"Estoril", prog:"A-Levels",
-    price:15000, priceMax:22000,
-    reviewed:false, verified:false, boarding:false,
-    bg:"#E1F5EE", color:"#085041", lat:38.7066, lng:-9.3950,
-    website:"https://www.greenescollege.com" },
+    address:"Rua Dom Afonso Henriques 1614, 2765-576 Estoril", loc:"Estoril", prog:"A-Levels",
+    price:18575, priceMax:24360,
+    enrollFee:"2,400", annualEnrollFee:"1,200",
+    lunchIncluded:false, schoolBus:false,
+    reviewed:false, verified:false, boarding:false, boutique:true,
+    bg:"#E1F5EE", color:"#085041", lat:38.7139595, lng:-9.3963899,
+    founded:1967, ageFrom:14, ageTo:18, classSize:3,
+    description:"Oxford-style tutorial college in Estoril (since 2015): IGCSE and A Levels taught one-to-one or in groups of 2–3. Also retakes, Foundation Year and part-time tuition.",
+    srNote:{
+      pros:["Tutorials of 1–3 students with a weekly Personal Tutor","Flexible — join mid-year, retakes, part-time"],
+      watch:["Not a conventional school — no lunch, bus or sports","Many extras on top: €2,400 registration, subject supplements, practicals, exam fees"],
+    },
+    website:"https://pt.greenesoxford.com" },
 
   { id:26, name:"Butterflies School", short:"BF",
     address:"Lisbon", loc:"Lisbon", prog:"British",
@@ -1505,6 +1513,7 @@ const schoolPages = {
   70: '/international-school-of-madeira-portugal.html',
   71: '/leiria-international-school-portugal.html',
   72: '/instituto-espanol-giner-de-los-rios-portugal.html',
+  25: '/greenes-college-oxford-estoril-portugal.html',
 };
 
 // Load compare queue saved from individual school pages
