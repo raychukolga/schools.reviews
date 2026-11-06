@@ -1,8 +1,24 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "missing": [
+        {
+          "type": "host",
+          "value": "schools.reviews"
+        }
+      ],
+      "destination": "https://schools.reviews/international-private-schools-portugal.html",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
-      "missing": [{ "type": "host", "value": "schools.reviews" }],
+      "missing": [
+        {
+          "type": "host",
+          "value": "schools.reviews"
+        }
+      ],
       "destination": "https://schools.reviews/:path*",
       "permanent": true
     },
