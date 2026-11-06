@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://schools.reviews/clarity-international-school-portugal.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/MqpRO40ZGrw/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Clarity International School (Oeiras, Portugal) | Independent school tour &amp; review</video:title>
+      <video:description>Independent video tour of Clarity International School in Oeiras, Portugal: we visit the campus, speak with the Principal and show classrooms, outdoor play areas and daily school life — a Cambridge school with a maximum of 15 students per class, ages 3–12.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/MqpRO40ZGrw</video:player_loc>
+      <video:duration>1170</video:duration>
+      <video:publication_date>2026-10-10T12:03:07-07:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader info="https://www.youtube.com/@Schools.Reviews">Schools Reviews</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://schools.reviews/international-sharing-school-taguspark-portugal.html</loc>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/TewIVMl7dsY/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>International Sharing School Portugal | Independent school tour and review, Lisbon</video:title>
+      <video:description>Independent video tour of International Sharing School at Taguspark, Oeiras (Lisbon area): campus, classrooms, library and STEM spaces of a full IB school, filmed by Schools Reviews the way a parent would see it.</video:description>
+      <video:player_loc>https://www.youtube.com/embed/TewIVMl7dsY</video:player_loc>
+      <video:duration>2181</video:duration>
+      <video:publication_date>2026-10-19T08:23:23-07:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:uploader info="https://www.youtube.com/@Schools.Reviews">Schools Reviews</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+</urlset>

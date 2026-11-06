@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://schools.reviews/sitemap.xml
+Sitemap: https://schools.reviews/video-sitemap.xml
