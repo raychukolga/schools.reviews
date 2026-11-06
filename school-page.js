@@ -83,13 +83,14 @@ document.addEventListener('DOMContentLoaded', function () {
         cmpBtn.style.background = '#E6F1FB';
         cmpBtn.style.color = '#0C447C';
       } else {
-        if (q.length >= 4) { alert('Максимум 4 школы для сравнения'); return; }
+        if (q.length >= 4) { alert('You can compare up to 4 schools'); return; }
         q.push(schoolUrl);
         cmpBtn.textContent = '✓ In compare';
         cmpBtn.style.background = '#0C447C';
         cmpBtn.style.color = 'white';
       }
       localStorage.setItem('sr_compare_queue', JSON.stringify(q));
+      if (window.srUpdateNavCounts) window.srUpdateNavCounts();
     });
 
     card.appendChild(saveBtn);

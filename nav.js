@@ -100,6 +100,7 @@ window.srTileUrl = function () {
     '  <div class="_nm_sec">Browse</div>\n' +
     '  <a href="/international-private-schools-portugal.html" class="_nm_link">🇵🇹 Schools in Portugal</a>\n' +
     '  <a href="/international-private-schools-portugal.html#saved" class="_nm_link">♥ Saved schools <span id="_nav_saved_count_m" class="_nav_count"></span></a>\n' +
+  '  <a href="/international-private-schools-portugal.html#compare" class="_nm_link">⇄ Compare schools <span id="_nav_cmp_count_m" class="_nav_count"></span></a>\n' +
   '  <div class="_nm_sec">Guides</div>\n' +
     '  <a href="/school-year-grade-by-age-guide.html" class="_nm_link">📊 School grades by age</a>\n' +
     '  <a href="/ib-vs-cambridge-which-is-better.html" class="_nm_link">🎓 IB vs Cambridge</a>\n' +
@@ -138,6 +139,8 @@ window.srTileUrl = function () {
     }
     var savedCountM = document.getElementById('_nav_saved_count_m');
     if (savedCountM) savedCountM.textContent = saved.length > 0 ? '(' + saved.length + ')' : '';
+    var cmpCountM = document.getElementById('_nav_cmp_count_m');
+    if (cmpCountM) cmpCountM.textContent = compare.length > 0 ? '(' + compare.length + ')' : '';
     if (cmpBtn && cmpCount) {
       cmpCount.textContent = compare.length > 0 ? '(' + compare.length + ')' : '';
       cmpBtn.classList.toggle('has-items', compare.length > 0);

@@ -1818,19 +1818,42 @@ function toggleCmp(id){
   const btn=document.getElementById('cmpBtn');
   if(compareList.has(id)){compareList.delete(id);btn.textContent='+ Compare';btn.classList.remove('added');}
   else{
-    if(compareList.size>=4){alert('Max 4 schools');return;}
+    if(compareList.size>=4){alert('You can compare up to 4 schools');return;}
     compareList.add(id);btn.textContent='✓ Added';btn.classList.add('added');
   }
+  saveCmp();
   updateCmpBar();
 }
+// Сравнение — один список на весь сайт: url страниц в sr_compare_queue
+// (его же пишет «Add to compare» на страницах школ, см. school-page.js)
+function saveCmp(){
+  try { localStorage.setItem('sr_compare_queue', JSON.stringify([...compareList].map(id=>schoolPages[id]).filter(Boolean))); } catch(e){}
+  if (window.srUpdateNavCounts) window.srUpdateNavCounts();
+}
+let cmpHint=false; // показать подсказку, когда пришли по «Compare» в шапке
 function updateCmpBar(){
   const bar=document.getElementById('compareBar');
-  if(compareList.size===0){bar.style.display='none';return;}
+  const btn=bar.querySelector('.cmp-btn'), clr=bar.querySelector('.cmp-clear');
+  if(compareList.size===0 && !cmpHint){bar.style.display='none';return;}
   bar.style.display='flex';
-  const names=[...compareList].map(id=>schools.find(s=>s.id===id)?.name.split(' ').slice(0,2).join(' ')).join(' · ');
-  document.getElementById('compareLabel').textContent=compareList.size+' selected: '+names;
+  const names=[...compareList].map(id=>schools.find(s=>s.id===id)?.name).filter(Boolean).join(' · ');
+  let label;
+  if(compareList.size===0) label='No schools to compare yet — tap ⇄ Add to compare on a school\'s page (up to 4).';
+  else if(compareList.size===1) label='1 selected: '+names+' — add at least one more school to compare.';
+  else label=compareList.size+' selected: '+names;
+  document.getElementById('compareLabel').textContent=label;
+  btn.style.display = compareList.size>=2 ? '' : 'none';
+  clr.textContent = compareList.size ? 'Clear' : 'Close';
 }
-function clearCompare(){compareList.clear();updateCmpBar();}
+function clearCompare(){compareList.clear();cmpHint=false;saveCmp();updateCmpBar();}
+// «Compare» в шапке ведёт сюда с #compare
+function applyCompareHash(){
+  if(location.hash!=='#compare') return;
+  history.replaceState(null,'',location.pathname+location.search);
+  if(compareList.size>=2) openCompare();
+  else { cmpHint=true; updateCmpBar(); }
+}
+window.addEventListener('hashchange', applyCompareHash);
 const ALL_CMP_FIELDS=[
   {id:'prog',   l:'Programme',        v:s=>s.prog||'—'},
   {id:'lang',   l:'Teaching language',v:s=>s.prog&&(s.prog.includes('French')||s.prog.includes('Français'))?'French':s.prog&&s.prog.includes('German')?'German':'English'},
@@ -1844,7 +1867,8 @@ const ALL_CMP_FIELDS=[
 let activeCmpFields=new Set(JSON.parse(localStorage.getItem('sr_cmp_fields')||JSON.stringify(ALL_CMP_FIELDS.map(f=>f.id))));
 
 function openCompare(){
-  const list=[...compareList].map(id=>schools.find(s=>s.id===id));
+  const list=[...compareList].map(id=>schools.find(s=>s.id===id)).filter(Boolean);
+  if(list.length<2) return;
   const overlay=document.createElement('div');
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;';
 
@@ -1876,7 +1900,7 @@ function openCompare(){
       <button onclick="this.closest('div[style*=fixed]').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;line-height:1;">✕</button>
     </div>
     <div style="padding:12px 24px;border-bottom:1px solid #f0f0f0;background:#fafafa;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:8px;">Показывать параметры</div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:8px;">Show fields</div>
       <div id="cmpCustomize" style="display:flex;flex-wrap:wrap;gap:4px 20px;">${renderCustomize()}</div>
     </div>
     <div id="cmpTable">${renderTable()}</div>
@@ -1965,6 +1989,7 @@ function initMap(){
 state.savedOnly = location.hash === '#saved';
 render();
 updateCmpBar();
+applyCompareHash();
 window.addEventListener('load', initMap);
 if(state.savedOnly) window.addEventListener('load', () => setTimeout(() => scrollToList(false), 300));
 
