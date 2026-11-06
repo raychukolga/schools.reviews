@@ -106,6 +106,67 @@
       </div>
     </div>
 
+    <div class="section" style="padding-bottom:4px;">
+      <div class="sec-title">School photos</div>
+      <div style="overflow-x:auto;overflow-y:visible;white-space:nowrap;padding-bottom:8px;">
+        <img src="/images/tasis/campus-aerial.jpg" alt="TASIS Portugal campus from above" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/sports-fields.jpg" alt="Sports fields" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/science-lab.jpg" alt="Science lab" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/upper-school-library.jpg" alt="Upper school library" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/library-stacks.jpg" alt="Library" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/lower-school-library.jpg" alt="Lower school library story time" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/middle-school-lounge.jpg" alt="Middle school lounge" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/theater.jpg" alt="Theatre" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/violin-class.jpg" alt="Violin lesson" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/outdoor-classroom.jpg" alt="Lower school outdoor classroom" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/tasis/forest-school.jpg" alt="Forest school" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;vertical-align:top;" title="Click to enlarge">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge · Photos: TASIS Portugal</p>
+    </div>
+
+    <div id="_photo_lb" onclick="lbBgClick(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+      <button onclick="lbNav(-1)" style="position:absolute;left:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8249;</button>
+      <img id="_photo_lb_img" style="max-width:84vw;max-height:90vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);cursor:default;" onclick="event.stopPropagation()">
+      <button onclick="lbNav(1)" style="position:absolute;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8250;</button>
+      <button onclick="document.getElementById('_photo_lb').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;">✕</button>
+    </div>
+    <script>
+    var _lb_photos = [
+      '/images/tasis/campus-aerial.jpg',
+      '/images/tasis/sports-fields.jpg',
+      '/images/tasis/science-lab.jpg',
+      '/images/tasis/upper-school-library.jpg',
+      '/images/tasis/library-stacks.jpg',
+      '/images/tasis/lower-school-library.jpg',
+      '/images/tasis/middle-school-lounge.jpg',
+      '/images/tasis/theater.jpg',
+      '/images/tasis/violin-class.jpg',
+      '/images/tasis/outdoor-classroom.jpg',
+      '/images/tasis/forest-school.jpg'
+    ];
+    var _lb_idx = 0;
+    function openPhoto(el){
+      _lb_idx = _lb_photos.indexOf(el.src.replace(location.origin,''));
+      if(_lb_idx < 0) _lb_idx = 0;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+      document.getElementById('_photo_lb').style.display = 'flex';
+    }
+    function lbNav(dir){
+      _lb_idx = (_lb_idx + dir + _lb_photos.length) % _lb_photos.length;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+    }
+    function lbBgClick(e){
+      if(e.target === document.getElementById('_photo_lb')) document.getElementById('_photo_lb').style.display='none';
+    }
+    document.addEventListener('keydown',function(e){
+      var lb = document.getElementById('_photo_lb');
+      if(lb.style.display==='none') return;
+      if(e.key==='Escape') lb.style.display='none';
+      if(e.key==='ArrowRight') lbNav(1);
+      if(e.key==='ArrowLeft') lbNav(-1);
+    });
+    </script>
+
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">TASIS Portugal — The American School in Portugal — opened in 2020 on a beautifully designed campus in Linhó, Sintra, on the Portuguese Riviera. Despite being the youngest of the four TASIS schools, it brings with it the institutional depth and pedagogical philosophy of a network founded in Switzerland in 1956. The campus was designed by architect David Mayernik, winner of the Palladio Award from the Traditional Building Conference.</p>
 
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:12px;">The school's academic approach is deliberately distinctive. Lower and middle school students follow the <strong>Core Knowledge</strong> curriculum — one of the few schools in the world to earn School of Distinction status for lower school curricular fidelity — combined with <strong>Singapore Math</strong>. In high school, the programme transitions to <strong>Cambridge IGCSE</strong> (Grades 9–10), followed by the <strong>IB Diploma Programme</strong> (Grades 11–12). This layered structure is designed to build genuinely well-read, broadly educated students before they enter the rigour of IB.</p>
@@ -262,16 +323,6 @@
       </div>
     </div>
 
-
-    <div class="sidebar-card" style="padding:12px 14px;">
-      <div class="sidebar-title">School photos</div>
-      <div style="background:var(--cream);border:1.5px dashed var(--border);border-radius:8px;height:80px;display:flex;align-items:center;justify-content:center;">
-        <div style="text-align:center;opacity:0.4;">
-          <div style="font-size:20px;">📷</div>
-          <div style="font-size:10px;color:#bbb;margin-top:3px;font-weight:600;letter-spacing:0.05em;">Coming soon</div>
-        </div>
-      </div>
-    </div>
 
     <div class="apply-card">
       <div class="sidebar-title">Apply to this school</div>
