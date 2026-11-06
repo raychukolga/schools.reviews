@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         saveBtn.style.color = 'var(--terra)';
       }
       localStorage.setItem('sr_saved_schools', JSON.stringify(list));
+      if (window.srUpdateNavCounts) window.srUpdateNavCounts();
     });
 
     var cmpBtn = document.createElement('button');

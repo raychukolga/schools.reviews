@@ -76,7 +76,7 @@ window.srTileUrl = function () {
     '      </div>\n' +
     '    </div>\n' +
     (backLink ? '    ' + backLink + '\n' : '') +
-    '    <a href="/international-private-schools-portugal.html" id="_nav_saved_btn" class="nav-action-btn nav-saved-btn nav-hide-mobile">♡ Saved <span id="_nav_saved_count" class="_nav_count"></span></a>\n' +
+    '    <a href="/international-private-schools-portugal.html#saved" id="_nav_saved_btn" class="nav-action-btn nav-saved-btn nav-hide-mobile">♡ Saved <span id="_nav_saved_count" class="_nav_count"></span></a>\n' +
     '    <a href="/international-private-schools-portugal.html#compare" id="_nav_compare_btn" class="nav-action-btn nav-compare-btn nav-hide-mobile">⇄ Compare <span id="_nav_cmp_count" class="_nav_count"></span></a>\n' +
     '    <a href="#" class="nav-signin nav-hide-mobile">' +
       '<div class="nav-signin-icon">' +
@@ -99,7 +99,8 @@ window.srTileUrl = function () {
     '<div id="_nav_menu">\n' +
     '  <div class="_nm_sec">Browse</div>\n' +
     '  <a href="/international-private-schools-portugal.html" class="_nm_link">🇵🇹 Schools in Portugal</a>\n' +
-    '  <div class="_nm_sec">Guides</div>\n' +
+    '  <a href="/international-private-schools-portugal.html#saved" class="_nm_link">♥ Saved schools <span id="_nav_saved_count_m" class="_nav_count"></span></a>\n' +
+  '  <div class="_nm_sec">Guides</div>\n' +
     '  <a href="/school-year-grade-by-age-guide.html" class="_nm_link">📊 School grades by age</a>\n' +
     '  <a href="/ib-vs-cambridge-which-is-better.html" class="_nm_link">🎓 IB vs Cambridge</a>\n' +
     '  <a href="/ib-diploma-explained.html" class="_nm_link">📋 IB Diploma explained</a>\n' +
@@ -120,8 +121,11 @@ window.srTileUrl = function () {
 
   // Update saved / compare counters from localStorage
   function updateNavCounts() {
-    var saved = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
-    var compare = JSON.parse(localStorage.getItem('sr_compare_queue') || '[]');
+    var saved = [], compare = [];
+    try {
+      saved = JSON.parse(localStorage.getItem('sr_saved_schools') || '[]');
+      compare = JSON.parse(localStorage.getItem('sr_compare_queue') || '[]');
+    } catch (e) {}
 
     var savedBtn = document.getElementById('_nav_saved_btn');
     var savedCount = document.getElementById('_nav_saved_count');
@@ -132,12 +136,15 @@ window.srTileUrl = function () {
       savedCount.textContent = saved.length > 0 ? '(' + saved.length + ')' : '';
       savedBtn.classList.toggle('has-items', saved.length > 0);
     }
+    var savedCountM = document.getElementById('_nav_saved_count_m');
+    if (savedCountM) savedCountM.textContent = saved.length > 0 ? '(' + saved.length + ')' : '';
     if (cmpBtn && cmpCount) {
       cmpCount.textContent = compare.length > 0 ? '(' + compare.length + ')' : '';
       cmpBtn.classList.toggle('has-items', compare.length > 0);
     }
   }
   updateNavCounts();
+  window.srUpdateNavCounts = updateNavCounts;
   window.addEventListener('storage', updateNavCounts);
 
   var hamburger = document.getElementById('_nav_hamburger');

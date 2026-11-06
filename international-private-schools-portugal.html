@@ -1296,9 +1296,13 @@ schools.sort((a, b) => {
   return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
 });
 
-const state = { prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
+const state = { savedOnly:false, prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
 const compareList = new Set();
-const favourites = new Set(JSON.parse(localStorage.getItem('sr_favourites')||'[]'));
+// Избранное — один список на весь сайт: [{name,url}] в sr_saved_schools
+// (его же пишет кнопка «Save school» на страницах школ, см. school-page.js)
+function getSaved(){ try { return JSON.parse(localStorage.getItem('sr_saved_schools')||'[]'); } catch(e){ return []; } }
+function setSaved(list){ try { localStorage.setItem('sr_saved_schools', JSON.stringify(list)); } catch(e){} if (window.srUpdateNavCounts) window.srUpdateNavCounts(); }
+function isSaved(id){ const u = schoolPages[id]; return !!u && getSaved().some(x => x.url === u); }
 
 function fmt(v){ return v ? '€'+v : '—'; }
 function val(v){ return v || '—'; }
@@ -1314,6 +1318,7 @@ function progPill(p){
 }
 
 function getFiltered(){
+  if(state.savedOnly) return schools.filter(s => isSaved(s.id));
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
     if(state.prog === 'IB'){
@@ -1358,8 +1363,10 @@ function getFiltered(){
 
 function render(){
   const filtered = getFiltered();
-  document.getElementById('listCount').textContent = filtered.length + ' schools · Portugal';
-  document.getElementById('heroCount').textContent = filtered.length;
+  document.getElementById('listCount').innerHTML = state.savedOnly
+    ? `<span style="color:var(--terra);font-weight:700;">♥ Your saved schools (${filtered.length})</span> <button onclick="showAllSchools()" style="margin-left:10px;font-size:11px;font-weight:600;color:var(--ink);background:var(--white);border:1.5px solid var(--border);border-radius:6px;padding:3px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Show all schools</button>`
+    : filtered.length + ' schools · Portugal';
+  document.getElementById('heroCount').textContent = state.savedOnly ? schools.length : filtered.length;
   if(map) schools.forEach(s => {
     if(markers[s.id]){
       const inFilter = filtered.some(x=>x.id===s.id);
@@ -1370,7 +1377,9 @@ function render(){
     }
   });
   if(filtered.length === 0){
-    document.getElementById('schoolsList').innerHTML = `<div class="empty-state">No schools match your filters.<br><small>Try adjusting the criteria above.</small></div>`;
+    document.getElementById('schoolsList').innerHTML = state.savedOnly
+      ? `<div class="empty-state">You haven't saved any schools yet.<br><small>Tap ♡ Save school on a school's page to add it here.</small></div>`
+      : `<div class="empty-state">No schools match your filters.<br><small>Try adjusting the criteria above.</small></div>`;
     return;
   }
   // Schools with individual pages first, then rest
@@ -1398,7 +1407,8 @@ function render(){
         ${s.boarding ? `<span class="pill p-blue">${s.boardingFrom ? 'Boarding from '+s.boardingFrom : 'Boarding ✓'}</span>` : '<span class="pill p-gray">Day</span>'}
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
-        <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
+        ${state.savedOnly ? `<button onclick="event.stopPropagation();unsaveSchool(${s.id})" title="Remove from saved" style="font-size:11px;font-weight:600;color:var(--gray);background:none;border:none;padding:4px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">♥ Remove</button>` : ''}
+        <div class="card-price" style="${state.savedOnly ? 'flex:1;' : ''}">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
         ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
     </div>
@@ -1531,6 +1541,19 @@ const schoolPages = {
   59: '/vale-verde-international-school-portugal.html',
 };
 
+// Старое избранное из модалки (sr_favourites, по id) переносим в общий список
+(function(){
+  try {
+    const old = JSON.parse(localStorage.getItem('sr_favourites')||'[]');
+    if (!old.length) return;
+    const list = getSaved();
+    old.forEach(id => { const s = schools.find(x=>x.id===id), url = schoolPages[id];
+      if (s && url && !list.some(x=>x.url===url)) list.push({name:s.name,url}); });
+    setSaved(list);
+    localStorage.removeItem('sr_favourites');
+  } catch(e){}
+})();
+
 // Load compare queue saved from individual school pages
 (function(){
   const queue = JSON.parse(localStorage.getItem('sr_compare_queue')||'[]');
@@ -1549,7 +1572,7 @@ function openModal(id){
   const card=document.getElementById('card-'+s.id);
   if(card){ card.classList.add('highlighted'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
 
-  const isFav=favourites.has(id), inCmp=compareList.has(id);
+  const isFav=isSaved(id), inCmp=compareList.has(id);
   const hasAnyFee = s.grades || s.price || s.earlyPrice || s.primaryPrice || s.appFee || s.enrollFee;
 
   document.getElementById('modalContent').innerHTML = `
@@ -1764,10 +1787,33 @@ function closeModal(e){
 }
 function toggleFav(id){
   const btn=document.getElementById('favBtn');
-  if(favourites.has(id)){favourites.delete(id);btn.textContent='♡ Save';}
-  else{favourites.add(id);btn.textContent='♥ Saved';}
-  localStorage.setItem('sr_favourites',JSON.stringify([...favourites]));
+  const s=schools.find(x=>x.id===id), url=schoolPages[id];
+  if(!s||!url) return;
+  let list=getSaved();
+  if(list.some(x=>x.url===url)){ list=list.filter(x=>x.url!==url); btn.textContent='♡ Save'; }
+  else { list.push({name:s.name,url}); btn.textContent='♥ Saved'; }
+  setSaved(list);
+  if(state.savedOnly) render();
 }
+function unsaveSchool(id){
+  setSaved(getSaved().filter(x=>x.url!==schoolPages[id]));
+  render();
+}
+// «Saved» в шапке ведёт сюда с #saved — показываем только избранное
+function applySavedHash(){
+  state.savedOnly = location.hash === '#saved';
+  render();
+  if(state.savedOnly) scrollToList(true);
+}
+function scrollToList(smooth){
+  const lp=document.querySelector('.list-panel');
+  if(lp) window.scrollTo({top: lp.getBoundingClientRect().top + window.scrollY - 70, behavior: smooth ? 'smooth' : 'auto'});
+}
+function showAllSchools(){
+  history.replaceState(null,'',location.pathname+location.search);
+  applySavedHash();
+}
+window.addEventListener('hashchange', applySavedHash);
 function toggleCmp(id){
   const btn=document.getElementById('cmpBtn');
   if(compareList.has(id)){compareList.delete(id);btn.textContent='+ Compare';btn.classList.remove('added');}
@@ -1916,9 +1962,11 @@ function initMap(){
   map.invalidateSize();
 }
 
+state.savedOnly = location.hash === '#saved';
 render();
 updateCmpBar();
 window.addEventListener('load', initMap);
+if(state.savedOnly) window.addEventListener('load', () => setTimeout(() => scrollToList(false), 300));
 
 // Open school from URL param e.g. ?school=18
 window.addEventListener('load', function(){
