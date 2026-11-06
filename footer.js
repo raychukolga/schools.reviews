@@ -55,6 +55,7 @@
     '        <summary class="footer-col-title">Navigate</summary>\n' +
     '        <div class="footer-links">\n' +
     '          <a href="/international-private-schools-portugal.html">Browse schools</a>\n' +
+    '          <a href="/all-schools-portugal.html">All schools A–Z</a>\n' +
     '          <a href="/about.html">About us</a>\n' +
     '          <a href="/parent-dashboard.html">For parents</a>\n' +
     '          <a href="/school-dashboard.html">For schools</a>\n' +
