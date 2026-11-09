@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Schools — Schools Reviews</title>
-<meta name="description" content="How Schools Reviews works with schools: what is free for every school, and what a school can optionally pay for.">
+<title>For Schools — Free Listing on Schools Reviews</title>
+<meta name="description" content="Schools Reviews lists international schools in Portugal for free. Independent, neutral reviews and verified data. Corrections: editor@schools.reviews.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://schools.reviews/for-schools.html">
-<meta property="og:title" content="For Schools — Schools Reviews">
-<meta property="og:description" content="How Schools Reviews works with schools: what is free for every school, and what a school can optionally pay for.">
+<meta property="og:title" content="For Schools — Free Listing on Schools Reviews">
+<meta property="og:description" content="Schools Reviews lists international schools in Portugal for free. Independent, neutral reviews and verified data. Corrections: editor@schools.reviews.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://schools.reviews/for-schools.html">
 <meta property="og:site_name" content="Schools Reviews">
@@ -87,16 +87,44 @@ nav { background: var(--white); border-bottom: 1px solid var(--border); height: 
 .section-body p { margin-bottom: 14px; }
 .section-body p:last-child { margin-bottom: 0; }
 
-/* TERMS */
-.terms-updated { font-size: 13px; color: var(--gray); margin-bottom: 40px; }
-.terms-section { margin-bottom: 40px; }
-.terms-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--ink); line-height: 1.25; margin-bottom: 14px; }
-.terms-section ul { margin: 0 0 14px 20px; }
-.terms-section li { margin-bottom: 8px; }
-.terms-section a { color: var(--terra); }
-.terms-note { background: var(--terra-light); border: 1.5px solid #e8c4b0; border-radius: 14px; padding: 20px 24px; font-size: 14px; color: #8B3A1F; line-height: 1.7; margin-bottom: 40px; }
-.terms-note strong { color: var(--ink); }
+/* WHAT WE DO — cards */
+.what-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.what-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 22px 20px; }
+.what-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px; }
+.what-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.what-card-desc { font-size: 13px; color: var(--gray); line-height: 1.65; }
 
+/* APPROACH — quote block */
+.approach-block { background: var(--white); border: 1.5px solid var(--border); border-radius: 16px; padding: 28px 32px; margin-top: 24px; position: relative; }
+.approach-block::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 80px; color: var(--terra-light); position: absolute; top: -10px; left: 20px; line-height: 1; }
+.approach-quote { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--ink); line-height: 1.5; margin-bottom: 14px; padding-top: 16px; }
+.approach-body { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+/* WHY IT MATTERS — list */
+.why-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.why-item { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+.why-dash { width: 28px; height: 28px; border-radius: 8px; background: var(--terra-light); color: var(--terra); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.why-text { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+/* MISSION */
+.mission-block { background: var(--ink); border-radius: 16px; padding: 36px 36px; margin-top: 24px; }
+.mission-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
+.mission-text { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: #fff; line-height: 1.4; }
+
+/* DIVIDER */
+.section-divider { height: 1px; background: var(--border); margin-bottom: 56px; }
+
+/* CTA */
+.cta-block { background: var(--terra-light); border: 1.5px solid #e8c4b0; border-radius: 16px; padding: 32px; text-align: center; margin-top: 56px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.cta-sub { font-size: 13px; color: #8B3A1F; margin-bottom: 20px; }
+.cta-btn { display: inline-block; background: var(--ink); color: #fff; text-decoration: none; border-radius: 10px; padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; transition: background .2s; }
+.cta-btn:hover { background: #2d2a26; }
+
+.free-pill { display:inline-block; background:var(--green-light); color:var(--green); border-radius:30px; padding:6px 14px; font-size:12px; font-weight:700; letter-spacing:.04em; margin-top:22px; }
+.section-body a { color: var(--terra); }
+.steps { margin: 16px 0 0 20px; font-size: 15px; color: #555; line-height: 1.8; }
+.steps li { margin-bottom: 6px; }
 /* FOOTER */
 
 .nav-dropdown { position: relative; }
@@ -139,18 +167,102 @@ nav { background: var(--white); border-bottom: 1px solid var(--border); height: 
 <!-- HERO -->
 <div class="page-hero">
   <div class="breadcrumb"><a href="/">Home</a> → For schools</div>
-  <div class="hero-label">Schools</div>
-  <h1 class="hero-title">For schools</h1>
-  <p class="hero-sub">What is free for every school, and what a school can optionally pay for.</p>
+  <div class="hero-label">For schools</div>
+  <h1 class="hero-title">Your school on <em>Schools Reviews</em></h1>
+  <p class="hero-sub">Independent, verified school profiles that help families see which school fits them.</p>
+  <div class="free-pill">✓ Free for every school</div>
 </div>
 
 <!-- CONTENT -->
 <div class="content-wrap">
 
-  <p class="lead">[WHAT SCHOOLS CAN PAY FOR]</p>
+  <!-- FREE -->
+  <div class="about-section">
+    <div class="section-label">Listing</div>
+    <h2 class="section-title">At this stage, everything is free for schools.</h2>
+    <div class="section-body">
+      <p>Every school on Schools Reviews is listed free of charge: the school profile page, the place in the catalogue and on the map, and inclusion in the comparison tool. A school does not pay to be listed or to be reviewed.</p>
+    </div>
+  </div>
 
-  <p>Текст этой страницы ещё не написан. Её открывает ссылка «What can schools pay for?»
-  из промо-блока видеотуров на странице каталога.</p>
+  <div class="section-divider"></div>
+
+  <!-- WHAT WE DO -->
+  <div class="about-section">
+    <div class="section-label">Our Goal</div>
+    <h2 class="section-title">Verified information and independent reviews.</h2>
+    <div class="section-body">
+      <p>Our goal is to give families verified information about schools — fees, programmes, ages, languages, accreditations — in one place, together with an independent review written from a parent’s perspective.</p>
+    </div>
+    <div class="what-cards">
+      <div class="what-card">
+        <div class="what-card-icon" style="background:var(--green-light);">✓</div>
+        <div class="what-card-title">Verified information</div>
+        <div class="what-card-desc">We check school data against official sources and mark profiles we have verified with the month of the check.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:var(--terra-light);">★</div>
+        <div class="what-card-title">Independent reviews</div>
+        <div class="what-card-desc">Reviews are written by our editorial team, not by the school, and are not paid for.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:#E6F1FB;">◎</div>
+        <div class="what-card-title">Neutral and objective</div>
+        <div class="what-card-desc">We describe each school as it is — facts first, without ratings or rankings.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon" style="background:#EEEDFE;">→</div>
+        <div class="what-card-title">The right fit</div>
+        <div class="what-card-desc">We help families understand which schools suit them, so they visit the right ones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- APPROACH -->
+  <div class="about-section">
+    <div class="section-label">Our Approach</div>
+    <h2 class="section-title">Different schools for different families.</h2>
+    <div class="approach-block">
+      <div class="approach-quote">Our aim is not to find something bad about a school. It is to show that different schools suit different families.</div>
+      <div class="approach-body">Each review has two parts: “What we like” and “Worth noting”. Worth noting is not criticism — it is what a family should know to decide whether the school fits them: the religious ethos, the language balance, extra costs, the admissions process, and so on.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CORRECTIONS -->
+  <div class="about-section">
+    <div class="section-label">Corrections</div>
+    <h2 class="section-title">Something out of date? Tell us.</h2>
+    <div class="section-body">
+      <p>If your school’s information needs updating — new fees, a new programme, a new address or anything else — please write to <a href="mailto:editor@schools.reviews">editor@schools.reviews</a>. It helps if you include:</p>
+    </div>
+    <ul class="steps">
+      <li>the school name and a link to its page on Schools Reviews;</li>
+      <li>what should be changed;</li>
+      <li>a source we can check — for example the fee schedule or a page on the school’s website.</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- LATER -->
+  <div class="about-section">
+    <div class="section-label">Coming Later</div>
+    <h2 class="section-title">Paid options for more visibility.</h2>
+    <div class="section-body">
+      <p>In the future we will add optional paid features that help schools increase their visibility on Schools Reviews. Listing will stay free, and paid options will not change what we write about a school.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <div class="cta-title">Questions or corrections?</div>
+    <div class="cta-sub">Write to our editorial team — we read every message.</div>
+    <a href="mailto:editor@schools.reviews" class="cta-btn">editor@schools.reviews</a>
+  </div>
 
 </div>
 
