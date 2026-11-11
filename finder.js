@@ -365,7 +365,7 @@
       var max = document.documentElement.scrollHeight - innerHeight;
       if (max > 0 && scrollY / max >= 0.4) show();
     }
-    setTimeout(show, 15000);
+    setTimeout(show, 8000);
     window.addEventListener('scroll', onScroll, { passive: true });
   }
   function closeSheet(remember) {
