@@ -225,7 +225,6 @@ def _finish(kb, body):
     if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
-    raw = out.get('picks') or []
     picks = []
     for p in out.get('picks') or []:
         s = by_slug.get(p.get('slug'))
