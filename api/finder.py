@@ -20,7 +20,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _kb  # noqa: E402
 
 MODEL = 'claude-haiku-5-5'
-OUTSIDE_LISBON = r'sintra|cascais|carcavelos|estoril|oeiras|taguspark|linh[oó]|amadora|barcarena|almada|set[uú]bal|palmela|colares|loures|odivelas|queluz'
 MAX_MESSAGES = 10
 MAX_CHARS = 1000
 RATE_LIMIT = 30          # requests per IP per hour (per warm instance, best effort)
@@ -41,7 +40,7 @@ Rules:
 - Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." followed by the next question in one sentence. Nothing else.
 - Reply format when you have no picks yet: just the next question in one sentence (plus a guide link if relevant).
 - The next question must appear in "reply" (the site shows only its option buttons).
-- Lisbon: when a parent says "Lisbon" and has not said whether that means the city only, return picks in Lisbon city only (schools whose Area names Lisbon / Lisbon City and NOT another municipality such as Sintra, Cascais, Carcavelos, Oeiras, Taguspark, Linhó, Alfragide/Amadora, Barcarena, Almada or Setúbal) and ask: "Only Lisbon city, or also nearby areas — Oeiras, Cascais, Sintra (about 20–30 minutes by car)?" with options ["Lisbon city only", "Include nearby areas", "Not sure"]. If they include nearby areas (or are not sure), add schools in Oeiras, Cascais / Estoril, Sintra and the rest of Greater Lisbon.
+- Lisbon: "Lisbon" means Lisbon and the surrounding area (Lisbon city, Oeiras, Cascais / Estoril, Sintra, Greater Lisbon) — many families do not know these towns are next to Lisbon. Return picks from the whole area, and offer to narrow it with: "Want to focus on one part of the Lisbon area?" options ["Lisbon city", "Oeiras (15–20 min west)", "Cascais / Estoril (coast, ~30 min)", "Sintra (~30 min, hills)", "South bank — Almada / Setúbal", "Keep the whole area"]. Only when the parent picks a part, narrow to it.
 - IB: when a parent asks for IB and it is not yet clear which, ask: "Full IB from the early years to graduation (PYP, MYP and Diploma), or just the IB Diploma in the last two years?" with options ["Full IB (all years)", "IB Diploma only", "Not sure"], and always end the reply with: "Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html". Full IB = schools whose programme is "Full IB"; IB Diploma only = any school offering the IB Diploma.
 - Point to school pages and our guides when useful.
 - Stay on choosing a school in Portugal. For anything else, politely bring the conversation back.
@@ -227,16 +226,8 @@ def _finish(kb, body):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
     raw = out.get('picks') or []
-    # "Lisbon" means the city until the parent opts in to nearby areas (the model does not always hold to this)
-    asked = ' '.join(m['content'] for m in body['messages'] if m['role'] == 'user').lower()
-    area = json.dumps(out.get('criteria') or {}).lower()
-    if 'lisbon' in area and not re.search(r'nearby|suburb|greater lisbon|not sure|oeiras|cascais|estoril|sintra|carcavelos|almada', asked + ' ' + area):
-        city = [p for p in raw if p.get('slug') in by_slug and not re.search(OUTSIDE_LISBON, by_slug[p['slug']]['area'].lower())]
-        if city:
-            raw = city
-            out['reply'] = re.sub(r'I found \d+ schools?', 'I found %d school%s' % (len(city), '' if len(city) == 1 else 's'), out.get('reply', ''))
     picks = []
-    for p in raw:
+    for p in out.get('picks') or []:
         s = by_slug.get(p.get('slug'))
         if s and s['slug'] not in [x['slug'] for x in picks]:
             picks.append({'slug': s['slug'], 'id': s['id'], 'url': s['url'], 'name': s['name'], 'why': p.get('why', '')})
