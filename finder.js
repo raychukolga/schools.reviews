@@ -82,6 +82,7 @@
     '.srf-link{background:none;border:none;color:#9E4A28;font:600 13px "DM Sans",sans-serif;cursor:pointer;padding:10px 0;min-height:44px;text-align:left}' +
     '.srf-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9E4A28}' +
     '.srf-title{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600;line-height:1.15;margin:6px 0 6px}' +
+    '.srf-promise{background:#EAF3DE;color:#1F5A23;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5;margin:0 0 14px}.srf-promise b{font-weight:700}' +
     '.srf-sub{font-size:14px;color:#555;line-height:1.55;margin:0 0 12px}' +
     '.srf-row{display:flex;gap:8px;align-items:stretch}' +
     '.srf-input{flex:1;min-width:0;min-height:44px;border:1.5px solid #e8e3de;border-radius:10px;padding:10px 12px;font:14px "DM Sans",sans-serif;background:#FAF8F5;color:#1a1814;outline:none;resize:none}' +
@@ -196,11 +197,13 @@
   function trustLine() {
     return 'Searches only our own directory of ' + schoolCount() + ' schools · No school pays to appear';
   }
-  function trustHTML() {
-    return '<ul class="srf-trust">' +
-      '<li>Every international school in Portugal — ' + schoolCount() + ' schools</li>' +
-      "<li>Fees, programmes and ages from each school's published information — verified where marked ✓</li>" +
-      '<li>No school pays to appear in results</li></ul>';
+  // Intro shown in the pop-up and at the top of the panel: the promise first, then the input
+  function introHTML(prefix) {
+    return '<div class="srf-label">AI School Finder</div>' +
+      '<div class="srf-title">Tell us what matters — our AI assistant will find the schools for you.</div>' +
+      '<div class="srf-promise">Searches only our independent directory of all ' + schoolCount() + ' international schools in Portugal. <b>No school pays to appear in results.</b></div>' +
+      entryHTML(prefix) +
+      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>';
   }
 
   // ── panel ────────────────────────────────────────────────────────────────
@@ -238,11 +241,7 @@
 
   function renderIntro() {
     document.getElementById('srf-body').innerHTML =
-      '<div class="srf-title">Not sure where to start?</div>' +
-      "<p class=\"srf-sub\">Tell us what matters to your family — by voice or text. We'll show matching schools on the map.</p>" +
-      entryHTML('srf-p') +
-      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>' +
-      trustHTML();
+      introHTML('srf-p');
     document.getElementById('srf-foot').innerHTML = '';
     document.getElementById('srf-foot').style.display = 'none';
   }
@@ -371,10 +370,7 @@
     sheet.setAttribute('role', 'complementary');
     sheet.setAttribute('aria-label', 'School Finder');
     sheet.innerHTML = '<button type="button" class="srf-x" aria-label="Close" data-sheetclose>✕</button>' +
-      '<div class="srf-label">School Finder</div><div class="srf-title">Not sure where to start?</div>' +
-      "<p class=\"srf-sub\">Tell us what matters to your family — by voice or text. We'll show matching schools on the map.</p>" +
-      entryHTML('srf-s') +
-      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>' + trustHTML();
+      introHTML('srf-s');
     document.body.appendChild(sheet);
     var dim = document.createElement('div');
     dim.id = 'srf-dim';
