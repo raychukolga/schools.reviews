@@ -217,11 +217,17 @@ def _finish(kb, body):
         data = _call(body)
         out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
     q = out.get('next_question') or {}
-    # the buttons belong to next_question, so the question in the text must be the same one
-    if q.get('text') and q['text'] not in out.get('reply', ''):
+    # the buttons belong to next_question, so the question in the text must be about the same thing
+    if q.get('text'):
         r = out.get('reply', '')
-        m = re.search(r'[^.!?]*\?\s*$', r)
-        out['reply'] = (r[:m.start()].rstrip() + ' ' + q['text']) if m else (r.rstrip() + ' ' + q['text'])
+        words = lambda x: set(re.findall(r'[a-zа-яё]{3,}', x.lower()))
+        qs = [m for m in re.finditer(r'[^.!?]*\?', r) if not m.group().strip().lower().startswith('not sure')]
+        if not any(len(words(m.group()) & words(q['text'])) >= 0.4 * len(words(q['text'])) for m in qs):
+            if qs:  # the model asked something else: swap its last question for the one the buttons answer
+                m = qs[-1]
+                out['reply'] = (r[:m.start()].rstrip() + ' ' + q['text'] + r[m.end():]).strip()
+            else:
+                out['reply'] = r.rstrip() + ' ' + q['text']
     if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
