@@ -134,7 +134,7 @@ def as_prompt(kb):
     """The knowledge base as one stable text block for the system prompt."""
     out = []
     for s in kb['schools']:
-        ages = f"{s['age_from']}–{s['age_to']}" if s['age_from'] is not None and s['age_to'] else 'see page'
+        ages = f"{s['age_from']}–{s['age_to']}" if s['age_from'] is not None and s['age_to'] else 'not listed'
         fees = f"€{s['fee_min']:,}–€{s['fee_max']:,}/yr" if s['fee_min'] else 'fees on request'
         ver = f"Verified {s['ver_date']}" if s['verified'] and s['ver_date'] else ('Verified' if s['verified'] else 'NOT verified')
         out.append('\n'.join([
