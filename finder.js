@@ -231,7 +231,7 @@
     conv.forEach(function (m, i) {
       h += '<div class="srf-msg ' + (m.role === 'user' ? 'u' : 'a') + '">' + (m.role === 'user' ? esc(m.content) : linkify(m.content)) + '</div>';
       if (i === conv.length - 1 && m.role === 'assistant') {
-        if (lastPicks.length && isMobile()) {
+        if (lastPicks.length) {
           h += '<button type="button" class="srf-btn srf-picks-cta" data-showpicks>Show ' + lastPicks.length + ' school' + (lastPicks.length > 1 ? 's' : '') + ' on the map →</button>';
         }
         if (m.q && m.q.options && m.q.options.length) {
@@ -270,7 +270,10 @@
         conv.push({ role: 'assistant', content: o.reply || '', q: o.next_question });
         if (o.picks && o.picks.length) {
           lastPicks = o.picks;
-          if (window.srFinderHooks) window.srFinderHooks.applyPicks(o.picks, chips);
+          if (window.srFinderHooks) {
+            window.srFinderHooks.applyPicks(o.picks, chips);
+            if (!isMobile()) window.srFinderHooks.showResults();  // the panel sits beside the list on desktop
+          }
         }
         renderChat();
       })
@@ -443,7 +446,7 @@
     if (t.hasAttribute('data-back')) { saveGuidedText(); if (qIndex) qIndex--; return renderGuided(); }
     if (t.hasAttribute('data-skipall')) { saveGuidedText(); return finishGuided(); }
     if (t.hasAttribute('data-showpicks')) {
-      closePanel();
+      if (isMobile()) closePanel();
       if (window.srFinderHooks) window.srFinderHooks.showResults();
     }
   });
