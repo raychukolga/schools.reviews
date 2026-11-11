@@ -135,7 +135,7 @@ def _clean_messages(raw):
     return msgs
 
 
-def ask(messages, criteria):
+def ask(messages, criteria, model=MODEL):
     """Call Claude and return the validated respond() payload."""
     kb, system = _load()
     msgs = _clean_messages(messages)
@@ -144,7 +144,7 @@ def ask(messages, criteria):
     if criteria:
         msgs[-1]['content'] += '\n\n[Criteria collected so far: ' + json.dumps(criteria)[:800] + ']'
     body = {
-        'model': MODEL,
+        'model': model if model in ('claude-haiku-5-5', 'claude-sonnet-5-5') else MODEL,
         'max_tokens': 1200,
         'system': system,
         'tools': [TOOL],
@@ -228,7 +228,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             n = min(int(self.headers.get('Content-Length') or 0), 20000)
             req = json.loads(self.rfile.read(n) or b'{}')
-            out = ask(req.get('messages'), req.get('criteria'))
+            out = ask(req.get('messages'), req.get('criteria'), req.get('_model') or MODEL)  # _model: temporary A/B test
         except urllib.error.HTTPError as e:
             print(json.dumps({'api_error': e.code, 'body': e.read()[:300].decode('utf-8', 'replace')}))
             return self._send(502, {'error': 'The assistant is unavailable right now — please use the filters.'})
