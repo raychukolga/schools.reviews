@@ -9,6 +9,7 @@ Claude in a cached system prompt. ANTHROPIC_API_KEY lives in Vercel env vars.
 import hashlib
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -19,6 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _kb  # noqa: E402
 
 MODEL = 'claude-haiku-5-5'
+OUTSIDE_LISBON = r'sintra|cascais|carcavelos|estoril|oeiras|taguspark|linh[oó]|amadora|barcarena|almada|set[uú]bal|palmela|colares|loures|odivelas|queluz'
 MAX_MESSAGES = 10
 MAX_CHARS = 1000
 RATE_LIMIT = 30          # requests per IP per hour (per warm instance, best effort)
@@ -219,8 +221,17 @@ def _finish(kb, body):
     if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
+    raw = out.get('picks') or []
+    # "Lisbon" means the city until the parent opts in to nearby areas (the model does not always hold to this)
+    asked = ' '.join(m['content'] for m in body['messages'] if m['role'] == 'user').lower()
+    area = json.dumps(out.get('criteria') or {}).lower()
+    if 'lisbon' in area and not re.search(r'nearby|suburb|greater lisbon|not sure|oeiras|cascais|estoril|sintra|carcavelos|almada', asked + ' ' + area):
+        city = [p for p in raw if p.get('slug') in by_slug and not re.search(OUTSIDE_LISBON, by_slug[p['slug']]['area'].lower())]
+        if city:
+            raw = city
+            out['reply'] = re.sub(r'I found \d+ schools?', 'I found %d school%s' % (len(city), '' if len(city) == 1 else 's'), out.get('reply', ''))
     picks = []
-    for p in out.get('picks') or []:
+    for p in raw:
         s = by_slug.get(p.get('slug'))
         if s and s['slug'] not in [x['slug'] for x in picks]:
             picks.append({'slug': s['slug'], 'id': s['id'], 'url': s['url'], 'name': s['name'], 'why': p.get('why', '')})
