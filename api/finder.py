@@ -6,6 +6,7 @@ POST /api/finder  {"messages": [{"role": "user"|"assistant", "content": "..."}],
 The answer comes only from the site's own school pages (see _kb.py), passed to
 Claude in a cached system prompt. ANTHROPIC_API_KEY lives in Vercel env vars.
 """
+import hashlib
 import json
 import os
 import sys
@@ -109,15 +110,40 @@ def _load():
     return _KB, _SYSTEM
 
 
+def _redis(*commands):
+    """Upstash Redis REST pipeline; returns None when the store is not configured or fails."""
+    url = os.environ.get('KV_REST_API_URL') or os.environ.get('UPSTASH_REDIS_REST_URL')
+    token = os.environ.get('KV_REST_API_TOKEN') or os.environ.get('UPSTASH_REDIS_REST_TOKEN')
+    if not (url and token):
+        return None
+    try:
+        req = urllib.request.Request(url.rstrip('/') + '/pipeline', data=json.dumps(list(commands)).encode(),
+                                     headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=3) as r:
+            return [x.get('result') for x in json.load(r)]
+    except Exception as e:  # noqa: BLE001 — the assistant must keep working without the store
+        print(json.dumps({'redis_error': repr(e)[:200]}))
+        return None
+
+
 def _rate_ok(ip):
-    now = time.time()
+    # the IP is only hashed into a counter key that expires after an hour; it is never stored
+    key = 'finder:rl:' + hashlib.sha256(('sr-finder|' + ip).encode()).hexdigest()[:16] + ':' + time.strftime('%Y%m%d%H')
+    res = _redis(['INCR', key], ['EXPIRE', key, 3600])
+    if res is not None:
+        return int(res[0]) <= RATE_LIMIT
+    now = time.time()  # fallback: per-instance memory
     hits = [t for t in _HITS.get(ip, []) if now - t < 3600]
-    if len(hits) >= RATE_LIMIT:
-        _HITS[ip] = hits
-        return False
     hits.append(now)
     _HITS[ip] = hits
-    return True
+    return len(hits) <= RATE_LIMIT
+
+
+def _log(entry):
+    """Anonymous query log: what parents ask, what we understood, which schools we showed."""
+    line = json.dumps(entry, ensure_ascii=False)
+    print(line)
+    _redis(['LPUSH', 'finder:log', line], ['LTRIM', 'finder:log', 0, 99999])
 
 
 def _clean_messages(raw):
@@ -237,6 +263,6 @@ class handler(BaseHTTPRequestHandler):
             return self._send(400, {'error': 'Something went wrong — please try again.'})
         # anonymous log: what parents ask and what we understood (no IP, no personal data)
         last = next((m.get('content', '') for m in reversed(req.get('messages') or []) if m.get('role') == 'user'), '')
-        print(json.dumps({'q': str(last)[:300], 'understood': out.get('understood'), 'picks': [p['slug'] for p in out['picks']],
-                          'usage': out.pop('usage', {})}, ensure_ascii=False))
+        _log({'t': time.strftime('%Y-%m-%d %H:%M'), 'q': str(last)[:300], 'understood': out.get('understood'),
+              'picks': [p['slug'] for p in out['picks']], 'usage': out.pop('usage', {})})
         return self._send(200, out)
