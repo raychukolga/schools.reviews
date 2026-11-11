@@ -94,9 +94,16 @@
     '#srf-sheet.open{transform:translate(-50%,0)}' +
     '.srf-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:none;background:none;font-size:20px;color:#888;cursor:pointer}' +
     // top entry on the listing
-    '.srf-top{background:#fff;border-bottom:1px solid #e8e3de;padding:14px 40px}' +
-    '.srf-top-inner{max-width:900px}.srf-top .srf-row{margin-top:8px}' +
-    '.srf-top-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.srf-top-head b{font-size:14px}' +
+    '.srf-top{background:#FAF8F5;padding:24px 40px;border-bottom:1px solid #e8e3de}' +
+    '.srf-top-card{max-width:960px;background:#1a1814;border-radius:18px;padding:24px 28px;box-shadow:0 12px 40px rgba(26,24,20,.18)}' +
+    '.srf-top .srf-label{color:#E8A47F}' +
+    '.srf-top-title{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:600;line-height:1.15;color:#fff;margin:6px 0 6px}' +
+    '.srf-top-title em{color:#E8A47F}' +
+    '.srf-top-sub{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px;line-height:1.5}' +
+    '.srf-top .srf-input{background:#fff;border-color:#fff;font-size:15px}' +
+    '.srf-top .srf-mic{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}' +
+    '.srf-top .srf-mic.on{background:#B5552E;border-color:#B5552E}' +
+    '.srf-top .srf-link{color:#E8A47F}.srf-top .srf-listening{color:#E8A47F}' +
     // panel
     '#srf-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;z-index:2500;background:#FAF8F5;border-left:1px solid #e8e3de;box-shadow:-12px 0 40px rgba(0,0,0,.12);display:none;flex-direction:column}' +
     '#srf-panel.open{display:flex}' +
@@ -122,7 +129,7 @@
     '.srf-typing{display:inline-flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid #e8e3de;border-radius:14px;margin-bottom:12px}' +
     '.srf-typing i{width:6px;height:6px;border-radius:50%;background:#bbb;animation:srfDot 1s infinite}.srf-typing i:nth-child(2){animation-delay:.15s}.srf-typing i:nth-child(3){animation-delay:.3s}' +
     '@keyframes srfDot{0%,100%{opacity:.3}50%{opacity:1}}' +
-    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}.srf-top{padding:12px 16px}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
+    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}.srf-top{padding:16px}.srf-top-card{padding:18px 16px}.srf-top-title{font-size:26px}.srf-top .srf-row{flex-wrap:wrap}.srf-top .srf-input{flex:1 1 100%}.srf-top .srf-btn{flex:1}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
 
   var MIC_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg>';
 
@@ -147,10 +154,26 @@
       for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
       input.value = base + t;
     };
-    rec.onend = function () { rec = null; btn.classList.remove('on'); if (status) status.classList.remove('on'); input.focus(); };
-    rec.onerror = rec.onend;
+    var failed = false;
+    rec.onend = function () {
+      rec = null; btn.classList.remove('on');
+      if (status && !failed) status.classList.remove('on');
+      input.focus();
+    };
+    rec.onerror = function (e) {
+      failed = true;
+      var msg = {
+        'not-allowed': 'Microphone access is blocked — allow it in your browser (the icon in the address bar) and try again.',
+        'service-not-allowed': 'Voice input is turned off in this browser — please type instead.',
+        'audio-capture': 'No microphone found — please type instead.',
+        'no-speech': "Didn't catch that — tap the microphone and speak again.",
+        'network': 'Voice input needs an internet connection — please try again or type.'
+      }[e.error] || 'Voice input did not work here — please type instead.';
+      if (status) { status.textContent = msg; status.classList.add('on'); }
+      track('finder_voice_error', { error: e.error });
+    };
     btn.classList.add('on');
-    if (status) status.classList.add('on');
+    if (status) { status.textContent = 'Listening… speak now'; status.classList.add('on'); }
     track('finder_voice');
     try { rec.start(); } catch (e) { rec.onend(); }
   }
@@ -391,13 +414,15 @@
   }
 
   function buildTopEntry() {
-    var anchor = document.querySelector('.search-bar-top');
+    var anchor = document.querySelector('.video-reviews-section') || document.querySelector('.search-bar-top');
     if (!anchor) return;
     var box = document.createElement('div');
     box.className = 'srf srf-top';
-    box.innerHTML = '<div class="srf-top-inner"><div class="srf-top-head"><span class="srf-label">School Finder</span>' +
-      '<b>Not sure where to start? Tell us what matters to your family.</b></div>' + entryHTML('srf-t') +
-      '<button type="button" class="srf-link" data-guided style="padding:6px 0 0;min-height:0">Or answer a few quick questions →</button></div>';
+    box.innerHTML = '<div class="srf-top-card"><div class="srf-label">School Finder · new</div>' +
+      '<div class="srf-top-title">Not sure where to start? <em>Ask our School Finder.</em></div>' +
+      "<p class=\"srf-top-sub\">Tell us what matters to your family — by voice or text. We'll show matching schools on the map.</p>" +
+      entryHTML('srf-t') +
+      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button></div>';
     anchor.parentNode.insertBefore(box, anchor);
   }
 
