@@ -140,7 +140,7 @@
     '.srf-typing{display:inline-flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid #e8e3de;border-radius:14px;margin-bottom:12px}' +
     '.srf-typing i{width:6px;height:6px;border-radius:50%;background:#bbb;animation:srfDot 1s infinite}.srf-typing i:nth-child(2){animation-delay:.15s}.srf-typing i:nth-child(3){animation-delay:.3s}' +
     '@keyframes srfDot{0%,100%{opacity:.3}50%{opacity:1}}' +
-    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}.srf-top{padding:16px}.srf-top-card{padding:18px 16px}.srf-top-title{font-size:26px}.srf-top .srf-row{flex-wrap:wrap}.srf-top .srf-input{flex:1 1 100%}.srf-top .srf-btn{flex:1}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
+    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}.srf-hero .srf-row{flex-wrap:wrap}.srf-hero .srf-input{flex:1 1 100%}.srf-hero .srf-btn{flex:1}.srf-top{padding:16px}.srf-top-card{padding:18px 16px}.srf-top-title{font-size:26px}.srf-top .srf-row{flex-wrap:wrap}.srf-top .srf-input{flex:1 1 100%}.srf-top .srf-btn{flex:1}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
 
   var MIC_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg>';
 
