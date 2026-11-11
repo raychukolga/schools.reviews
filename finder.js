@@ -8,8 +8,7 @@
 
   var LISTING = '/international-private-schools-portugal.html';
   var API = '/api/finder';
-  var DISMISS_KEY = 'sr_finder_sheet_closed';
-  var DISMISS_DAYS = 30;
+  var SHOWN_KEY = 'sr_finder_sheet_shown';   // sessionStorage: the sheet pops up once per visit
   var EXAMPLES = [
     "My daughter is 7, we're looking for an IB school near Cascais, budget up to €15k",
     'Two kids, 5 and 11, moving to Lisbon next September, English-speaking school',
@@ -64,8 +63,8 @@
     });
   }
   function maxAge(text) { var m = String(text || '').match(/\d+/g); return m ? Math.max.apply(null, m.map(Number)) : 0; }
-  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+  function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
   function track(name, params) { try { if (window.gtag) window.gtag('event', name, params || {}); } catch (e) {} }
   function schoolCount() {
     var h = window.srFinderHooks;
@@ -380,12 +379,12 @@
     document.body.appendChild(sheet);
   }
   function maybeShowSheet() {
-    var closed = Number(lsGet(DISMISS_KEY) || 0);
-    if (closed && Date.now() - closed < DISMISS_DAYS * 864e5) return;
+    if (ssGet(SHOWN_KEY)) return;
     var shown = false;
     function show() {
       if (shown || (panel && panel.classList.contains('open'))) return;
       shown = true;
+      ssSet(SHOWN_KEY, '1');
       window.removeEventListener('scroll', onScroll);
       if (!sheet) buildSheet();
       requestAnimationFrame(function () { sheet.classList.add('open'); });
@@ -401,7 +400,6 @@
   function closeSheet(remember) {
     if (!sheet) return;
     sheet.classList.remove('open');
-    if (remember) lsSet(DISMISS_KEY, String(Date.now()));
   }
 
   function buildFab() {
