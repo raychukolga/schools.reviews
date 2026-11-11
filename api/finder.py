@@ -213,6 +213,9 @@ def _finish(kb, body):
         body['messages'][-1]['content'] += '\n\n[Note from the site: there are enough criteria now — include picks in this reply.]'
         data = _call(body)
         out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
+    q = out.get('next_question') or {}
+    if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
+        out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
     picks = []
     for p in out.get('picks') or []:
