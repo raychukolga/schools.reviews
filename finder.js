@@ -99,10 +99,12 @@
     // bottom sheet (not a modal: the page stays visible and scrollable)
     '#srf-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,110%);width:min(560px,100%);z-index:1700;background:#fff;border:1px solid #e8e3de;border-bottom:none;border-radius:18px 18px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.15);padding:18px 18px 16px;transition:transform .35s ease}' +
     '#srf-sheet.open{transform:translate(-50%,0)}' +
-    // desktop: a centred card over a soft dim (Google's interstitial penalty is about mobile; phones keep the bottom sheet)
-    '#srf-dim{position:fixed;inset:0;z-index:1690;background:rgba(26,24,20,.35);opacity:0;pointer-events:none;transition:opacity .3s}' +
-    '@media(min-width:769px){#srf-sheet{top:50%;bottom:auto;transform:translate(-50%,-46%);opacity:0;pointer-events:none;border-radius:18px;border:1px solid #e8e3de;padding:26px 28px 22px;transition:opacity .3s,transform .3s}' +
-    '#srf-sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}#srf-dim.open{opacity:1;pointer-events:auto}}' +
+    // a centred card over a soft dim, on desktop and phones (owner's choice)
+    '#srf-dim{position:fixed;inset:0;z-index:1690;background:rgba(26,24,20,.45);opacity:0;pointer-events:none;transition:opacity .3s}' +
+    '#srf-sheet{top:50%;bottom:auto;transform:translate(-50%,-46%);opacity:0;pointer-events:none;border-radius:18px;border:1px solid #e8e3de;padding:26px 28px 22px;transition:opacity .3s,transform .3s;max-height:calc(100vh - 32px);overflow-y:auto}' +
+    '#srf-sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}#srf-dim.open{opacity:1;pointer-events:auto}' +
+    '@media(max-width:768px){#srf-sheet{width:calc(100% - 24px);padding:26px 20px 20px}#srf-sheet .srf-title{font-size:30px}#srf-sheet .srf-promise{font-size:15px}' +
+    '#srf-sheet .srf-row{flex-wrap:wrap}#srf-sheet .srf-input{flex:1 1 100%;min-height:52px;font-size:16px}#srf-sheet .srf-btn{flex:1;min-height:52px;font-size:16px}#srf-sheet .srf-mic{min-height:52px;width:52px}}' +
     '.srf-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:none;background:none;font-size:20px;color:#888;cursor:pointer}' +
     // top entry on the listing
     // panel
@@ -388,7 +390,7 @@
       if (!sheet) buildSheet();
       requestAnimationFrame(function () {
         sheet.classList.add('open');
-        if (!isMobile()) document.getElementById('srf-dim').classList.add('open');
+        document.getElementById('srf-dim').classList.add('open');
       });
       track('finder_sheet_shown');
     }
