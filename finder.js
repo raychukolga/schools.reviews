@@ -95,7 +95,7 @@
     '.srf-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:none;background:none;font-size:20px;color:#888;cursor:pointer}' +
     // top entry on the listing
     '.srf-top{background:#FAF8F5;padding:24px 40px;border-bottom:1px solid #e8e3de}' +
-    '.srf-top-card{max-width:960px;background:#1a1814;border-radius:18px;padding:24px 28px;box-shadow:0 12px 40px rgba(26,24,20,.18)}' +
+    '.srf-top-card{background:#1a1814;border-radius:18px;padding:24px 28px;box-shadow:0 12px 40px rgba(26,24,20,.18)}' +
     '.srf-top .srf-label{color:#E8A47F}' +
     '.srf-top-title{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:600;line-height:1.15;color:#fff;margin:6px 0 6px}' +
     '.srf-top-title em{color:#E8A47F}' +
