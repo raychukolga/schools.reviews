@@ -18,7 +18,7 @@
   ];
   var GUIDE_HELP = {
     language: { text: 'Most international schools teach in English; bilingual schools add a strong Portuguese track, and national schools (French, German, Spanish…) follow their own country\'s system.', href: '/school-year-grade-by-age-guide.html', label: 'School grades by age' },
-    curriculum: { text: 'IB is one programme from age 3 to 18 ending in the IB Diploma; British / Cambridge schools lead to IGCSE and A Levels. Both are recognised by universities worldwide.', href: '/ib-vs-cambridge-which-is-better.html', label: 'IB vs Cambridge' }
+    curriculum: { text: 'Both are recognised by universities worldwide. IB is one programme with coursework, an Extended Essay and Theory of Knowledge — it builds analytical thinking and independence. Cambridge (IGCSE, then A Levels) is mainly exam-based and lets students specialise in fewer subjects — often a good fit for UK universities. Many Cambridge schools in Portugal also offer the IB Diploma in the last two years.', href: '/ib-vs-cambridge-which-is-better.html', label: 'IB vs Cambridge' }
   };
   var QUESTIONS = [
     { id: 'children', text: 'How many children, and how old are they?', type: 'text', placeholder: 'e.g. two kids, 5 and 11' },
@@ -339,8 +339,8 @@
       }).join('') + '</div>';
       if (q.help) {
         var g = GUIDE_HELP[q.help];
-        h += '<details class="srf-help"><summary style="cursor:pointer;font-weight:600;color:#9E4A28">Not sure?</summary><p style="margin:6px 0 4px">' + esc(g.text) +
-          '</p><a href="' + g.href + '" target="_blank">Read our guide: ' + esc(g.label) + ' →</a></details>';
+        h += '<details class="srf-help"' + (/^Not sure/.test(answers[q.id] || '') ? ' open' : '') + '><summary style="cursor:pointer;font-weight:600;color:#9E4A28">Not sure?</summary><p style="margin:6px 0 4px">' + esc(g.text) +
+          '</p><a href="' + g.href + '" target="_blank">More in our guide: ' + esc(g.label) + ' →</a></details>';
       }
     }
     body.innerHTML = h;
