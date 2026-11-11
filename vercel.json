@@ -2,25 +2,25 @@
   "redirects": [
     {
       "source": "/",
-      "missing": [
+      "destination": "https://schools.reviews/international-private-schools-portugal.html",
+      "permanent": true,
+      "has": [
         {
           "type": "host",
-          "value": "schools.reviews"
+          "value": "schools-reviews.vercel.app"
         }
-      ],
-      "destination": "https://schools.reviews/international-private-schools-portugal.html",
-      "permanent": true
+      ]
     },
     {
       "source": "/:path*",
-      "missing": [
+      "destination": "https://schools.reviews/:path*",
+      "permanent": true,
+      "has": [
         {
           "type": "host",
-          "value": "schools.reviews"
+          "value": "schools-reviews.vercel.app"
         }
-      ],
-      "destination": "https://schools.reviews/:path*",
-      "permanent": true
+      ]
     },
     {
       "source": "/",
