@@ -39,8 +39,8 @@ def _listing():
     t = _read(LISTING)
     i = t.find('const schools')
     body = t[i:t.find('\n];', i)]
-    j = t.find('schoolPages')
-    pages = {int(a): b for a, b in re.findall(r"(\d+)\s*:\s*'(/[^']+\.html)'", t[j:j + 20000])}
+    j = re.search(r'schoolPages\s*=\s*\{', t).end()
+    pages = {int(a): b for a, b in re.findall(r"(\d+)\s*:\s*'(/[^']+\.html)'", t[j:t.find('}', j)])}
     out = []
     for item in re.split(r'\n\s*\{\s*id:', body)[1:]:
         sid = int(re.match(r'\s*(\d+)', item).group(1))
