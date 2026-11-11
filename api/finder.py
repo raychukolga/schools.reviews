@@ -151,6 +151,16 @@ def ask(messages, criteria):
         'tool_choice': {'type': 'tool', 'name': 'respond'},
         'messages': msgs,
     }
+    return _finish(kb, body)
+
+
+def _enough(c):
+    has = lambda *keys: any(v not in (None, '', [], {}) for k, v in c.items() if any(x in k.lower() for x in keys))
+    return (has('age') and (has('area', 'location', 'city') or has('programme', 'program', 'curriculum'))) or \
+        (has('area', 'location', 'city') and has('programme', 'program', 'curriculum', 'language'))
+
+
+def _call(body):
     req = urllib.request.Request(
         'https://api.anthropic.com/v1/messages',
         data=json.dumps(body).encode(),
@@ -160,9 +170,18 @@ def ask(messages, criteria):
             'anthropic-version': '2023-06-01',
         },
     )
-    with urllib.request.urlopen(req, timeout=50) as r:
-        data = json.load(r)
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return json.load(r)
+
+
+def _finish(kb, body):
+    data = _call(body)
     out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
+    if not out.get('picks') and _enough(out.get('criteria') or {}):
+        # the model sometimes keeps asking questions; parents should see schools as soon as possible
+        body['messages'][-1]['content'] += '\n\n[Note from the site: there are enough criteria now — include picks in this reply.]'
+        data = _call(body)
+        out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
     by_slug = {s['slug']: s for s in kb['schools']}
     picks = []
     for p in out.get('picks') or []:

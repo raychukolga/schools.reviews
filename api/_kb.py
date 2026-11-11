@@ -145,6 +145,13 @@ def as_prompt(kb):
             s['about'],
             *s['facts'],
         ]))
+    topics = []
+    for label, pat in (('Religious ethos mentioned', r'(?i)\b(catholic|christian|religio\w*|faith)\b'),
+                       ('Class size listed', r'(?i)class size|per class|students per'),
+                       ('Exam results listed', r'(?i)avg score|average score|pass rate|results:? (?!not)')):
+        hit = [s['name'] for s in kb['schools'] if re.search(pat, s['about'] + ' '.join(s['facts']))]
+        topics.append(f"- {label} on our page for: {', '.join(hit) or 'none'}. For the other {len(kb['schools']) - len(hit)} schools it is not listed.")
+    out.append('# Topics covered only for some schools\n' + '\n'.join(topics))
     guides = '\n'.join(f'- {t}: https://schools.reviews/{u}' for u, t in kb['guides'].items())
     return '# Schools\n\n' + '\n\n'.join(out) + '\n\n# Guides\n' + guides
 
