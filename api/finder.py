@@ -267,7 +267,8 @@ class handler(BaseHTTPRequestHandler):
         kb, _ = _load()
         store = _redis(['LLEN', 'finder:log'])
         return self._send(200, {'ok': True, 'schools': len(kb['schools']), 'key': bool(os.environ.get('ANTHROPIC_API_KEY')),
-                                'store': store is not None, 'logged': store[0] if store else 0})
+                                'store': store is not None, 'logged': store[0] if store else 0,
+                                'errors': [w for w in kb['warnings'] if 'no assessment' not in w and 'no fee table' not in w]})
 
     def do_OPTIONS(self):
         self.send_response(204 if self._origin_ok() else 403)
