@@ -100,6 +100,10 @@
     '#srf-sheet.open{transform:translate(-50%,0)}' +
     '.srf-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:none;background:none;font-size:20px;color:#888;cursor:pointer}' +
     // top entry on the listing
+    '.srf-hero{margin-top:16px;max-width:520px}' +
+    '.srf-hero-sub{font-size:14px;color:#4A433D;line-height:1.5;margin:0 0 10px}' +
+    '.srf-hero .srf-link{padding:8px 0 0;min-height:0}' +
+    '.srf-hero-trust{font-size:12px;color:#2E7D32;margin-top:8px}' +
     '.srf-top{background:#FAF8F5;padding:24px 40px;border-bottom:1px solid #e8e3de}' +
     '.srf-top-card{background:#1a1814;border-radius:18px;padding:24px 28px;box-shadow:0 12px 40px rgba(26,24,20,.18)}' +
     '.srf-top .srf-label{color:#E8A47F}' +
@@ -114,6 +118,7 @@
     '#srf-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;z-index:2500;background:#FAF8F5;border-left:1px solid #e8e3de;box-shadow:-12px 0 40px rgba(0,0,0,.12);display:none;flex-direction:column}' +
     '#srf-panel.open{display:flex}' +
     '.srf-head{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 18px;background:#fff;border-bottom:1px solid #e8e3de}' +
+    '.srf-indep{font-size:11px;color:#2E7D32;background:#EAF3DE;padding:7px 18px;line-height:1.4}' +
     '.srf-body{flex:1;overflow-y:auto;padding:16px 18px;-webkit-overflow-scrolling:touch}' +
     '.srf-foot{padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #e8e3de}' +
     '.srf-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}' +
@@ -198,6 +203,9 @@
       '<button type="button" class="srf-btn" data-go="' + prefix + '-in">Find schools</button></div>' +
       '<div class="srf-listening" id="' + prefix + '-ls">Listening… speak now</div>';
   }
+  function trustLine() {
+    return 'Searches only our own directory of ' + schoolCount() + ' schools · No school pays to appear';
+  }
   function trustHTML() {
     return '<ul class="srf-trust">' +
       '<li>Every international school in Portugal — ' + schoolCount() + ' schools</li>' +
@@ -215,6 +223,7 @@
     panel.innerHTML =
       '<div class="srf-head"><span class="srf-label">School Finder</span>' +
       '<button type="button" class="srf-x" style="position:static" aria-label="Close" data-close>✕</button></div>' +
+      '<div class="srf-indep">✓ ' + esc(trustLine()) + '</div>' +
       '<div class="srf-body" id="srf-body"></div>' +
       '<div class="srf-foot" id="srf-foot"></div>';
     document.body.appendChild(panel);
@@ -418,6 +427,20 @@
     }, 800);
   }
 
+  var VARIANT = new URLSearchParams(location.search).get('fv') || 'card';  // temporary: design review
+
+  function buildHeroEntry() {
+    var head = document.querySelector('.hero-head');
+    if (!head) return;
+    var box = document.createElement('div');
+    box.className = 'srf srf-hero';
+    box.innerHTML = '<p class="srf-hero-sub">Tell us what matters to your family — by voice or text — and we\'ll find matching schools.</p>' +
+      entryHTML('srf-h') +
+      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>' +
+      '<div class="srf-hero-trust">✓ ' + esc(trustLine()) + '</div>';
+    head.appendChild(box);
+  }
+
   function buildTopEntry() {
     var anchor = document.querySelector('.video-reviews-section') || document.querySelector('.search-bar-top');
     if (!anchor) return;
@@ -502,7 +525,8 @@
     document.head.appendChild(st);
     buildFab();
     if (!onListing) return;
-    buildTopEntry();
+    if (VARIANT === 'card') buildTopEntry();
+    if (VARIANT === 'hero') buildHeroEntry();
     var p = new URLSearchParams(location.search);
     if (p.get('finder') === 'open') openPanel(p.get('q') || '');
     else if (p.get('finder') === 'guided') { openPanel(); answers = {}; qIndex = 0; renderGuided(); }
