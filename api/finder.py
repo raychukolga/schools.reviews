@@ -218,6 +218,11 @@ def _finish(kb, body):
         data = _call(body)
         out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
     q = out.get('next_question') or {}
+    # the buttons belong to next_question, so the question in the text must be the same one
+    if q.get('text') and q['text'] not in out.get('reply', ''):
+        r = out.get('reply', '')
+        m = re.search(r'[^.!?]*\?\s*$', r)
+        out['reply'] = (r[:m.start()].rstrip() + ' ' + q['text']) if m else (r.rstrip() + ' ' + q['text'])
     if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
