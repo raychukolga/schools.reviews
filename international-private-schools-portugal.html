@@ -218,6 +218,18 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 }
 
 /* COMPARE BAR */
+.picks-bar { background:#fff; border:1.5px solid #e8c4b0; border-radius:12px; padding:10px 12px; }
+.picks-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.picks-title { font-size:13px; font-weight:700; color:#9E4A28; }
+.picks-x { width:36px; height:36px; border:none; background:none; font-size:16px; color:var(--gray); cursor:pointer; }
+.picks-chips { display:flex; flex-wrap:wrap; gap:5px; margin:6px 0; }
+.picks-chips span { background:var(--terra-light); color:#8B3A1F; border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; }
+.picks-links { font-size:12px; color:var(--gray); }
+.picks-links button { background:none; border:none; padding:8px 2px; font:600 12px 'DM Sans',sans-serif; color:#9E4A28; cursor:pointer; }
+.why-fits { display:flex; gap:9px; align-items:flex-start; background:#FBF6F2; border-radius:8px; padding:8px 10px; margin-top:8px; font-size:12px; line-height:1.5; color:var(--ink); }
+.why-num { flex:none; width:22px; height:22px; border-radius:50%; background:#B5552E; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.why-label { font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#9E4A28; margin-bottom:1px; }
+.picks-note { font-size:11px; color:var(--gray); padding:4px 16px 18px; line-height:1.5; }
 #compareBar { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); color:#fff; padding:14px 24px; z-index:1500; font-size:13px; align-items:center; justify-content:space-between; font-family:'DM Sans',sans-serif; }
 .cmp-btn { background:var(--terra); color:#fff; border:none; border-radius:8px; padding:8px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
 .cmp-clear { background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:8px; padding:8px 12px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; }
@@ -1677,7 +1689,7 @@ schools.sort((a, b) => {
   return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
 });
 
-const state = { savedOnly:false, prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
+const state = { picks:null, pickChips:[], savedOnly:false, prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
 const compareList = new Set();
 // Избранное — один список на весь сайт: [{name,url}] в sr_saved_schools
 // (его же пишет кнопка «Save school» на страницах школ, см. school-page.js)
@@ -1699,6 +1711,8 @@ function progPill(p){
 }
 
 function getFiltered(){
+  // School Finder picks (finder.js) replace the filters until cleared, in the assistant's order
+  if(state.picks) return state.picks.map(p => schools.find(s => s.id === p.id)).filter(Boolean);
   if(state.savedOnly) return schools.filter(s => isSaved(s.id));
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
@@ -1744,17 +1758,22 @@ function getFiltered(){
 
 function render(){
   const filtered = getFiltered();
-  document.getElementById('listCount').innerHTML = state.savedOnly
+  document.getElementById('listCount').style.flex = state.picks ? '1' : '';
+  document.getElementById('listCount').innerHTML = state.picks ? picksBarHTML(filtered.length) : state.savedOnly
     ? `<span style="color:var(--terra);font-weight:700;">♥ Your saved schools (${filtered.length})</span> <button onclick="showAllSchools()" style="margin-left:10px;font-size:11px;font-weight:600;color:var(--ink);background:var(--white);border:1.5px solid var(--border);border-radius:6px;padding:3px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Show all schools</button>`
     : filtered.length + ' schools · Portugal';
-  document.getElementById('heroCount').textContent = state.savedOnly ? schools.length : filtered.length;
+  document.getElementById('heroCount').textContent = (state.savedOnly || state.picks) ? schools.length : filtered.length;
   if(map) schools.forEach(s => {
     if(markers[s.id]){
-      const inFilter = filtered.some(x=>x.id===s.id);
-      const el = markers[s.id].getElement();
+      const m = markers[s.id];
+      const pickNo = state.picks ? state.picks.findIndex(p => p.id === s.id) + 1 : 0;
+      m.setIcon(state.picks ? (pickNo ? pickIcon(pickNo) : greyIcon) : baseIcons[s.id]);
+      m.setZIndexOffset(pickNo ? 1000 - pickNo : 0);
+      const inFilter = state.picks ? true : filtered.some(x=>x.id===s.id);
+      const el = m.getElement();
       if(el) el.style.opacity = inFilter ? '1' : '0.12';
-      if(inFilter){ if(!map.hasLayer(markers[s.id])) markers[s.id].addTo(map); }
-      else { markers[s.id].closePopup(); }
+      if(inFilter){ if(!map.hasLayer(m)) m.addTo(map); }
+      else { m.closePopup(); }
     }
   });
   if(filtered.length === 0){
@@ -1764,7 +1783,7 @@ function render(){
     return;
   }
   // Schools with individual pages first, then rest
-  const sorted = [...filtered].sort((a,b) => {
+  const sorted = state.picks ? filtered : [...filtered].sort((a,b) => {
     const aHasPage = schoolPages[a.id] ? 1 : 0;
     const bHasPage = schoolPages[b.id] ? 1 : 0;
     return bHasPage - aHasPage;
@@ -1787,14 +1806,100 @@ function render(){
         ${s.prog?.includes('IB') && (s.prog?.includes('Cambridge') || s.prog?.includes('British') || s.prog?.includes('A-Level')) ? '<span class="pill" style="background:#E6F1FB;color:#0C447C;font-size:9px;">+ IB Diploma</span>' : ''}
         ${s.boarding ? `<span class="pill p-blue">${s.boardingFrom ? 'Boarding from '+s.boardingFrom : 'Boarding ✓'}</span>` : '<span class="pill p-gray">Day</span>'}
       </div>
+      ${state.picks ? whyHTML(s.id) : ''}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
         ${state.savedOnly ? `<button onclick="event.stopPropagation();unsaveSchool(${s.id})" title="Remove from saved" style="font-size:11px;font-weight:600;color:var(--gray);background:none;border:none;padding:4px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">♥ Remove</button>` : ''}
         <div class="card-price" style="${state.savedOnly ? 'flex:1;' : ''}">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
         ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
     </div>
-  `).join('') + `</div>`;
+  `).join('') + `</div>` + (state.picks ? `<div class="picks-note">Fees show the full range per school. The fee for your child's year is in each school's fee table.</div>` : '');
 }
+
+// ── School Finder (finder.js) ────────────────────────────────────────────────
+const baseIcons = {};
+const greyIcon = L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#c9c3bc;border:1.5px solid #fff;border-radius:50%;"></div>',iconSize:[10,10],iconAnchor:[5,5]});
+function pickIcon(n){ return L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:#B5552E;color:#fff;border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.3);font-family:'DM Sans',sans-serif;">${n}</div>`,iconSize:[30,30],iconAnchor:[15,15]}); }
+function escHTML(v){ return String(v||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function whyHTML(id){
+  const p = state.picks.find(x => x.id === id);
+  if(!p || !p.why) return '';
+  const n = state.picks.indexOf(p) + 1;
+  return `<div class="why-fits"><span class="why-num">${n}</span><div><div class="why-label">Why it fits</div>${escHTML(p.why)}</div></div>`;
+}
+function picksBarHTML(n){
+  return `<div class="picks-bar">
+    <div class="picks-top"><span class="picks-title">Assistant picks · ${n} school${n===1?'':'s'}</span><button class="picks-x" onclick="clearPicks()" aria-label="Clear assistant picks and show all schools">✕</button></div>
+    ${state.pickChips.length ? `<div class="picks-chips">${state.pickChips.map(c => `<span>${escHTML(c)}</span>`).join('')}</div>` : ''}
+    <div class="picks-links"><button onclick="window.srFinder&&srFinder.open()">Ask a follow-up</button> · <button onclick="refineWithFilters()">Refine with filters</button> · <button onclick="sharePicks(this)">Share</button></div>
+  </div>`;
+}
+const slugOf = id => (schoolPages[id]||'').replace(/^\//,'').replace(/\.html$/,'');
+function picksURL(){
+  const q = new URLSearchParams();
+  q.set('picks', state.picks.map(p => slugOf(p.id)).join(','));
+  if(state.pickChips.length) q.set('c', state.pickChips.join('|'));
+  q.set('w', state.picks.map(p => (p.why||'').replace(/~/g,'-')).join('~'));
+  return location.pathname + '?' + q.toString();
+}
+function applyPicks(picks, chips){
+  state.picks = picks.map(p => ({id: p.id, why: p.why}));
+  state.pickChips = chips || [];
+  state.savedOnly = false;
+  try { history.replaceState(null, '', picksURL()); } catch(e){}
+  render();
+  fitToPicks();
+}
+function fitToPicks(){
+  if(!map || !state.picks) return;
+  const pts = state.picks.map(p => schools.find(s => s.id === p.id)).filter(s => s && s.lat).map(s => [s.lat, s.lng]);
+  if(pts.length) map.fitBounds(pts, {padding:[40,40], maxZoom:12});
+}
+function clearPicks(){
+  state.picks = null; state.pickChips = [];
+  try { history.replaceState(null, '', location.pathname); } catch(e){}
+  if(window.srFinder) srFinder.reset();
+  render();
+  if(map) map.setView([39.5,-8.0],7);
+}
+function sharePicks(btn){
+  const url = location.origin + picksURL();
+  if(navigator.share){ navigator.share({title:'Schools picked for us — Schools Reviews', url}).catch(()=>{}); return; }
+  const done = () => { btn.textContent = 'Link copied'; setTimeout(() => btn.textContent = 'Share', 2000); };
+  if(navigator.clipboard) navigator.clipboard.writeText(url).then(done, () => prompt('Copy this link:', url));
+  else prompt('Copy this link:', url);
+}
+// Turn the assistant's criteria into the normal filters (they hold one area / one language at most)
+function refineWithFilters(){
+  const text = (state.pickChips.join(' ') + ' ').toLowerCase();
+  resetAll();
+  const area = [['lisbon','Lisbon','a_lisbon'],['cascais','Cascais','a_cascais'],['estoril','Cascais','a_cascais'],['sintra','Sintra','a_sintra'],['oeiras','Oeiras','a_oeiras'],['porto','Porto','a_porto'],['algarve','Algarve','a_algarve']].find(a => text.includes(a[0]));
+  if(area){ state.area = area[1]; const el = document.getElementById(area[2]); if(el) el.checked = true; }
+  const prog = [['montessori','Montessori'],['ib','IB'],['cambridge','Cambridge'],['british','Cambridge'],['a-level','Cambridge'],['american','American'],['french','French'],['german','German']].find(p => new RegExp('\\b'+p[0]+'\\b').test(text));
+  const m = text.match(/(?:up to|under|max|budget[^€\d]*)\s*€?\s*(\d+)\s*k/);
+  if(m){ const v = Math.min(40000, parseInt(m[1])*1000); state.maxPrice = v; const sl = document.getElementById('priceSlider'); if(sl){ sl.value = v; } const sv = document.getElementById('sliderVal'); if(sv) sv.textContent = '€'+v.toLocaleString(); }
+  state.picks = null; state.pickChips = [];
+  try { history.replaceState(null, '', location.pathname); } catch(e){}
+  const chip = prog && document.querySelector(`.prog-chip[data-val="${prog[1]}"]`);
+  if(chip) setP(prog[1], chip); else render();
+  document.getElementById('filterExpanded').classList.add('open');
+  document.querySelector('.filter-bar').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function showPickResults(){
+  const target = window.innerWidth <= 768 ? document.getElementById('mobileMapBlock') || document.getElementById('schoolsList') : document.getElementById('schoolsList');
+  if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(() => { if(map) map.invalidateSize(); fitToPicks(); }, 400);
+}
+// Shared link ?picks=slug1,slug2&c=chip|chip&w=why~why restores the picks without calling the API
+function applyPicksFromURL(){
+  const q = new URLSearchParams(location.search);
+  if(!q.get('picks')) return;
+  const ids = Object.fromEntries(Object.entries(schoolPages).map(([id,u]) => [slugOf(id), Number(id)]));
+  const whys = (q.get('w')||'').split('~');
+  const picks = q.get('picks').split(',').map((slug,i) => ({id: ids[slug], why: whys[i]||''})).filter(p => p.id);
+  if(picks.length){ state.picks = picks; state.pickChips = (q.get('c')||'').split('|').filter(Boolean); }
+}
+window.srFinderHooks = { count: () => schools.length, applyPicks, clearPicks, showResults: showPickResults };
 
 function setP(val, btn){
   state.prog = val;
@@ -2364,11 +2469,14 @@ function initMap(){
       if(card){card.classList.add('highlighted');card.scrollIntoView({behavior:'smooth',block:'nearest'});}
     });
     markers[s.id]=m;
+    baseIcons[s.id]=icon;
   });
   map.invalidateSize();
+  if(state.picks){ render(); fitToPicks(); }
 }
 
 state.savedOnly = location.hash === '#saved';
+applyPicksFromURL();
 render();
 updateCmpBar();
 applyCompareHash();

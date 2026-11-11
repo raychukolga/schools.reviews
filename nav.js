@@ -208,3 +208,13 @@ window.srTileUrl = function () {
     init();
   }
 })();
+
+// School Finder (AI helper) — floating button on every page, full helper on the listing
+(function () {
+  if (document.getElementById('_sr_finder_js')) return;
+  var s = document.createElement('script');
+  s.id = '_sr_finder_js';
+  s.src = '/finder.js';
+  s.defer = true;
+  document.head.appendChild(s);
+})();
