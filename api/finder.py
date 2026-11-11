@@ -236,6 +236,13 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b)
 
+    def do_GET(self):
+        # health check: no secrets, just whether the pieces are in place
+        kb, _ = _load()
+        store = _redis(['LLEN', 'finder:log'])
+        return self._send(200, {'ok': True, 'schools': len(kb['schools']), 'key': bool(os.environ.get('ANTHROPIC_API_KEY')),
+                                'store': store is not None, 'logged': store[0] if store else 0})
+
     def do_OPTIONS(self):
         self.send_response(204 if self._origin_ok() else 403)
         o = self.headers.get('Origin')
