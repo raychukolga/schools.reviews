@@ -98,22 +98,12 @@
     // bottom sheet (not a modal: the page stays visible and scrollable)
     '#srf-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,110%);width:min(560px,100%);z-index:1700;background:#fff;border:1px solid #e8e3de;border-bottom:none;border-radius:18px 18px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.15);padding:18px 18px 16px;transition:transform .35s ease}' +
     '#srf-sheet.open{transform:translate(-50%,0)}' +
+    // desktop: a centred card over a soft dim (Google's interstitial penalty is about mobile; phones keep the bottom sheet)
+    '#srf-dim{position:fixed;inset:0;z-index:1690;background:rgba(26,24,20,.35);opacity:0;pointer-events:none;transition:opacity .3s}' +
+    '@media(min-width:769px){#srf-sheet{top:50%;bottom:auto;transform:translate(-50%,-46%);opacity:0;pointer-events:none;border-radius:18px;border:1px solid #e8e3de;padding:26px 28px 22px;transition:opacity .3s,transform .3s}' +
+    '#srf-sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}#srf-dim.open{opacity:1;pointer-events:auto}}' +
     '.srf-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:none;background:none;font-size:20px;color:#888;cursor:pointer}' +
     // top entry on the listing
-    '.srf-hero{margin-top:16px;max-width:520px}' +
-    '.srf-hero-sub{font-size:14px;color:#4A433D;line-height:1.5;margin:0 0 10px}' +
-    '.srf-hero .srf-link{padding:8px 0 0;min-height:0}' +
-    '.srf-hero-trust{font-size:12px;color:#2E7D32;margin-top:8px}' +
-    '.srf-top{background:#FAF8F5;padding:24px 40px;border-bottom:1px solid #e8e3de}' +
-    '.srf-top-card{background:#1a1814;border-radius:18px;padding:24px 28px;box-shadow:0 12px 40px rgba(26,24,20,.18)}' +
-    '.srf-top .srf-label{color:#E8A47F}' +
-    '.srf-top-title{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:600;line-height:1.15;color:#fff;margin:6px 0 6px}' +
-    '.srf-top-title em{color:#E8A47F}' +
-    '.srf-top-sub{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px;line-height:1.5}' +
-    '.srf-top .srf-input{background:#fff;border-color:#fff;font-size:15px}' +
-    '.srf-top .srf-mic{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}' +
-    '.srf-top .srf-mic.on{background:#B5552E;border-color:#B5552E}' +
-    '.srf-top .srf-link{color:#E8A47F}.srf-top .srf-listening{color:#E8A47F}' +
     // panel
     '#srf-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;z-index:2500;background:#FAF8F5;border-left:1px solid #e8e3de;box-shadow:-12px 0 40px rgba(0,0,0,.12);display:none;flex-direction:column}' +
     '#srf-panel.open{display:flex}' +
@@ -140,7 +130,7 @@
     '.srf-typing{display:inline-flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid #e8e3de;border-radius:14px;margin-bottom:12px}' +
     '.srf-typing i{width:6px;height:6px;border-radius:50%;background:#bbb;animation:srfDot 1s infinite}.srf-typing i:nth-child(2){animation-delay:.15s}.srf-typing i:nth-child(3){animation-delay:.3s}' +
     '@keyframes srfDot{0%,100%{opacity:.3}50%{opacity:1}}' +
-    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}.srf-hero .srf-row{flex-wrap:wrap}.srf-hero .srf-input{flex:1 1 100%}.srf-hero .srf-btn{flex:1}.srf-top{padding:16px}.srf-top-card{padding:18px 16px}.srf-top-title{font-size:26px}.srf-top .srf-row{flex-wrap:wrap}.srf-top .srf-input{flex:1 1 100%}.srf-top .srf-btn{flex:1}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
+    '@media(max-width:768px){#srf-panel{width:100%;border-left:none}#srf-fab{right:12px;bottom:12px}#srf-fab.raised{bottom:72px}}';
 
   var MIC_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/></svg>';
 
@@ -386,6 +376,10 @@
       entryHTML('srf-s') +
       '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>' + trustHTML();
     document.body.appendChild(sheet);
+    var dim = document.createElement('div');
+    dim.id = 'srf-dim';
+    dim.addEventListener('click', function () { closeSheet(); });
+    document.body.appendChild(dim);
   }
   function maybeShowSheet() {
     if (ssGet(SHOWN_KEY)) return;
@@ -396,7 +390,10 @@
       ssSet(SHOWN_KEY, '1');
       window.removeEventListener('scroll', onScroll);
       if (!sheet) buildSheet();
-      requestAnimationFrame(function () { sheet.classList.add('open'); });
+      requestAnimationFrame(function () {
+        sheet.classList.add('open');
+        if (!isMobile()) document.getElementById('srf-dim').classList.add('open');
+      });
       track('finder_sheet_shown');
     }
     function onScroll() {
@@ -409,6 +406,8 @@
   function closeSheet(remember) {
     if (!sheet) return;
     sheet.classList.remove('open');
+    var dim = document.getElementById('srf-dim');
+    if (dim) dim.classList.remove('open');
   }
 
   function buildFab() {
@@ -425,33 +424,6 @@
       var up = bar && getComputedStyle(bar).display !== 'none';
       fab.classList.toggle('raised', !!up);
     }, 800);
-  }
-
-  var VARIANT = new URLSearchParams(location.search).get('fv') || 'card';  // temporary: design review
-
-  function buildHeroEntry() {
-    var head = document.querySelector('.hero-head');
-    if (!head) return;
-    var box = document.createElement('div');
-    box.className = 'srf srf-hero';
-    box.innerHTML = '<p class="srf-hero-sub">Tell us what matters to your family — by voice or text — and we\'ll find matching schools.</p>' +
-      entryHTML('srf-h') +
-      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>' +
-      '<div class="srf-hero-trust">✓ ' + esc(trustLine()) + '</div>';
-    head.appendChild(box);
-  }
-
-  function buildTopEntry() {
-    var anchor = document.querySelector('.video-reviews-section') || document.querySelector('.search-bar-top');
-    if (!anchor) return;
-    var box = document.createElement('div');
-    box.className = 'srf srf-top';
-    box.innerHTML = '<div class="srf-top-card"><div class="srf-label">School Finder · new</div>' +
-      '<div class="srf-top-title">Not sure where to start? <em>Ask our School Finder.</em></div>' +
-      "<p class=\"srf-top-sub\">Tell us what matters to your family — by voice or text. We'll show matching schools on the map.</p>" +
-      entryHTML('srf-t') +
-      '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button></div>';
-    anchor.parentNode.insertBefore(box, anchor);
   }
 
   // ── events (one delegated listener) ─────────────────────────────────────
@@ -505,6 +477,7 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && panel && panel.classList.contains('open')) return closePanel();
+    if (e.key === 'Escape' && sheet && sheet.classList.contains('open')) return closeSheet();
     if (e.key !== 'Enter' || !e.target.classList || !e.target.classList.contains('srf-input')) return;
     e.preventDefault();
     if (e.target.id === 'srf-g-in') { saveGuidedText(); qIndex++; return renderGuided(); }
@@ -525,8 +498,6 @@
     document.head.appendChild(st);
     buildFab();
     if (!onListing) return;
-    if (VARIANT === 'card') buildTopEntry();
-    if (VARIANT === 'hero') buildHeroEntry();
     var p = new URLSearchParams(location.search);
     if (p.get('finder') === 'open') openPanel(p.get('q') || '');
     else if (p.get('finder') === 'guided') { openPanel(); answers = {}; qIndex = 0; renderGuided(); }
