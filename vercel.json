@@ -32,5 +32,11 @@
       "destination": "/international-private-schools-portugal.html",
       "permanent": false
     }
-  ]
+  ],
+  "functions": {
+    "api/finder.py": {
+      "includeFiles": "*.html",
+      "maxDuration": 30
+    }
+  }
 }
