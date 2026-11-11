@@ -27,6 +27,10 @@
     { id: 'budget', text: "What's your yearly budget per child?", options: ['Up to €10k', '€10–15k', '€15–20k', '€20k+', 'Not sure yet', "Budget isn't a deciding factor"] },
     { id: 'language', text: 'Which language should lessons be taught in?', multi: true, help: 'language', options: ['English', 'Portuguese', 'Bilingual EN + PT', 'French', 'German', 'Spanish', 'Dutch', 'No preference'] },
     { id: 'curriculum', text: 'Do you have a curriculum in mind?', help: 'curriculum', options: ['IB', 'British / Cambridge', 'American', 'National (country) curriculum', 'Montessori / alternative', 'Not sure — explain'] },
+    { id: 'ib', text: 'Full IB from the early years to graduation, or just the IB Diploma in the last two years?', options: ['Full IB (all years)', 'IB Diploma only', 'Not sure'],
+      when: function (a) { return a.curriculum === 'IB'; },
+      note: 'Full IB = PYP, MYP and Diploma in one school. The IB Diploma is the last two years only (ages 16–18).',
+      link: { href: '/ib-diploma-explained.html', label: 'Not sure of the difference? Read our IB guide →' } },
     { id: 'portuguese', text: 'How important is Portuguese language?', options: ['Very — we want strong Portuguese', 'Some is fine', 'Not important'] },
     { id: 'journey', text: 'Are you choosing a school for the whole journey to graduation, or for the next few years?', options: ['All the way to graduation', 'For the next few years', 'Not sure'] },
     { id: 'exams', text: 'Do exam results and the path to university matter to you?', options: ['Yes, a lot', 'Somewhat', 'Not a priority'],
@@ -321,7 +325,7 @@
     h += '<div class="srf-qnum">Question ' + (qIndex + 1) + ' of ' + qs.length + '</div>' +
       '<div class="srf-progress"><i style="width:' + Math.round(100 * qIndex / qs.length) + '%"></i></div>' +
       '<div class="srf-q">' + esc(q.text) + '</div>';
-    if (q.note) h += '<div class="srf-help">' + esc(q.note) + '</div>';
+    if (q.note) h += '<div class="srf-help">' + esc(q.note) + (q.link ? '<br><a href="' + q.link.href + '" target="_blank">' + esc(q.link.label) + '</a>' : '') + '</div>';
     if (q.type === 'text') {
       h += '<div class="srf-row"><input id="srf-g-in" class="srf-input" type="text" placeholder="' + esc(q.placeholder || '') + '" value="' + esc(answers[q.id] || '') + '">' +
         micButton('srf-g-in', 'srf-g-ls') + '</div><div class="srf-listening" id="srf-g-ls">Listening… speak now</div>';
