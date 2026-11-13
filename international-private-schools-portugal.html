@@ -789,10 +789,10 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       <button class="chip prog-chip" data-val="Montessori" onclick="setP('Montessori',this)">Montessori</button>
       <button class="chip prog-chip" data-val="Waldorf" onclick="setP('Waldorf',this)">Waldorf</button>
       <button class="chip prog-chip" data-val="Forest School" onclick="setP('Forest School',this)">Forest School</button>
-      <button class="chip price-chip active" onclick="setPr('all',this)">All prices</button>
-      <button class="chip price-chip" onclick="setPr('low',this)">Under €8k</button>
-      <button class="chip price-chip" onclick="setPr('mid',this)">€8–15k</button>
-      <button class="chip price-chip" onclick="setPr('high',this)">€15k+</button>
+      <button class="chip price-chip active" data-val="all" onclick="setPr('all',this)">All prices</button>
+      <button class="chip price-chip" data-val="low" onclick="setPr('low',this)">Under €8k</button>
+      <button class="chip price-chip" data-val="mid" onclick="setPr('mid',this)">€8–15k</button>
+      <button class="chip price-chip" data-val="high" onclick="setPr('high',this)">€15k+</button>
     </div>
     <button class="more-filters-btn" id="moreBtn" onclick="toggleExpanded()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="12" y2="18"/></svg>
@@ -809,18 +809,18 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
           <a href="/ib-vs-cambridge-which-is-better.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">Not sure which curriculum suits your child? Read our guide →<br><span style="font-weight:600;color:var(--terra);">IB vs Cambridge guide →</span></span>?</a>
         </div>
         <div class="fg-opts">
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> IB (any) <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
-          <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_full" value="Full IB" onchange="syncProgChip('Full IB')"> <span style="color:var(--gray);">↳ Full IB (Pre-K–18)</span></label>
-          <label class="fg-opt" style="padding-left:16px;"><input type="radio" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
-          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="radio" name="progExp" id="pe_cambridge" value="Cambridge" onchange="syncProgChip('Cambridge')"> Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_german" value="German" onchange="syncProgChip('German')"> German</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_portuguese" value="Portuguese" onchange="syncProgChip('Portuguese')"> Portuguese national</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_montessori" value="Montessori" onchange="syncProgChip('Montessori')"> Montessori</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_waldorf" value="Waldorf" onchange="syncProgChip('Waldorf')"> Waldorf</label>
-          <label class="fg-opt"><input type="radio" name="progExp" id="pe_forest" value="Forest School" onchange="syncProgChip('Forest School')"> Forest School</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_all" value="all" checked onchange="syncProgChip('all')"> All</label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="checkbox" name="progExp" id="pe_ib" value="IB" onchange="syncProgChip('IB')"> IB (any) <a href="/ib-diploma-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the IB programme? →</span>?</a></label>
+          <label class="fg-opt" style="padding-left:16px;"><input type="checkbox" name="progExp" id="pe_ib_full" value="Full IB" onchange="syncProgChip('Full IB')"> <span style="color:var(--gray);">↳ Full IB (Pre-K–18)</span></label>
+          <label class="fg-opt" style="padding-left:16px;"><input type="checkbox" name="progExp" id="pe_ib_dp" value="IB Diploma" onchange="syncProgChip('IB Diploma')"> <span style="color:var(--gray);">↳ IB Diploma only (Years 12–13)</span></label>
+          <label class="fg-opt" style="display:flex;align-items:center;gap:4px;"><input type="checkbox" name="progExp" id="pe_cambridge" value="Cambridge" onchange="syncProgChip('Cambridge')"> Cambridge <a href="/cambridge-curriculum-explained.html" target="_blank" class="filter-help"><span class="filter-help-tip" style="bottom:auto;top:calc(100% + 8px);">What is the Cambridge curriculum? →</span>?</a></label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_american" value="American" onchange="syncProgChip('American')"> American</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_french" value="French" onchange="syncProgChip('French')"> French</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_german" value="German" onchange="syncProgChip('German')"> German</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_portuguese" value="Portuguese" onchange="syncProgChip('Portuguese')"> Portuguese national</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_montessori" value="Montessori" onchange="syncProgChip('Montessori')"> Montessori</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_waldorf" value="Waldorf" onchange="syncProgChip('Waldorf')"> Waldorf</label>
+          <label class="fg-opt"><input type="checkbox" name="progExp" id="pe_forest" value="Forest School" onchange="syncProgChip('Forest School')"> Forest School</label>
         </div>
       </div>
       <div>
@@ -1761,7 +1761,7 @@ schools.sort((a, b) => {
   return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
 });
 
-const state = { picks:null, pickChips:[], savedOnly:false, prog:'all', price:'all', reviewed:false, search:'', maxPrice:40000, boarding:null, area:null, classSize:'all', schoolAge:'all', lang:null, boutique:false, largeCampus:false, bilingualPt:false };
+const state = { picks:null, pickChips:[], savedOnly:false, prog:[], price:[], reviewed:false, search:'', maxPrice:40000, boarding:null, area:[], classSize:'all', schoolAge:'all', lang:[], boutique:false, largeCampus:false, bilingualPt:false };
 const compareList = new Set();
 // Избранное — один список на весь сайт: [{name,url}] в sr_saved_schools
 // (его же пишет кнопка «Save school» на страницах школ, см. school-page.js)
@@ -1782,37 +1782,41 @@ function progPill(p){
   return 'p-gray';
 }
 
+function matchProg(s, p){
+  const prog = (s.prog||'').toLowerCase();
+  if(p === 'Full IB') return s.prog === 'Full IB';
+  if(p === 'IB') return (s.prog||'').includes('IB');
+  if(p === 'IB Diploma') return (s.prog||'').includes('IB Diploma');
+  if(p === 'Cambridge') return prog.includes('cambridge') || prog.includes('british');
+  return !s.prog || prog.includes(p.toLowerCase());
+}
+function matchPrice(price, r){
+  if(r === 'low') return price <= 8000;
+  if(r === 'mid') return price >= 8000 && price <= 15000;
+  return price >= 15000;
+}
 function getFiltered(){
   // School Finder picks (finder.js) replace the filters until cleared, in the assistant's order
   if(state.picks) return state.picks.map(p => schools.find(s => s.id === p.id)).filter(Boolean);
   if(state.savedOnly) return schools.filter(s => isSaved(s.id));
   return schools.filter(s => {
     if(state.reviewed && !s.reviewed) return false;
-    if(state.prog === 'IB'){
-      if(!s.prog?.includes('IB')) return false;
-    } else if(state.prog === 'Full IB'){
-      if(s.prog !== 'Full IB') return false;
-    } else if(state.prog === 'IB Diploma'){
-      if(!(s.prog?.includes('IB Diploma'))) return false;
-    } else if(state.prog === 'Cambridge'){
-      if(!s.prog?.toLowerCase().includes('cambridge') && !s.prog?.toLowerCase().includes('british')) return false;
-    } else if(state.prog !== 'all' && s.prog && !s.prog.toLowerCase().includes(state.prog.toLowerCase())) return false;
+    // Within a group the chosen options are OR (IB or Cambridge), groups combine as AND
+    if(state.prog.length && !state.prog.some(p => matchProg(s, p))) return false;
     if(s.price){
-      if(state.price === 'low' && s.price > 8000) return false;
-      if(state.price === 'mid' && (s.price < 8000 || s.price > 15000)) return false;
-      if(state.price === 'high' && s.price < 15000) return false;
+      if(state.price.length && !state.price.some(r => matchPrice(s.price, r))) return false;
       if(state.maxPrice < 40000 && s.price > state.maxPrice) return false;
     }
     if(state.boarding === 'boarding' && !s.boarding) return false;
     if(state.boarding === 'day' && s.boarding) return false;
-    if(state.area && !s.loc.toLowerCase().includes(state.area.toLowerCase())) return false;
+    if(state.area.length && !state.area.some(a => s.loc.toLowerCase().includes(a.toLowerCase()))) return false;
     if(state.classSize === 'small' && (!s.classSize || s.classSize > 16)) return false;
     if(state.classSize === 'mid' && (!s.classSize || s.classSize < 17 || s.classSize > 22)) return false;
     if(state.classSize === 'big' && (!s.classSize || s.classSize <= 22)) return false;
     if(state.schoolAge === 'old' && (!s.founded || s.founded >= 2008)) return false;
     if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
-    if(state.lang && s.prog && !s.prog.toLowerCase().includes(state.lang.toLowerCase())) return false;
+    if(state.lang.length && s.prog && !state.lang.some(l => s.prog.toLowerCase().includes(l.toLowerCase()))) return false;
     if(state.boutique && !s.boutique) return false;
     if(state.largeCampus && !s.largeCampus) return false;
     if(state.bilingualPt && !s.bilingualPt) return false;
@@ -1946,14 +1950,14 @@ function refineWithFilters(){
   const text = (state.pickChips.join(' ') + ' ').toLowerCase();
   resetAll();
   const area = [['lisbon','Lisbon','a_lisbon'],['cascais','Cascais','a_cascais'],['estoril','Cascais','a_cascais'],['sintra','Sintra','a_sintra'],['oeiras','Oeiras','a_oeiras'],['porto','Porto','a_porto'],['algarve','Algarve','a_algarve']].find(a => text.includes(a[0]));
-  if(area){ state.area = area[1]; const el = document.getElementById(area[2]); if(el) el.checked = true; }
+  if(area){ state.area = [area[1]]; const el = document.getElementById(area[2]); if(el) el.checked = true; }
   const prog = [['montessori','Montessori'],['ib','IB'],['cambridge','Cambridge'],['british','Cambridge'],['a-level','Cambridge'],['american','American'],['french','French'],['german','German']].find(p => new RegExp('\\b'+p[0]+'\\b').test(text));
   const m = text.match(/(?:up to|under|max|budget[^€\d]*)\s*€?\s*(\d+)\s*k/);
   if(m){ const v = Math.min(40000, parseInt(m[1])*1000); state.maxPrice = v; const sl = document.getElementById('priceSlider'); if(sl){ sl.value = v; } const sv = document.getElementById('sliderVal'); if(sv) sv.textContent = '€'+v.toLocaleString(); }
   state.picks = null; state.pickChips = [];
   try { history.replaceState(null, '', location.pathname); } catch(e){}
-  const chip = prog && document.querySelector(`.prog-chip[data-val="${prog[1]}"]`);
-  if(chip) setP(prog[1], chip); else render();
+  state.prog = prog ? [prog[1]] : []; state.price = [];
+  syncProgUI(); setPr('all');
   document.getElementById('filterExpanded').classList.add('open');
   document.querySelector('.filter-bar').scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -1973,17 +1977,21 @@ function applyPicksFromURL(){
 }
 window.srFinderHooks = { count: () => schools.length, applyPicks, clearPicks, showResults: showPickResults };
 
+// Chips toggle on and off; "All" clears the group
+function toggleIn(list, val){ const i = list.indexOf(val); if(i < 0) list.push(val); else list.splice(i, 1); }
 function setP(val, btn){
-  state.prog = val;
-  document.querySelectorAll('.prog-chip').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  if(val === 'all') state.prog = []; else toggleIn(state.prog, val);
+  syncProgUI();
   render();
 }
 function setPr(val, btn){
-  state.price = val;
-  document.querySelectorAll('.price-chip').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  if(val === 'all') state.price = []; else toggleIn(state.price, val);
+  document.querySelectorAll('.price-chip').forEach(b => b.classList.toggle('active', b.dataset.val === 'all' ? !state.price.length : state.price.includes(b.dataset.val)));
   render();
+}
+function syncProgUI(){
+  document.querySelectorAll('.prog-chip').forEach(b => b.classList.toggle('active', b.dataset.val === 'all' ? !state.prog.length : state.prog.includes(b.dataset.val)));
+  document.querySelectorAll('input[name="progExp"]').forEach(el => { el.checked = el.value === 'all' ? !state.prog.length : state.prog.includes(el.value); });
 }
 function toggleReviewed(btn){
   state.reviewed = !state.reviewed;
@@ -2002,10 +2010,10 @@ function applyExpanded(){
   state.classSize = document.querySelector('input[name="classSize"]:checked')?.value || 'all';  state.schoolAge = document.querySelector('input[name="schoolAge"]:checked')?.value || 'all';
   const areas = [{id:'a_lisbon',v:'Lisbon'},{id:'a_cascais',v:'Cascais'},{id:'a_sintra',v:'Sintra'},{id:'a_oeiras',v:'Oeiras'},{id:'a_porto',v:'Porto'},{id:'a_algarve',v:'Algarve'}];
   const ac = areas.filter(a=>document.getElementById(a.id)?.checked).map(a=>a.v);
-  state.area = ac.length===1 ? ac[0] : null;
+  state.area = ac;
   const langs = [{id:'l_en',v:'English'},{id:'l_fr',v:'French'},{id:'l_de',v:'German'},{id:'l_pt',v:'Portuguese'}];
   const lc = langs.filter(l=>document.getElementById(l.id)?.checked).map(l=>l.v);
-  state.lang = lc.length===1 ? lc[0] : null;
+  state.lang = lc;
   state.boutique = document.getElementById('f_boutique')?.checked || false;
   state.largeCampus = document.getElementById('f_largecampus')?.checked || false;
   state.bilingualPt = document.getElementById('l_bilingual_pt')?.checked || false;
@@ -2022,8 +2030,9 @@ function resetAll(){
   const agAll = document.getElementById('ag_all'); if(agAll) agAll.checked=true;
   document.getElementById('priceSlider').value=40000;
   document.getElementById('sliderVal').textContent='€40,000';
-  Object.assign(state,{maxPrice:40000,boarding:null,area:null,classSize:'all',schoolAge:'all',lang:null,ageGroup:'all',boutique:false,largeCampus:false,bilingualPt:false});
-  render();
+  Object.assign(state,{maxPrice:40000,boarding:null,area:[],classSize:'all',schoolAge:'all',lang:[],ageGroup:'all',boutique:false,largeCampus:false,bilingualPt:false,prog:[]});
+  syncProgUI();
+  setPr('all');
 }
 
 function focusSchool(id){
@@ -2480,11 +2489,8 @@ function openCompare(){
 }
 
 function syncProgChip(val){
-  document.querySelectorAll('.prog-chip').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.prog-chip').forEach(c=>{
-    if((c.dataset.val||c.textContent.trim()) === val) c.classList.add('active');
-  });
-  state.prog = val;
+  if(val === 'all') state.prog = []; else toggleIn(state.prog, val);
+  syncProgUI();
   render();
 }
 
