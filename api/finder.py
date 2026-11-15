@@ -219,8 +219,11 @@ def _finish(kb, body):
         out = next(b['input'] for b in data['content'] if b.get('type') == 'tool_use')
     q = out.get('next_question') or {}
     # the buttons belong to next_question, so the question in the text must be about the same thing
-    if q.get('text'):
-        r = out.get('reply', '')
+    r = out.get('reply', '')
+    letters = re.findall(r'[^\W\d_]', r)
+    english = not letters or sum(c.isascii() for c in letters) > 0.9 * len(letters)
+    # word overlap only works when the reply is in English like the buttons
+    if q.get('text') and english:
         words = lambda x: set(re.findall(r'[a-zа-яё]{3,}', x.lower()))
         qs = [m for m in re.finditer(r'[^.!?]*\?', r) if not m.group().strip().lower().startswith('not sure')]
         if not any(len(words(m.group()) & words(q['text'])) >= 0.4 * len(words(q['text'])) for m in qs):
