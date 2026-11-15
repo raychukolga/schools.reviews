@@ -6,6 +6,7 @@ every push that changes a school page also changes what the assistant knows.
 """
 import html
 import json
+import math
 import os
 import re
 
@@ -20,6 +21,32 @@ GUIDES = {
     'international-schools-lisbon.html': 'International schools in Lisbon — guide',
     'ib-schools-lisbon-2026.html': 'IB schools in Lisbon — guide',
 }
+LISBON = (38.7223, -9.1393)
+
+
+def _zone(s):
+    """'Lisbon city' within ~8 km of the centre, 'Lisbon suburbs — <part>' up to ~45 km (incl. the south bank)."""
+    d = math.hypot((s['lat'] - LISBON[0]) * 111, (s['lng'] - LISBON[1]) * 87)
+    if not s['lat'] or d > 45:
+        return None
+    if d <= 8:
+        return 'Lisbon city'
+    loc = (s['area'] or '').lower()
+    for keys, part in ((('cascais', 'estoril'), 'Cascais / Estoril'), (('sintra',), 'Sintra'),
+                       (('oeiras', 'queluz', 'barcarena'), 'Oeiras'),
+                       (('almada', 'caparica', 'setúbal', 'setubal', 'palmela', 'seixal'), 'South bank — Caparica / Almada / Setúbal')):
+        if any(k in loc for k in keys):
+            return 'Lisbon suburbs — ' + part
+    return 'Lisbon suburbs'
+
+
+def _bus(s, facts):
+    text = ' '.join(facts)
+    if re.search(r'(?i)school bus: no\b|no school bus', text):
+        return False
+    return s['bus'] or bool(re.search(r'School bus: ✓|Transport: (?:Yes|Door-to-door|Partner bus|✓ Available|€)|runs buses', text))
+
+
 SKIP_SECTIONS = ('School photos', 'Other schools', 'Frequently asked questions')
 
 
@@ -57,6 +84,7 @@ def _listing():
             'verified': g('verified', r'(true|false)') == 'true', 'ver_date': g('verDate'),
             'visited': g('reviewed', r'(true|false)') == 'true',
             'boarding': g('boarding', r'(true|false)') == 'true',
+            'bus': g('schoolBus', r'(true|"yes")') is not None,
             'url': pages.get(sid),
         })
     return out
@@ -122,6 +150,7 @@ def build():
         warnings += [f"{s['url']}: {x}" for x in w]
         s['slug'] = s['url'].strip('/').removesuffix('.html')
         s.update(p)
+        s['zone'], s['bus'] = _zone(s), _bus(s, p['facts'])
         if s['age_from'] is None:  # fall back to the page's profile line, e.g. "Ages: 3–18 years"
             m = re.search(r'Ages: (\d+)(?:\.0)? ?(months?)?\s*–\s*(\d+)', ' '.join(p['facts']))
             if m:
@@ -141,6 +170,7 @@ def as_prompt(kb):
             f"## {s['name']}  (slug: {s['slug']})",
             f"Area: {s['area']} · Programme: {s['programme']} · Ages: {ages} · Fees: {fees} · {ver}"
             + (' · Visited and filmed by us' if s['visited'] else '') + (' · Boarding' if s['boarding'] else ''),
+            *([f"Zone: {s['zone']}" + (' · School bus: yes' if s['bus'] else '')] if s['zone'] else []),
             f"Page: https://schools.reviews{s['url']}",
             s['about'],
             *s['facts'],
