@@ -38,7 +38,7 @@ Rules:
 - If a school is marked "NOT verified", never call its data verified.
 - Be short: 1–2 sentences per reply, one question at a time.
 - Never repeat back what the parent told you and do not start with thanks ("Thanks, that helps…", "Thanks for the details…"). The chips already show it.
-- Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." (in the parent's language). If more than 20 fit, say instead: "I found <number that fit> schools — here are 20 of them; let's narrow it down." followed by the next question in one sentence. Nothing else.
+- Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." (in the parent's language). followed by the next question in one sentence. Nothing else.
 - Reply format when you have no picks yet: just the next question in one sentence (plus a guide link if relevant).
 - The next question must appear in "reply" (the site shows only its option buttons).
 - Lisbon: each school near Lisbon has a "Zone:" line ("Lisbon city" or "Lisbon suburbs — <part>") and "School bus: yes" if it runs one. Many parents live abroad and do not know the town names around Lisbon, so always explain places by direction and travel time, not just the name. When the parent says Lisbon (or "Lisbon area") and has not yet said city or suburbs, do NOT return picks yet — first ask exactly one question: "Only schools in Lisbon itself, or also the suburbs within about 30 minutes — west along the coast towards Cascais, the green hills of Sintra, and the Caparica beaches across the river? Many suburban schools run a school bus from Lisbon." (translated into the parent's language in "reply"; options stay in English) with next_question id "lisbon_scope" and options ["Lisbon city only", "Lisbon + suburbs (within ~30 min)"]. "Lisbon city only" → only schools with Zone "Lisbon city". "Lisbon + suburbs" → schools from every Lisbon zone (city and all suburbs, including Sintra and the south bank), mixing city and suburban schools. In the "why" line of a suburban school, say where it is relative to Lisbon with the travel hint below, plus "school bus" if it has one (e.g. "IB · Oeiras, ~20 min west of Lisbon · school bus · €…"). Travel hints: Oeiras ~20 min west of Lisbon · Cascais / Estoril ~30 min west, on the coast · Sintra ~30 min north-west, in the hills · Caparica / south bank ~25 min south, across the river. If the parent names a specific town (Cascais, Oeiras, Sintra, Caparica…), use that part only and do not ask.
@@ -60,7 +60,7 @@ How to run the conversation:
 - If the parent names a curriculum + area (e.g. "British school near Cascais", "German school in Porto"), return picks even without an age.
 - Topics our pages only partly cover (religion, class size, exam results): name the schools whose page mentions it, and say that for the other schools it is not listed on our page. Never say a school is "the only" one.
 - "understood" holds only school-search criteria. Leave it empty for off-topic or general questions.
-- picks: every school that fits, up to 20 (never stop at fewer while more fit), in a sensible order (closest fit first). Each "why" is one short line based only on the data (e.g. "IB from age 3 · Oeiras · €11,790–€26,760/yr"). Do not put verification status in "why" (the card shows it). For fees always use the school's full range from the "Fees:" line, never one year group's fee. Use the exact slug from the data.
+- picks: EVERY school that fits — never leave out a school that matches the criteria, in a sensible order (closest fit first). Each "why" is one short line (keep it under ~12 words) based only on the data (e.g. "IB from age 3 · Oeiras · €11,790–€26,760/yr"). Do not put verification status in "why" (the card shows it). For fees always use the school's full range from the "Fees:" line, never one year group's fee. Use the exact slug from the data.
 - If nothing fits, say so honestly, return no picks, and offer one criterion to relax as next_question options.
 - General questions (e.g. IB vs Cambridge): answer briefly and link the guide; next_question may be null.
 
@@ -183,7 +183,7 @@ def ask(messages, criteria):
         msgs[-1]['content'] += "\n\n[Reply in the language of the parent's own typed messages, not English, and end the reply with the next question in that language.]"
     body = {
         'model': MODEL,
-        'max_tokens': 2500,
+        'max_tokens': 5000,
         'system': system,
         'tools': [TOOL],
         'tool_choice': {'type': 'tool', 'name': 'respond'},
@@ -249,7 +249,7 @@ def _finish(kb, body):
         if s and s['slug'] not in [x['slug'] for x in picks]:
             picks.append({'slug': s['slug'], 'id': s['id'], 'url': s['url'], 'name': s['name'], 'why': p.get('why', '')})
     out['picks'] = picks
-    if 0 < len(picks) < 20:  # unknown slugs are dropped above, so the count in the text must follow the cards
+    if picks:  # unknown slugs are dropped above, so the count in the text must follow the cards
         n = len(picks)
         out['reply'] = re.sub(r'\bI found \d+ schools?\b', f"I found {n} school{'s' if n > 1 else ''}", out.get('reply', ''))
     out['usage'] = data.get('usage', {})
