@@ -238,6 +238,9 @@ def _finish(kb, body):
         if s and s['slug'] not in [x['slug'] for x in picks]:
             picks.append({'slug': s['slug'], 'id': s['id'], 'url': s['url'], 'name': s['name'], 'why': p.get('why', '')})
     out['picks'] = picks
+    if picks:  # unknown slugs are dropped above, so the count in the text must follow the cards
+        n = len(picks)
+        out['reply'] = re.sub(r'\bI found \d+ schools?\b', f"I found {n} school{'s' if n > 1 else ''}", out.get('reply', ''))
     out['usage'] = data.get('usage', {})
     return out
 
