@@ -33,12 +33,12 @@ Rules:
 - Use only the data below. If something is not there (class size, religion, exam results, places, waiting lists…), say it is "not listed on our page — worth asking the school". Never guess.
 - Neutral tone. Never say "best", "top", "cheapest", "better", "worse" or rank schools by quality. Different schools suit different families.
 - Fees: always quote the range shown on the school's page. Do not calculate a fee for the child's year.
-- Budget: a school fits the budget when the lower end of its fee range is within the budget (younger years usually cost less); never exclude a school only because the upper end is higher. If a budget is tight, still show the schools whose range starts within it.
+- Budget: a school fits the budget when the lower end of its fee range is within the budget (younger years usually cost less); never exclude a school only because the upper end is higher (e.g. budget €12k → a school with €9,830–€22,200/yr fits). If a budget is tight, still show the schools whose range starts within it.
 - Do not promise places, discounts or admission dates.
 - If a school is marked "NOT verified", never call its data verified.
 - Be short: 1–2 sentences per reply, one question at a time.
 - Never repeat back what the parent told you and do not start with thanks ("Thanks, that helps…", "Thanks for the details…"). The chips already show it.
-- Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." followed by the next question in one sentence. Nothing else.
+- Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." (in the parent's language) followed by the next question in one sentence. Nothing else.
 - Reply format when you have no picks yet: just the next question in one sentence (plus a guide link if relevant).
 - The next question must appear in "reply" (the site shows only its option buttons).
 - Lisbon: each school near Lisbon has a "Zone:" line ("Lisbon city" or "Lisbon suburbs — <part>") and "School bus: yes" if it runs one. Many parents live abroad and do not know the town names around Lisbon, so always explain places by direction and travel time, not just the name. When the parent says Lisbon (or "Lisbon area") and has not yet said city or suburbs, do NOT return picks yet — first ask exactly one question: "Only schools in Lisbon itself, or also the suburbs within about 30 minutes — west along the coast towards Cascais, the green hills of Sintra, and the Caparica beaches across the river? Many suburban schools run a school bus from Lisbon." (translated into the parent's language in "reply"; options stay in English) with next_question id "lisbon_scope" and options ["Lisbon city only", "Lisbon + suburbs (within ~30 min)"]. "Lisbon city only" → only schools with Zone "Lisbon city". "Lisbon + suburbs" → schools from every Lisbon zone (city and all suburbs, including Sintra and the south bank), mixing city and suburban schools. In the "why" line of a suburban school, say where it is relative to Lisbon with the travel hint below, plus "school bus" if it has one (e.g. "IB · Oeiras, ~20 min west of Lisbon · school bus · €…"). Travel hints: Oeiras ~20 min west of Lisbon · Cascais / Estoril ~30 min west, on the coast · Sintra ~30 min north-west, in the hills · Caparica / south bank ~25 min south, across the river. If the parent names a specific town (Cascais, Oeiras, Sintra, Caparica…), use that part only and do not ask.
@@ -178,6 +178,9 @@ def ask(messages, criteria):
         raise ValueError('empty conversation')
     if criteria:
         msgs[-1]['content'] += '\n\n[Criteria collected so far: ' + json.dumps(criteria)[:800] + ']'
+    if not _is_english(msgs[-1]['content']) or any(not _is_english(m['content']) for m in msgs if m['role'] == 'user'):
+        # button answers are English; the parent's own language must win
+        msgs[-1]['content'] += "\n\n[Reply in the language of the parent's own typed messages, not English.]"
     body = {
         'model': MODEL,
         'max_tokens': 1200,
@@ -187,6 +190,11 @@ def ask(messages, criteria):
         'messages': msgs,
     }
     return _finish(kb, body)
+
+
+def _is_english(text):
+    letters = re.findall(r'[^\W\d_]', text)
+    return not letters or sum(c.isascii() for c in letters) > 0.9 * len(letters)
 
 
 def _enough(c):
@@ -221,8 +229,7 @@ def _finish(kb, body):
     q = out.get('next_question') or {}
     # the buttons belong to next_question, so the question in the text must be about the same thing
     r = out.get('reply', '')
-    letters = re.findall(r'[^\W\d_]', r)
-    english = not letters or sum(c.isascii() for c in letters) > 0.9 * len(letters)
+    english = _is_english(r)
     # word overlap only works when the reply is in English like the buttons
     if q.get('text') and english:
         words = lambda x: set(re.findall(r'[a-zа-яё]{3,}', x.lower()))
