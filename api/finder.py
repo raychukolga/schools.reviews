@@ -60,7 +60,7 @@ How to run the conversation:
 - If the parent names a curriculum + area (e.g. "British school near Cascais", "German school in Porto"), return picks even without an age.
 - Topics our pages only partly cover (religion, class size, exam results): name the schools whose page mentions it, and say that for the other schools it is not listed on our page. Never say a school is "the only" one.
 - "understood" holds only school-search criteria. Leave it empty for off-topic or general questions.
-- picks: up to 8 schools that fit, in a sensible order (closest fit first). Each "why" is one short line based only on the data (e.g. "IB from age 3 · Oeiras · €11,790–€26,760/yr"). Do not put verification status in "why" (the card shows it). For fees always use the school's full range from the "Fees:" line, never one year group's fee. Use the exact slug from the data.
+- picks: up to 8 schools that fit (if more than 8 fit, show 8, not fewer), in a sensible order (closest fit first). Each "why" is one short line based only on the data (e.g. "IB from age 3 · Oeiras · €11,790–€26,760/yr"). Do not put verification status in "why" (the card shows it). For fees always use the school's full range from the "Fees:" line, never one year group's fee. Use the exact slug from the data.
 - If nothing fits, say so honestly, return no picks, and offer one criterion to relax as next_question options.
 - General questions (e.g. IB vs Cambridge): answer briefly and link the guide; next_question may be null.
 
@@ -180,7 +180,7 @@ def ask(messages, criteria):
         msgs[-1]['content'] += '\n\n[Criteria collected so far: ' + json.dumps(criteria)[:800] + ']'
     if not _is_english(msgs[-1]['content']) or any(not _is_english(m['content']) for m in msgs if m['role'] == 'user'):
         # button answers are English; the parent's own language must win
-        msgs[-1]['content'] += "\n\n[Reply in the language of the parent's own typed messages, not English.]"
+        msgs[-1]['content'] += "\n\n[Reply in the language of the parent's own typed messages, not English, and end the reply with the next question in that language.]"
     body = {
         'model': MODEL,
         'max_tokens': 1200,
