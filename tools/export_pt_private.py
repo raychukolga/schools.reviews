@@ -1,0 +1,62 @@
+"""Export all private Portuguese schools (ptPrivate) from the listing to an Excel file for the editor.
+Usage: python3 tools/export_pt_private.py ~/Downloads/schools_reviews_portuguese_private.xlsx"""
+import os, re, sys
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font, PatternFill
+
+NUM = r'(\d+)'
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+NOTES = {  # what changed versus the editor's source file / earlier page
+    'Colégio Planalto': ('Updated', '18 Nov 2026', 'Was marked international; boys only from Grade 1; official 2026/27 fees (were estimates €6,000–€10,000)'),
+    'Colégio Luso-Francês': ('Updated', '18 Nov 2026', 'Was marked British/French; official 2026/27 fees; Grade 13 removed'),
+    'Colégio Cesário Verde': ('Updated', '18 Nov 2026', 'Was "Cesário Verde Int\'l School (SEK)", listed as IB; no IB, only up to Grade 9; renamed, new URL'),
+    'Colégio Moderno': ('New page', '18 Nov 2026', 'Your file says Catholic — the school says it is secular (escola laica); fees updated to 2026/27'),
+    'Colégio Valsassina': ('New page', '18 Nov 2026', 'Fees updated to 2026/27'),
+    'Colégio São João de Brito': ('New page', '18 Nov 2026', 'Fees 2026/27 added (missing in your file)'),
+    'Colégio Manuel Bernardes': ('New page', '18 Nov 2026', 'Address and website added (cmb.pt); fees updated to 2026/27'),
+    'Colégio Mira Rio': ('New page', '18 Nov 2026', 'Fees updated to 2026/27 (same price list as Planalto)'),
+}
+
+
+def main(out):
+    t = open(os.path.join(ROOT, 'international-private-schools-portugal.html'), encoding='utf-8').read()
+    i = t.find('const schools'); body = t[i:t.find('\n];', i)]
+    j = re.search(r'schoolPages\s*=\s*\{', t).end()
+    pages = {int(a): b for a, b in re.findall(r"(\d+)\s*:\s*'(/[^']+\.html)'", t[j:t.find('}', j)])}
+    rows = []
+    for item in re.split(r'\n\s*\{\s*id:', body)[1:]:
+        if 'ptPrivate:true' not in item:
+            continue
+        sid = int(re.match(r'\s*(\d+)', item).group(1))
+        g = lambda k, p=r'"([^"]*)"': (re.search(r'\b' + k + r':\s*' + p, item) or [None, None])[1]
+        name = g('name')
+        page = open(os.path.join(ROOT, pages[sid].lstrip('/')), encoding='utf-8').read()
+        owner = re.search(r'Owner / type</div>\s*<div class="profile-val">([^<]*)', page)
+        lo, hi = g('price', NUM), g('priceMax', NUM)
+        fees = f'€{int(lo):,} – €{int(hi):,}' if lo and hi else (f'from €{int(lo):,}' if lo else 'on request')
+        st, date, note = NOTES.get(name, ('', '', ''))
+        rows.append([name, st, date, g('loc'), owner.group(1).strip() if owner else '', g('prog'),
+                     '%s–%s' % (g('ageFrom', NUM), g('ageTo', NUM)), fees,
+                     ('Verified ' + g('verDate')) if 'verified:true' in item else 'Not yet — please review',
+                     'https://schools.reviews' + pages[sid], g('website'), note])
+    wb = Workbook(); ws = wb.active; ws.title = 'Portuguese private schools'
+    head = ['School', 'On the site', 'Date', 'Area', 'Type / owner', 'Programme', 'Ages', 'Tuition 2026/27 (per year)',
+            'Verified', 'Page on schools.reviews', 'School website', 'What changed vs your file / old page']
+    ws.append(head)
+    for r in rows:
+        ws.append(r)
+    for c in ws[1]:
+        c.font = Font(bold=True, color='FFFFFF'); c.fill = PatternFill('solid', fgColor='C4633A')
+    for col, w in zip('ABCDEFGHIJKL', [30, 12, 13, 22, 50, 24, 8, 22, 22, 55, 30, 70]):
+        ws.column_dimensions[col].width = w
+    for row in ws.iter_rows(min_row=2):
+        for c in row:
+            c.alignment = Alignment(wrap_text=True, vertical='top')
+        row[9].hyperlink = row[9].value
+    ws.freeze_panes = 'B2'
+    wb.save(os.path.expanduser(out))
+    print(len(rows), 'schools ->', out)
+
+
+if __name__ == '__main__':
+    main(sys.argv[1] if len(sys.argv) > 1 else '~/Downloads/schools_reviews_portuguese_private.xlsx')
