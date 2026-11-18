@@ -1304,11 +1304,18 @@ const schools = [
 
   { id:20, name:"Colégio Planalto", short:"CP",
     address:"Rua Armindo Rodrigues 28, 1600-414 Lisboa", loc:"Lisbon", prog:"Portuguese / IB Diploma",
-    price:6000, priceMax:10000,
-    reviewed:false, verified:false, boarding:false,
+    price:5540, priceMax:8460,
+    earlyPrice:"5,632–5,973", primaryPrice:"5,540–6,500", middlePrice:"6,600", secondaryPrice:"8,460",
+    appFee:300, annualEnrollFee:"228–471", lunchIncluded:false, lunchPrice:"1,000–1,400", schoolBus:true,
+    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false, ptPrivate:true,
     bg:"#EAF3DE", color:"#27500A", lat:38.7679052, lng:-9.1662542,
-    founded:1978,
-    website:"https://www.planalto.pt" },
+    founded:1978, ageFrom:0, ageTo:18,
+    description:"Private Portuguese school in Telheiras, Lisbon: Portuguese national curriculum in Portuguese and the IB Diploma in secondary. Mixed nursery and pre-school, boys only from Grade 1.",
+    srNote:{
+      pros:["IB World School since 1994 — the first in Portugal","A personal tutor for every pupil","€5,540–€8,460 a year (2026/27)"],
+      watch:["Boys only from Grade 1 (girls: sister school Mira Rio)","Taught in Portuguese","Catholic-inspired ethos"],
+    },
+    website:"https://www.colegioplanalto.pt" },
 
   { id:21, name:"International Christian School of Cascais", short:"IC",
     address:"Cascais", loc:"Cascais", prog:"American",
@@ -1761,7 +1768,7 @@ schools.sort((a, b) => {
   return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
 });
 
-const state = { picks:null, pickChips:[], savedOnly:false, prog:[], price:[], reviewed:false, search:'', maxPrice:40000, boarding:null, area:[], classSize:'all', schoolAge:'all', lang:[], boutique:false, largeCampus:false, bilingualPt:false };
+const state = { picks:null, pickChips:[], savedOnly:false, prog:[], price:[], reviewed:false, search:'', maxPrice:40000, boarding:null, area:[], classSize:'all', schoolAge:'all', lang:[], boutique:false, largeCampus:false, bilingualPt:false, schoolType:[] };
 const compareList = new Set();
 // Избранное — один список на весь сайт: [{name,url}] в sr_saved_schools
 // (его же пишет кнопка «Save school» на страницах школ, см. school-page.js)
@@ -1821,6 +1828,8 @@ function getFiltered(){
     if(state.schoolAge === 'mid' && (!s.founded || s.founded < 2008 || s.founded > 2023)) return false;
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
     if(state.lang.length && s.prog && !state.lang.some(l => s.prog.toLowerCase().includes(l.toLowerCase()))) return false;
+    // School type: Portuguese private schools carry ptPrivate; ticking both boxes = no filter
+    if(state.schoolType.length === 1 && (state.schoolType[0] === 'nat') !== !!s.ptPrivate) return false;
     if(state.boutique && !s.boutique) return false;
     if(state.largeCampus && !s.largeCampus) return false;
     if(state.bilingualPt && !s.bilingualPt) return false;
@@ -2022,6 +2031,7 @@ function applyExpanded(){
   state.lang = lc;
   state.boutique = document.getElementById('f_boutique')?.checked || false;
   state.largeCampus = document.getElementById('f_largecampus')?.checked || false;
+  state.schoolType = [['st_intl','intl'],['st_nat','nat']].filter(([id]) => document.getElementById(id)?.checked).map(([,v]) => v);
   state.bilingualPt = document.getElementById('l_bilingual_pt')?.checked || false;
   const ag = document.querySelector('input[name="ageGroup"]:checked')?.value || 'all';
   state.ageGroup = ag;
@@ -2029,14 +2039,14 @@ function applyExpanded(){
   render();
 }
 function resetAll(){
-  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt','f_boutique','f_largecampus','l_bilingual_pt'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
+  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt','f_boutique','f_largecampus','l_bilingual_pt','st_intl','st_nat'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
   const csAll = document.getElementById('cs_all'); if(csAll) csAll.checked=true;
   const csMid = document.getElementById('cs_mid'); if(csMid) csMid.checked=false;
   const fAll = document.getElementById('f_all'); if(fAll) fAll.checked=true;
   const agAll = document.getElementById('ag_all'); if(agAll) agAll.checked=true;
   document.getElementById('priceSlider').value=40000;
   document.getElementById('sliderVal').textContent='€40,000';
-  Object.assign(state,{maxPrice:40000,boarding:null,area:[],classSize:'all',schoolAge:'all',lang:[],ageGroup:'all',boutique:false,largeCampus:false,bilingualPt:false,prog:[]});
+  Object.assign(state,{maxPrice:40000,boarding:null,area:[],classSize:'all',schoolAge:'all',lang:[],ageGroup:'all',boutique:false,largeCampus:false,bilingualPt:false,schoolType:[],prog:[]});
   syncProgUI();
   setPr('all');
 }

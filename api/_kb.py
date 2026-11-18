@@ -85,6 +85,7 @@ def _listing():
             'visited': g('reviewed', r'(true|false)') == 'true',
             'boarding': g('boarding', r'(true|false)') == 'true',
             'bus': g('schoolBus', r'(true|"yes")') is not None,
+            'pt_private': g('ptPrivate', r'(true|false)') == 'true',
             'url': pages.get(sid),
         })
     return out
@@ -169,7 +170,8 @@ def as_prompt(kb):
         out.append('\n'.join([
             f"## {s['name']}  (slug: {s['slug']})",
             f"Area: {s['area']} · Programme: {s['programme']} · Ages: {ages} · Fees: {fees} · {ver}"
-            + (' · Visited and filmed by us' if s['visited'] else '') + (' · Boarding' if s['boarding'] else ''),
+            + (' · Visited and filmed by us' if s['visited'] else '') + (' · Boarding' if s['boarding'] else '')
+            + (' · Type: private Portuguese school (Portuguese curriculum, taught in Portuguese)' if s['pt_private'] else ''),
             *([f"Zone: {s['zone']}" + (' · School bus: yes' if s['bus'] else '')] if s['zone'] else []),
             f"Page: https://schools.reviews{s['url']}",
             s['about'],
