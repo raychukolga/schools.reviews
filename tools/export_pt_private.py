@@ -20,6 +20,11 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Colégio do Sagrado Coração de Maria': ('New page', '18 Nov 2026', 'Fees updated to 2026/27; address added (Av. Manuel da Maia 2)'),
     'Colégio Pedro Arrupe': ('New page', '18 Nov 2026', 'Fees updated to 2026/27; owned by the Alves Ribeiro group with Jesuit collaboration'),
     'Colégio Oriente': ('New page', '18 Nov 2026', 'Fees updated to 2026/27 (nursery from 6 months)'),
+    'Colégio de Santa Maria': ('New page', '18 Nov 2026', 'Website in your file is dead — the school is colegiodesantamaria.pt; fees 2026/27; only up to Grade 9'),
+    'Externato Marista de Lisboa': ('New page', '18 Nov 2026', 'Website in your file is dead — the school is ext.marista-lisboa.org; fees updated to 2026/27'),
+    'Colégio Vasco da Gama': ('New page', '18 Nov 2026', 'Not in Lisbon — it is in Meleças, Sintra; part of International Schools Partnership; tuition not published online'),
+    'Colégio Amor de Deus': ('New page', '18 Nov 2026', 'Website in your file is dead — the school is cad.edu.pt; fees updated to 2026/27'),
+    'Colégio Marista de Carcavelos': ('New page', '18 Nov 2026', 'Fees not published online (price page is empty)'),
 }
 
 
