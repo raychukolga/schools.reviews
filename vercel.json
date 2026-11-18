@@ -28,6 +28,11 @@
       "permanent": false
     },
     {
+      "source": "/cesario-verde-international-school-sek-portugal.html",
+      "destination": "/colegio-cesario-verde-portugal.html",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/international-private-schools-portugal.html",
       "permanent": false
