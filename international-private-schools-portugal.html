@@ -840,6 +840,14 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
           <label class="fg-opt"><input type="checkbox" id="t_day" value="day"> Day school only</label>
           <label class="fg-opt"><input type="checkbox" id="t_boarding" value="boarding"> Boarding available</label>
         </div>
+        <div class="fg-title" style="margin-top:16px;">🎒 Child's age <a href="/school-year-grade-by-age-guide.html" target="_blank" class="filter-help"><span class="filter-help-tip">How do school years compare by age? Read our guide →</span>?</a></div>
+        <div style="margin-top:8px;"><select id="childAge" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font:500 13px 'DM Sans',sans-serif;background:var(--white);color:var(--ink);"><option value="">Any age</option><option value="0">Under 1</option><option value="1">1 year</option><option value="2">2 years</option><option value="3">3 years</option><option value="4">4 years</option><option value="5">5 years</option><option value="6">6 years</option><option value="7">7 years</option><option value="8">8 years</option><option value="9">9 years</option><option value="10">10 years</option><option value="11">11 years</option><option value="12">12 years</option><option value="13">13 years</option><option value="14">14 years</option><option value="15">15 years</option><option value="16">16 years</option><option value="17">17 years</option><option value="18">18 years</option></select></div>
+        <div class="fg-title" style="margin-top:16px;">🎓 School goes up to</div>
+        <div class="fg-opts">
+          <label class="fg-opt"><input type="checkbox" id="up_18"> Up to age 18 (graduation)</label>
+          <label class="fg-opt"><input type="checkbox" id="up_mid"> Up to age 16</label>
+          <label class="fg-opt"><input type="checkbox" id="up_12"> Up to age 12</label>
+        </div>
         <div class="fg-title" style="margin-top:16px;">👥 Class size</div>
         <div class="fg-opts">
           <label class="fg-opt"><input type="radio" name="classSize" id="cs_all" value="all" checked> All sizes</label>
@@ -875,14 +883,6 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
         <div style="margin-top:8px;">
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-bottom:6px;"><span>€0</span><span id="sliderVal" style="font-weight:600;color:var(--ink);">€40,000</span></div>
           <input type="range" id="priceSlider" min="0" max="40000" step="1000" value="40000" style="width:100%;accent-color:var(--terra);" oninput="document.getElementById('sliderVal').textContent='€'+parseInt(this.value).toLocaleString()">
-        </div>
-        <div class="fg-title" style="margin-top:16px;">🎒 Child's age <a href="/school-year-grade-by-age-guide.html" target="_blank" class="filter-help"><span class="filter-help-tip">How do school years compare by age? Read our guide →</span>?</a></div>
-        <div style="margin-top:8px;"><select id="childAge" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font:500 13px 'DM Sans',sans-serif;background:var(--white);color:var(--ink);"><option value="">Any age</option><option value="0">Under 1</option><option value="1">1 year</option><option value="2">2 years</option><option value="3">3 years</option><option value="4">4 years</option><option value="5">5 years</option><option value="6">6 years</option><option value="7">7 years</option><option value="8">8 years</option><option value="9">9 years</option><option value="10">10 years</option><option value="11">11 years</option><option value="12">12 years</option><option value="13">13 years</option><option value="14">14 years</option><option value="15">15 years</option><option value="16">16 years</option><option value="17">17 years</option><option value="18">18 years</option></select></div>
-        <div class="fg-title" style="margin-top:16px;">🎓 School goes up to</div>
-        <div class="fg-opts">
-          <label class="fg-opt"><input type="checkbox" id="up_18"> Up to age 18 (graduation)</label>
-          <label class="fg-opt"><input type="checkbox" id="up_mid"> Up to age 16</label>
-          <label class="fg-opt"><input type="checkbox" id="up_12"> Up to age 12</label>
         </div>
       </div>
     </div>
