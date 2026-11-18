@@ -15,6 +15,11 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Colégio São João de Brito': ('New page', '18 Nov 2026', 'Fees 2026/27 added (missing in your file)'),
     'Colégio Manuel Bernardes': ('New page', '18 Nov 2026', 'Address and website added (cmb.pt); fees updated to 2026/27'),
     'Colégio Mira Rio': ('New page', '18 Nov 2026', 'Fees updated to 2026/27 (same price list as Planalto)'),
+    'Colégio de São Tomás': ('New page', '18 Nov 2026', 'Website in your file is dead — the school is now colegiodestomas.com; fees 2026/27 added; 2 campuses (Quinta das Conchas, Sete Rios)'),
+    'Salesianos de Lisboa': ('New page', '18 Nov 2026', 'Fees not published online — page says "on request"; merit scholarships and state support added'),
+    'Colégio do Sagrado Coração de Maria': ('New page', '18 Nov 2026', 'Fees updated to 2026/27; address added (Av. Manuel da Maia 2)'),
+    'Colégio Pedro Arrupe': ('New page', '18 Nov 2026', 'Fees updated to 2026/27; owned by the Alves Ribeiro group with Jesuit collaboration'),
+    'Colégio Oriente': ('New page', '18 Nov 2026', 'Fees updated to 2026/27 (nursery from 6 months)'),
 }
 
 
