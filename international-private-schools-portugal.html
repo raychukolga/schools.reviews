@@ -201,7 +201,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vr-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--ink); }
 .vr-subtitle { font-size:12px; color:var(--gray); margin-top:3px; }
 .vr-badge { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--terra-light); color:var(--terra); padding:4px 10px; border-radius:20px; }
-.vr-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+/* one row; more videos scroll sideways */
+.vr-grid { display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:thin; padding-bottom:4px; }
+.vr-grid > .vr-card { flex:0 0 calc((100% - 42px) / 4); min-width:220px; scroll-snap-align:start; }
 .vr-card { background:var(--cream); border:1.5px dashed var(--border); border-radius:12px; overflow:hidden; position:relative; }
 .vr-thumb { aspect-ratio:16/9; background:linear-gradient(135deg,#f0ede8,#e8e3de); display:flex; align-items:center; justify-content:center; position:relative; }
 .vr-play { width:42px; height:42px; background:rgba(196,99,58,.15); border:2px solid var(--terra); border-radius:50%; display:flex; align-items:center; justify-content:center; }
@@ -210,12 +212,7 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .vr-school-name { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.3; }
 .vr-loc { font-size:10px; color:var(--gray); }
 @media (max-width:768px) { .video-reviews-section { padding:20px 16px; } }
-.vr-show-more { display:none; }
-@media (max-width:768px) {
-  .vr-card-extra { display:none; }
-  .vr-card-extra.visible { display:block; }
-  .vr-show-more { display:block; width:100%; margin-top:12px; background:none; border:1px solid var(--border); border-radius:8px; padding:9px; font-size:12px; font-weight:600; color:var(--gray); cursor:pointer; font-family:'DM Sans',sans-serif; }
-}
+@media (max-width:768px) { .vr-grid > .vr-card { flex-basis:72%; min-width:0; } }
 
 /* COMPARE BAR */
 .picks-bar { background:#fff; border:1.5px solid #e8c4b0; border-radius:12px; padding:10px 12px; }
@@ -288,7 +285,6 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .modal { border-radius:20px 20px 0 0; max-height:92vh; }
   .modal-overlay { align-items:flex-end; padding:0; }
   .m-grid { grid-template-columns:1fr 1fr; }
-  .vr-grid { grid-template-columns:repeat(2,1fr); }
 }
 /* FOOTER */
 /* ALL SCHOOLS DIRECTORY */
@@ -810,36 +806,21 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       </div>
       <div class="vr-info"><div class="vr-school-name">International Sharing School</div><div class="vr-loc">Taguspark, Oeiras</div></div>
     </a>
-    <div class="vr-card vr-card-extra">
+    <div class="vr-card">
       <div class="vr-thumb">
         <div class="vr-cs-tag">Coming soon</div>
         <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">United Lisbon International School</div><div class="vr-loc">Parque das Nações, Lisbon</div></div>
     </div>
-    <div class="vr-card vr-card-extra">
+    <div class="vr-card">
       <div class="vr-thumb">
         <div class="vr-cs-tag">Coming soon</div>
         <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
       </div>
       <div class="vr-info"><div class="vr-school-name">Hypha International School</div><div class="vr-loc">Colares, Sintra</div></div>
     </div>
-    <div class="vr-card vr-card-extra">
-      <div class="vr-thumb">
-        <div class="vr-cs-tag">Coming soon</div>
-        <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
-      </div>
-      <div class="vr-info"><div class="vr-school-name">St Julian's School</div><div class="vr-loc">Carcavelos, Cascais</div></div>
-    </div>
-    <div class="vr-card vr-card-extra">
-      <div class="vr-thumb">
-        <div class="vr-cs-tag">Coming soon</div>
-        <div class="vr-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--terra)" stroke="none"><polygon points="5,3 19,12 5,21"/></svg></div>
-      </div>
-      <div class="vr-info"><div class="vr-school-name">King's College Lisbon</div><div class="vr-loc">Cascais</div></div>
-    </div>
   </div>
-  <button class="vr-show-more" id="vrShowMore" onclick="toggleVrMore()">Show more ↓</button>
 </div>
 
 <!-- SEARCH BAR -->
