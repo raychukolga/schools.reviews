@@ -35,8 +35,6 @@ def section(title, cls, rows):
 
 
 def fee_text(s):
-    if s.get('freeLocal'):
-        return 'Free', s.get('free_sub', 'state-funded · local pupils only')
     if not s.get('price'):
         return 'Fees on request', 'not published by the school'
     if not s.get('priceMax') or s['priceMax'] == s['price']:
@@ -55,7 +53,7 @@ def listing_schools():
         sid = int(re.match(r'\s*(\d+)', item).group(1))
         g = lambda k, pat=r'"([^"]*)"': (re.search(r'\b' + k + r':\s*' + pat, item) or [None, None])[1]
         out.append({'id': sid, 'name': g('name'), 'prog': g('prog'), 'lat': float(g('lat', r'([-\d.]+)') or 0),
-                    'lng': float(g('lng', r'([-\d.]+)') or 0), 'price': g('price', r'(\d+)'), 'max': g('priceMax', r'(\d+)'), 'free': g('freeLocal', r'(true)'),
+                    'lng': float(g('lng', r'([-\d.]+)') or 0), 'price': g('price', r'(\d+)'), 'max': g('priceMax', r'(\d+)'),
                     'url': pages.get(sid)})
     return t, out
 
@@ -138,7 +136,7 @@ def build_page(s, others):
     near = sorted([o for o in others if o['url'] and o['lat']], key=lambda o: math.hypot(o['lat'] - s['lat'], (o['lng'] - s['lng']) * 0.78))[:2]
     cards = '      <a href="/international-private-schools-portugal.html" class="nearby-card"><div class="nearby-prog">All programmes</div><div class="nearby-name">Browse all schools in Portugal →</div><div class="nearby-price">75+ schools listed</div></a>\n'
     for o in near:
-        pr = f"€{int(o['price']):,} – €{int(o['max']):,} /yr" if o['price'] and o['max'] and o['max'] != o['price'] else (f"from €{int(o['price']):,} /yr" if o['price'] else ('Free · state-funded' if o.get('free') else 'Fees on request'))
+        pr = f"€{int(o['price']):,} – €{int(o['max']):,} /yr" if o['price'] and o['max'] and o['max'] != o['price'] else (f"from €{int(o['price']):,} /yr" if o['price'] else 'Fees on request')
         cards += f'      <a href="{o["url"]}" class="nearby-card"><div class="nearby-prog">{e(o["prog"])}</div><div class="nearby-name">{e(o["name"])}</div><div class="nearby-price">{pr}</div></a>\n'
     nearby = ('<div style="background:var(--white);border-top:1px solid var(--border);padding:32px 40px;">\n  <div style="max-width:900px;margin:0 auto;">\n'
               '    <div class="sec-title" style="margin-bottom:16px;">Other schools in this area</div>\n    <div class="nearby-grid">\n' + cards + '    </div>\n  </div>\n</div>\n\n')
@@ -160,8 +158,6 @@ def listing_entry(s, sid):
         lines.append('    ' + ', '.join(extra) + ',')
     ver = f'verified:true, verDate:{js(s["verDate"])}' if s.get('verDate') else 'verified:false'
     lines.append(f'    reviewed:false, {ver}, boarding:false, ptPrivate:{str(s.get("ptPrivate", True)).lower()}, ageFrom:{s["ageFrom"]}, ageTo:{s["ageTo"]},')
-    if s.get('freeLocal'):
-        lines.append('    freeLocal:true,')
     lines.append(f'    bg:"#EAF3DE", color:"#27500A", lat:{s["lat"]}, lng:{s["lng"]},')
     if s.get('founded'):
         lines.append(f'    founded:{s["founded"]},')
