@@ -86,6 +86,7 @@ def _listing():
             'boarding': g('boarding', r'(true|false)') == 'true',
             'bus': g('schoolBus', r'(true|"yes")') is not None,
             'pt_private': g('ptPrivate', r'(true|false)') == 'true',
+            'free_local': g('freeLocal', r'(true)') is not None,
             'url': pages.get(sid),
         })
     return out
@@ -165,7 +166,8 @@ def as_prompt(kb):
     out = []
     for s in kb['schools']:
         ages = f"{s['age_from']}–{s['age_to']}" if s['age_from'] is not None and s['age_to'] else 'not listed'
-        fees = f"€{s['fee_min']:,}–€{s['fee_max']:,}/yr" if s['fee_min'] else 'fees on request'
+        fees = ('free (state-funded; see the page for who can enrol)' if s.get('free_local')
+                else f"€{s['fee_min']:,}–€{s['fee_max']:,}/yr" if s['fee_min'] else 'fees on request')
         ver = f"Verified {s['ver_date']}" if s['verified'] and s['ver_date'] else ('Verified' if s['verified'] else 'NOT verified')
         out.append('\n'.join([
             f"## {s['name']}  (slug: {s['slug']})",
