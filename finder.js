@@ -16,9 +16,12 @@
     "What's the difference between IB and Cambridge?"
   ];
   var GUIDE_HELP = {
+    type: { text: 'International schools teach in English with an international curriculum (IB, British, American…). Private Portuguese schools follow the Portuguese national curriculum in Portuguese and usually cost less. Bilingual schools teach in both English and Portuguese.', href: '/school-year-grade-by-age-guide.html', label: 'School grades by age' },
     language: { text: 'Most international schools teach in English; bilingual schools add a strong Portuguese track, and national schools (French, German, Spanish…) follow their own country\'s system.', href: '/school-year-grade-by-age-guide.html', label: 'School grades by age' },
     curriculum: { text: 'Both are recognised by universities worldwide. IB is one programme with coursework, an Extended Essay and Theory of Knowledge — it builds analytical thinking and independence. Cambridge (IGCSE, then A Levels) is mainly exam-based and lets students specialise in fewer subjects — often a good fit for UK universities. Many Cambridge schools in Portugal also offer the IB Diploma in the last two years.', href: '/ib-vs-cambridge-which-is-better.html', label: 'IB vs Cambridge' }
   };
+  function isPtType(a) { return /^Private Portuguese/.test(a.type || ''); }
+  function isBiType(a) { return /^Bilingual/.test(a.type || ''); }
   var QUESTIONS = [
     { id: 'children', text: 'How many children, and how old are they?', type: 'text', placeholder: 'e.g. two kids, 5 and 11' },
     { id: 'start', text: 'When would they start?', options: ['This school year', 'Next September', 'Later', 'Not sure'] },
@@ -26,14 +29,18 @@
     { id: 'lisbon', text: 'Only schools in Lisbon itself, or also the suburbs within about 30 minutes?', options: ['Lisbon city only', 'Lisbon + suburbs (within ~30 min)'],
       when: function (a) { return a.area === 'Lisbon'; },
       note: 'Many international schools are just outside the city: west along the coast towards Cascais (20–30 min), in the green hills of Sintra (~30 min) and by the Caparica beaches across the river (~25 min). Many of them run a school bus from Lisbon.' },
+    { id: 'type', text: 'What type of school are you looking for?', help: 'type', options: ['International school — taught in English', 'Private Portuguese school — taught in Portuguese', 'Bilingual — English + Portuguese', 'Not sure'] },
     { id: 'budget', text: "What's your yearly budget per child?", options: ['Up to €10k', '€10–15k', '€15–20k', '€20k+', 'Not sure yet', "Budget isn't a deciding factor"] },
-    { id: 'language', text: 'Which language should lessons be taught in?', multi: true, help: 'language', options: ['English', 'Portuguese', 'Bilingual EN + PT', 'French', 'German', 'Spanish', 'Dutch', 'No preference'] },
-    { id: 'curriculum', text: 'Do you have a curriculum in mind?', help: 'curriculum', options: ['IB', 'British / Cambridge', 'American', 'National (country) curriculum', 'Montessori / alternative', 'Not sure — explain'] },
+    { id: 'language', text: 'Which language should lessons be taught in?', multi: true, help: 'language', options: ['English', 'French', 'German', 'Spanish', 'Dutch', 'No preference'],
+      when: function (a) { return !isPtType(a) && !isBiType(a); } },
+    { id: 'curriculum', text: 'Do you have a curriculum in mind?', help: 'curriculum', options: ['IB', 'British / Cambridge', 'American', 'National (country) curriculum', 'Montessori / alternative', 'Not sure — explain'],
+      when: function (a) { return !isPtType(a); } },
     { id: 'ib', text: 'Full IB from the early years to graduation, or just the IB Diploma in the last two years?', options: ['Full IB (all years)', 'IB Diploma only', 'Not sure'],
-      when: function (a) { return a.curriculum === 'IB'; },
+      when: function (a) { return a.curriculum === 'IB' && !isPtType(a); },
       note: 'Full IB = PYP, MYP and Diploma in one school. The IB Diploma is the last two years only (ages 16–18).',
       link: { href: '/ib-diploma-explained.html', label: 'Not sure of the difference? Read our IB guide →' } },
-    { id: 'portuguese', text: 'How important is Portuguese language?', options: ['Very — we want strong Portuguese', 'Some is fine', 'Not important'] },
+    { id: 'portuguese', text: 'How important is Portuguese language?', options: ['Very — we want strong Portuguese', 'Some is fine', 'Not important'],
+      when: function (a) { return !isPtType(a) && !isBiType(a); } },
     { id: 'journey', text: 'Are you choosing a school for the whole journey to graduation, or for the next few years?', options: ['All the way to graduation', 'For the next few years', 'Not sure'] },
     { id: 'exams', text: 'Do exam results and the path to university matter to you?', options: ['Yes, a lot', 'Somewhat', 'Not a priority'],
       when: function (a) { return a.journey === 'All the way to graduation' || maxAge(a.children) >= 11; } },

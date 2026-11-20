@@ -144,6 +144,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .p-green { background:#EAF3DE; color:#27500A; }
 .p-gray { background:#f0ede8; color:var(--gray); }
 .card-price { font-size:12px; font-weight:700; color:var(--terra); }
+.card-cmp { margin-left:auto; margin-right:6px; font-size:11px; font-weight:600; color:#0C447C; background:#E6F1FB; border:1.5px solid #B5D4F4; border-radius:6px; padding:3px 9px; cursor:pointer; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+.card-cmp.added { background:#0C447C; color:#fff; border-color:#0C447C; }
 .card-price span { font-size:10px; font-weight:400; color:var(--gray); }
 .empty-state { padding:48px 24px; text-align:center; color:var(--gray); font-size:13px; }
 
@@ -2651,6 +2653,8 @@ function render(){
     const bHasPage = schoolPages[b.id] ? 1 : 0;
     return bHasPage - aHasPage;
   });
+  // Список сужен фильтрами, поиском помощника или избранным — сразу даём «Compare» на карточках
+  const showCmp = !!state.picks || state.savedOnly || filtered.length < schools.length;
   document.getElementById('schoolsList').innerHTML = `<div class="cards-wrap">` + sorted.map(s=>`
     <div class="school-card ${s.verified?'verified-card':''}" id="card-${s.id}" onclick="focusSchool(${s.id})" style="cursor:pointer;">
       <div class="card-top">
@@ -2674,6 +2678,7 @@ function render(){
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
         ${state.savedOnly ? `<button onclick="event.stopPropagation();unsaveSchool(${s.id})" title="Remove from saved" style="font-size:11px;font-weight:600;color:var(--gray);background:none;border:none;padding:4px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">♥ Remove</button>` : ''}
         <div class="card-price" style="${state.savedOnly ? 'flex:1;' : ''}">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
+        ${showCmp && schoolPages[s.id] ? `<button class="card-cmp ${compareList.has(s.id)?'added':''}" data-cmp="${s.id}" onclick="event.stopPropagation();toggleCmp(${s.id})">${compareList.has(s.id)?'✓ Compare':'+ Compare'}</button>` : ''}
         ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
     </div>
@@ -3218,12 +3223,14 @@ function showAllSchools(){
 }
 window.addEventListener('hashchange', applySavedHash);
 function toggleCmp(id){
-  const btn=document.getElementById('cmpBtn');
-  if(compareList.has(id)){compareList.delete(id);btn.textContent='+ Compare';btn.classList.remove('added');}
+  if(compareList.has(id)) compareList.delete(id);
   else{
     if(compareList.size>=4){alert('You can compare up to 4 schools');return;}
-    compareList.add(id);btn.textContent='✓ Added';btn.classList.add('added');
+    compareList.add(id);
   }
+  const on=compareList.has(id), btn=document.getElementById('cmpBtn');
+  if(btn){btn.textContent=on?'✓ Added':'+ Compare';btn.classList.toggle('added',on);}
+  document.querySelectorAll(`.card-cmp[data-cmp="${id}"]`).forEach(b=>{b.textContent=on?'✓ Compare':'+ Compare';b.classList.toggle('added',on);});
   saveCmp();
   updateCmpBar();
 }
@@ -3248,7 +3255,7 @@ function updateCmpBar(){
   btn.style.display = compareList.size>=2 ? '' : 'none';
   clr.textContent = compareList.size ? 'Clear' : 'Close';
 }
-function clearCompare(){compareList.clear();cmpHint=false;saveCmp();updateCmpBar();}
+function clearCompare(){compareList.clear();cmpHint=false;saveCmp();updateCmpBar();document.querySelectorAll(".card-cmp.added").forEach(b=>{b.textContent="+ Compare";b.classList.remove("added");});}
 // «Compare» в шапке ведёт сюда с #compare
 function applyCompareHash(){
   if(location.hash!=='#compare') return;
