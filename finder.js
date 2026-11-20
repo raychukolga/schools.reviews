@@ -268,7 +268,7 @@
       h += '<div class="srf-msg ' + (m.role === 'user' ? 'u' : 'a') + '">' + (m.role === 'user' ? esc(m.content) : linkify(m.content)) + '</div>';
       if (i === conv.length - 1 && m.role === 'assistant') {
         if (lastPicks.length) {
-          h += '<button type="button" class="srf-btn srf-picks-cta" data-showpicks>Show ' + lastPicks.length + ' school' + (lastPicks.length > 1 ? 's' : '') + ' on the map →</button>';
+          h += '<button type="button" class="srf-btn srf-picks-cta" data-showpicks>' + (lastPicks.length > 1 ? 'Show ' + lastPicks.length + ' schools on the map' : 'Show this school on the map') + ' →</button>';
         }
         if (m.q && m.q.options && m.q.options.length) {
           h += '<div class="srf-opts">' + m.q.options.map(function (o) { return '<button type="button" class="srf-opt" data-ans="' + esc(o) + '">' + esc(o) + '</button>'; }).join('') + '</div>';
