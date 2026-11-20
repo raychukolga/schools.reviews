@@ -1051,7 +1051,8 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
       <div>
         <div class="fg-title">📍 Location</div>
         <div class="fg-opts">
-          <label class="fg-opt"><input type="checkbox" id="a_lisbon" value="Lisbon"> Lisbon centre</label>
+          <label class="fg-opt"><input type="checkbox" id="a_lisbon" value="Lisbon"> Lisbon city only</label>
+          <label class="fg-opt"><input type="checkbox" id="a_lisbon30" value="Lisbon30"> Lisbon + 30 min drive</label>
           <label class="fg-opt"><input type="checkbox" id="a_cascais" value="Cascais"> Cascais</label>
           <label class="fg-opt"><input type="checkbox" id="a_sintra" value="Sintra"> Sintra</label>
           <label class="fg-opt"><input type="checkbox" id="a_oeiras" value="Oeiras"> Oeiras</label>
@@ -2570,10 +2571,16 @@ function progPill(p){
   return 'p-gray';
 }
 
-// Area checkboxes → loc fragments ("|" = any of them)
-const AREA_VALUES = {a_lisbon:'Lisbon|Parque das Nações', a_cascais:'Cascais|Estoril', a_sintra:'Sintra', a_oeiras:'Oeiras|Queluz', a_porto:'Porto', a_algarve:'Algarve'};
+// Area checkboxes → loc fragments ("|" = any of them, "!" = never, e.g. CAISL's "Sintra, Lisbon")
+// Lisbon + 30 min: city, Oeiras, Carcavelos / Parede / S. Domingos de Rana, Estoril, Caparica — not Cascais town or Sintra
+const AREA_VALUES = {a_lisbon:'Lisbon|Parque das Nações|!Sintra', a_lisbon30:'Lisbon|Parque das Nações|Oeiras|Queluz|Carcavelos|Parede|São Domingos de Rana|Estoril|Caparica|!Sintra', a_cascais:'Cascais|Estoril', a_sintra:'Sintra', a_oeiras:'Oeiras|Queluz', a_porto:'Porto', a_algarve:'Algarve'};
 // Lisbon + suburbs as the assistant means it, incl. the south bank
-const LISBON_AREA = [AREA_VALUES.a_lisbon, AREA_VALUES.a_cascais, AREA_VALUES.a_sintra, AREA_VALUES.a_oeiras, 'Almada|Caparica|Setúbal|Palmela'];
+const LISBON_AREA = ['Lisbon|Parque das Nações', AREA_VALUES.a_cascais, AREA_VALUES.a_sintra, AREA_VALUES.a_oeiras, 'Almada|Caparica|Setúbal|Palmela'];
+function matchArea(s, a){
+  const loc = (s.loc||'').toLowerCase(), parts = a.toLowerCase().split('|');
+  if(parts.some(x => x[0] === '!' && loc.includes(x.slice(1)))) return false;
+  return parts.some(x => x[0] !== '!' && loc.includes(x));
+}
 function matchProg(s, p){
   const prog = (s.prog||'').toLowerCase();
   if(p === 'Full IB') return s.prog === 'Full IB';
@@ -2601,7 +2608,7 @@ function getFiltered(){
     }
     if(state.boarding === 'boarding' && !s.boarding) return false;
     if(state.boarding === 'day' && s.boarding) return false;
-    if(state.area.length && !state.area.some(a => a.split('|').some(x => s.loc.toLowerCase().includes(x.toLowerCase())))) return false;
+    if(state.area.length && !state.area.some(a => matchArea(s, a))) return false;
     if(state.classSize === 'small' && (!s.classSize || s.classSize > 16)) return false;
     if(state.classSize === 'mid' && (!s.classSize || s.classSize < 17 || s.classSize > 22)) return false;
     if(state.classSize === 'big' && (!s.classSize || s.classSize <= 22)) return false;
@@ -2823,7 +2830,7 @@ function applyExpanded(){
   render();
 }
 function resetAll(){
-  ['t_day','t_boarding','a_lisbon','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt','f_boutique','f_largecampus','l_bilingual_pt','st_intl','st_nat','up_18','up_mid','up_12'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
+  ['t_day','t_boarding','a_lisbon','a_lisbon30','a_cascais','a_sintra','a_oeiras','a_porto','a_algarve','l_en','l_fr','l_de','l_pt','f_boutique','f_largecampus','l_bilingual_pt','st_intl','st_nat','up_18','up_mid','up_12'].forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=false; });
   const csAll = document.getElementById('cs_all'); if(csAll) csAll.checked=true;
   const csMid = document.getElementById('cs_mid'); if(csMid) csMid.checked=false;
   const fAll = document.getElementById('f_all'); if(fAll) fAll.checked=true;
