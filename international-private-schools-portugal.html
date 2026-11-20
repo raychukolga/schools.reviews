@@ -3267,13 +3267,49 @@ window.addEventListener('hashchange', applyCompareHash);
 const ALL_CMP_FIELDS=[
   {id:'prog',   l:'Programme',        v:s=>s.prog||'—'},
   {id:'lang',   l:'Teaching language',v:s=>s.prog&&(s.prog.includes('French')||s.prog.includes('Français'))?'French':s.prog&&s.prog.includes('German')?'German':'English'},
-  {id:'class',  l:'Class size',       v:s=>s.classSize?'Max '+s.classSize:'—'},
-  {id:'founded',l:'Founded',          v:s=>s.founded||'—'},
+  {id:'class',  l:'Class size',       v:s=>cmpPageVal(s,'class')||(s.classSize?'Max '+s.classSize:'—')},
+  {id:'founded',l:'Founded',          v:s=>s.founded||cmpPageVal(s,'founded')||'—'},
   {id:'ibavg',  l:'Exam result (IB avg)',v:s=>s.ibAvg?s.ibAvg+' / 45':'—'},
   {id:'price',  l:'Annual tuition',   v:s=>s.price?`€${s.price.toLocaleString()} – €${s.priceMax.toLocaleString()}`:'On request'},
-  {id:'enroll', l:'Enrollment fee',   v:s=>s.enrollFee?'€'+s.enrollFee:'—'},
-  {id:'lunch',  l:'Lunch',            v:s=>s.lunchIncluded?'✓ Included':s.lunchPrice?'Not incl. · €'+s.lunchPrice+'/yr':'—'},
+  {id:'enroll', l:'Enrollment fee',   v:s=>cmpPageVal(s,'enroll')||(s.enrollFee?'€'+s.enrollFee:'—')},
+  {id:'lunch',  l:'Lunch',            v:s=>cmpPageVal(s,'lunch')||(s.lunchIncluded?'✓ Included':s.lunchPrice?'Not incl. · €'+s.lunchPrice+'/yr':'—')},
 ];
+// Сравнение показывает то же, что на странице школы: класс, взнос и обед читаем
+// из её профиля/блока Fees (в карточках списка эти поля заполнены не у всех)
+const CMP_PAGE_RX={
+  class:/class size/i,
+  founded:/^founded$/i,
+  enroll:/^(first )?enrol+ment( fee)?(\s*[(·—]|$)/i,
+  lunch:/^(lunch|meals?|meal plan|packed lunch)\b/i,
+};
+const cmpPageCache={};
+function cmpPageVal(s,fid){
+  const rows=cmpPageCache[s.id];
+  if(!rows) return '';
+  const hit=rows.filter(r=>CMP_PAGE_RX[fid].test(r.l));
+  if(!hit.length) return '';
+  const esc=x=>x.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  if(hit.length===1) return esc(hit[0].v);
+  return hit.map(r=>`<div><span style="color:#888;">${esc(r.l)}:</span> ${esc(r.v)}</div>`).join('');
+}
+function loadCmpPages(list){
+  return Promise.all(list.filter(s=>!cmpPageCache[s.id]&&schoolPages[s.id]).map(s=>
+    fetch(schoolPages[s.id]).then(r=>r.ok?r.text():'').then(html=>{
+      const doc=new DOMParser().parseFromString(html,'text/html');
+      const rows=[], seen=new Set();
+      doc.querySelectorAll('.profile-item,.fee-item,.acad-row').forEach(el=>{
+        const l=el.querySelector('.profile-label,.fee-label,.acad-label'), v=el.querySelector('.profile-val,.fee-val,.acad-val');
+        if(!l||!v) return;
+        const lt=l.textContent.replace(/\s+/g,' ').trim(), vt=v.textContent.replace(/\s+/g,' ').trim();
+        // в профиле и в Academics размер класса часто повторяется — берём первый
+        const key=CMP_PAGE_RX.class.test(lt)?'class':lt.toLowerCase();
+        if(!vt||vt==='—'||seen.has(key)) return;
+        seen.add(key); rows.push({l:lt,v:vt});
+      });
+      cmpPageCache[s.id]=rows;
+    }).catch(()=>{})
+  ));
+}
 let activeCmpFields=new Set(JSON.parse(localStorage.getItem('sr_cmp_fields')||JSON.stringify(ALL_CMP_FIELDS.map(f=>f.id))));
 
 function openCompare(){
@@ -3325,6 +3361,7 @@ function openCompare(){
 
   document.body.appendChild(overlay);
   overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+  loadCmpPages(list).then(()=>{ const tb=overlay.querySelector('#cmpTable'); if(tb) tb.innerHTML=renderTable(); });
 }
 
 function syncProgChip(val){
