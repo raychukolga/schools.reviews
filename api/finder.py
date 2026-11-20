@@ -36,13 +36,14 @@ Rules:
 - Budget: a school fits the budget when the lower end of its fee range is within the budget (younger years usually cost less); never exclude a school only because the upper end is higher (e.g. budget €12k → a school with €9,830–€22,200/yr fits). If a budget is tight, still show the schools whose range starts within it.
 - Do not promise places, discounts or admission dates.
 - If a school is marked "NOT verified", never call its data verified.
-- Be short: 1–2 sentences per reply, one question at a time.
+- Be short: 1–2 sentences per reply, one question at a time. Never put two questions together (not "Which area are you looking at, and how old is your child?") — ask one, the other in the next turn. next_question.text is one question about one thing, and its options answer exactly that question.
 - Never repeat back what the parent told you and do not start with thanks ("Thanks, that helps…", "Thanks for the details…"). The chips already show it.
 - Reply format when you return picks: "I found <exact number of picks> schools — you can look at them now, or we can narrow it down." (in the parent's language). followed by the next question in one sentence. Nothing else.
 - Reply format when you have no picks yet: just the next question in one sentence (plus a guide link if relevant).
 - The next question must appear in "reply" (the site shows only its option buttons).
 - Lisbon: each school near Lisbon has a "Zone:" line ("Lisbon city" or "Lisbon suburbs — <part>") and "School bus: yes" if it runs one. Many parents live abroad and do not know the town names around Lisbon, so always explain places by direction and travel time, not just the name. When the parent says Lisbon (or "Lisbon area") and has not yet said city or suburbs, do NOT return picks yet — first ask exactly one question: "Only schools in Lisbon itself, or also the suburbs within about 30 minutes — west along the coast towards Cascais, the green hills of Sintra, and the Caparica beaches across the river? Many suburban schools run a school bus from Lisbon." (translated into the parent's language in "reply"; options stay in English) with next_question id "lisbon_scope" and options ["Lisbon city only", "Lisbon + suburbs (within ~30 min)"]. "Lisbon city only" → only schools with Zone "Lisbon city". "Lisbon + suburbs" → schools from every Lisbon zone (city and all suburbs, including Sintra and the south bank), mixing city and suburban schools. In the "why" line of a suburban school, say where it is relative to Lisbon with the travel hint below, plus "school bus" if it has one (e.g. "IB · Oeiras, ~20 min west of Lisbon · school bus · €…"). Travel hints: Oeiras ~20 min west of Lisbon · Cascais / Estoril ~30 min west, on the coast · Sintra ~30 min north-west, in the hills · Caparica / south bank ~25 min south, across the river. If the parent names a specific town (Cascais, Oeiras, Sintra, Caparica…), use that part only and do not ask.
 - IB: when a parent asks for IB and it is not yet clear which, ask: "Full IB from the early years to graduation (PYP, MYP and Diploma), or just the IB Diploma in the last two years?" with options ["Full IB (all years)", "IB Diploma only", "Not sure"], and always end the reply with: "Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html". Full IB = schools whose programme is "Full IB"; IB Diploma only = any school offering the IB Diploma.
+- If the parent answers "Not sure" to that IB question: explain in 1–2 short sentences, without the guide link again (it was just shown): "Full IB means the IB runs through all school years; with the IB Diploma only, younger pupils usually follow another curriculum (often British/Cambridge) and switch to the IB for the last two years. Either way your child can graduate with the IB Diploma." Then treat it as "any IB school" and ask the next single question.
 - Point to school pages and our guides when useful.
 - Stay on choosing a school in Portugal. For anything else, politely bring the conversation back.
 - Do not ask for names, emails, phone numbers or other personal data.
@@ -231,17 +232,24 @@ def _finish(kb, body):
     # the buttons belong to next_question, so the question in the text must be about the same thing
     r = out.get('reply', '')
     english = _is_english(r)
-    # word overlap only works when the reply is in English like the buttons
+    # only for English replies: the question text from next_question is in English like the buttons
     if q.get('text') and english:
-        words = lambda x: set(re.findall(r'[a-zа-яё]{3,}', x.lower()))
+        # one question at a time: the reply keeps only the question the buttons answer,
+        # so "Which area…, and how old is your child?" can't slip through
         qs = [m for m in re.finditer(r'[^.!?]*\?', r) if not m.group().strip().lower().startswith('not sure')]
-        if not any(len(words(m.group()) & words(q['text'])) >= 0.4 * len(words(q['text'])) for m in qs):
-            if qs:  # the model asked something else: swap its last question for the one the buttons answer
-                m = qs[-1]
-                out['reply'] = (r[:m.start()].rstrip() + ' ' + q['text'] + r[m.end():]).strip()
-            else:
-                out['reply'] = r.rstrip() + ' ' + q['text']
-    if any('IB Diploma only' in o for o in q.get('options') or []) and 'ib-diploma-explained' not in out.get('reply', ''):
+        if qs:
+            for m in reversed(qs[:-1]):
+                r = r[:m.start()] + r[m.end():]
+            m = list(re.finditer(r'[^.!?]*\?', r))
+            m = [x for x in m if not x.group().strip().lower().startswith('not sure')][-1]
+            r = r[:m.start()].rstrip() + ' ' + q['text'].strip() + r[m.end():]
+        else:
+            r = r.rstrip() + ' ' + q['text'].strip()
+        out['reply'] = re.sub(r'\s{2,}', ' ', r).strip()
+    if not any('IB Diploma only' in o for o in q.get('options') or []):
+        # the IB guide link belongs to the Full IB / Diploma question only — not repeated on the next turns
+        out['reply'] = re.sub(r'\s*Not sure of the difference\? See our guide: \S*ib-diploma-explained\S*', '', out.get('reply', '')).strip()
+    elif 'ib-diploma-explained' not in out.get('reply', ''):
         out['reply'] = out.get('reply', '').rstrip() + ' Not sure of the difference? See our guide: https://schools.reviews/ib-diploma-explained.html'
     by_slug = {s['slug']: s for s in kb['schools']}
     picks = []
