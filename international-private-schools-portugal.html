@@ -3289,6 +3289,8 @@ function cmpPageVal(s,fid){
   if(!rows) return '';
   const hit=rows.filter(r=>CMP_PAGE_RX[fid].test(r.l));
   if(!hit.length) return '';
+  // размер класса — только чёткая цифра; описания вроде «taught in small groups» не показываем
+  if(fid==='class' && !/\d/.test(hit[0].v)) return '—';
   const esc=x=>x.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
   if(hit.length===1) return esc(hit[0].v);
   return hit.map(r=>`<div><span style="color:#888;">${esc(r.l)}:</span> ${esc(r.v)}</div>`).join('');
