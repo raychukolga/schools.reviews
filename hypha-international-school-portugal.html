@@ -15,10 +15,10 @@
 <meta name="twitter:title" content="Hypha International School — Cambridge Forest School Sintra 2026">
 <meta name="twitter:description" content="Independent review of Hypha International School in Colares, Sintra: Cambridge with forest school, 3+ hours outdoors a day, ages 3–10. Fees €10,900–€14,900.">
 <meta property="og:site_name" content="Schools Reviews">
-<meta property="og:image" content="https://schools.reviews/images/og/schools-reviews.jpg">
+<meta property="og:image" content="https://schools.reviews/images/hypha/campus-aerial.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:image" content="https://schools.reviews/images/og/schools-reviews.jpg">
+<meta name="twitter:image" content="https://schools.reviews/images/hypha/campus-aerial.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -104,6 +104,61 @@
 
     <p style="font-size:15px;color:#444;line-height:1.85;margin-bottom:20px;">The school is small and intentional — 56 students in total, up to 16 per class, with 17 nationalities represented. Teaching is bilingual in English and Portuguese. Lunch and school transport are both included in the fees, which is unusual for international schools in Portugal. Hypha currently serves ages 3 to 10 (Nursery through Grade 5).</p>
 
+
+    <div class="section" style="padding-bottom:4px;">
+      <div class="sec-title">School photos</div>
+      <div style="overflow-x:auto;overflow-y:visible;white-space:nowrap;padding-bottom:8px;">
+        <img src="/images/hypha/campus-aerial.jpg" alt="Hypha International School — Campus from the air — gardens, woods and school buildings" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/campus-from-above.jpg" alt="Hypha International School — Campus seen from directly above" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/reading-corner.jpg" alt="Hypha International School — Reading corner" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/music-lesson.jpg" alt="Hypha International School — Music lesson — violin and guitar" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/outdoor-play-table.jpg" alt="Hypha International School — Outdoor play and learning table" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/learning-outdoors-with-teacher.jpg" alt="Hypha International School — Learning outdoors with a teacher" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/maths-with-pine-cones.jpg" alt="Hypha International School — Maths outdoors with pine cones" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+        <img src="/images/hypha/sports-hall.jpg" alt="Hypha International School — PE in the sports hall" loading="lazy" onclick="openPhoto(this)" style="height:140px;width:auto;border-radius:8px;cursor:zoom-in;display:inline-block;margin-right:8px;vertical-align:top;" title="Click to enlarge">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;">Click any photo to enlarge</p>
+    </div>
+
+    <div id="_photo_lb" onclick="lbBgClick(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;">
+      <button onclick="lbNav(-1)" style="position:absolute;left:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8249;</button>
+      <img id="_photo_lb_img" alt="" style="max-width:84vw;max-height:90vh;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);cursor:default;" onclick="event.stopPropagation()">
+      <button onclick="lbNav(1)" style="position:absolute;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">&#8250;</button>
+      <button onclick="document.getElementById('_photo_lb').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:2;">✕</button>
+    </div>
+    <script>
+    var _lb_photos = [
+      '/images/hypha/campus-aerial.jpg',
+      '/images/hypha/campus-from-above.jpg',
+      '/images/hypha/reading-corner.jpg',
+      '/images/hypha/music-lesson.jpg',
+      '/images/hypha/outdoor-play-table.jpg',
+      '/images/hypha/learning-outdoors-with-teacher.jpg',
+      '/images/hypha/maths-with-pine-cones.jpg',
+      '/images/hypha/sports-hall.jpg'
+    ];
+    var _lb_idx = 0;
+    function openPhoto(el){
+      _lb_idx = _lb_photos.indexOf(el.src.replace(location.origin,''));
+      if(_lb_idx < 0) _lb_idx = 0;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+      document.getElementById('_photo_lb').style.display = 'flex';
+    }
+    function lbNav(dir){
+      _lb_idx = (_lb_idx + dir + _lb_photos.length) % _lb_photos.length;
+      document.getElementById('_photo_lb_img').src = _lb_photos[_lb_idx];
+    }
+    function lbBgClick(e){
+      if(e.target === document.getElementById('_photo_lb')) document.getElementById('_photo_lb').style.display='none';
+    }
+    document.addEventListener('keydown',function(e){
+      var lb = document.getElementById('_photo_lb');
+      if(lb.style.display==='none') return;
+      if(e.key==='Escape') lb.style.display='none';
+      if(e.key==='ArrowRight') lbNav(1);
+      if(e.key==='ArrowLeft') lbNav(-1);
+    });
+    </script>
 
     <div class="section">
       <div class="sec-title">School profile</div>
