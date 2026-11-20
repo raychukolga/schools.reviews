@@ -171,7 +171,7 @@ def as_prompt(kb):
         out.append('\n'.join([
             f"## {s['name']}  (slug: {s['slug']})",
             f"Area: {s['area']} · Programme: {s['programme']} · Ages: {ages} · Fees: {fees} · {ver}"
-            + (' · Visited and filmed by us' if s['visited'] else '') + (' · Boarding' if s['boarding'] else '')
+            + (' · Visited by us' if s['visited'] else '') + (' · Boarding' if s['boarding'] else '')
             + (' · Type: private Portuguese school (Portuguese curriculum, taught in Portuguese)' if s['pt_private'] else '')
             + (' · Bilingual English + Portuguese' if s['bilingual_pt'] else ''),
             *([f"Zone: {s['zone']}" + (' · School bus: yes' if s['bus'] else '')] if s['zone'] else []),
