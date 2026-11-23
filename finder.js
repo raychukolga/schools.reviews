@@ -204,13 +204,13 @@
       '<div class="srf-listening" id="' + prefix + '-ls">Listening… speak now</div>';
   }
   function trustLine() {
-    return 'Searches only our own directory of ' + schoolCount() + ' schools · No school pays to appear';
+    return 'Only schools we’ve checked · Nobody pays for results';
   }
   // Intro shown in the pop-up and at the top of the panel: the promise first, then the input
   function introHTML(prefix) {
     return '<div class="srf-label">AI School Finder</div>' +
-      '<div class="srf-title">Tell us what matters — our AI assistant will find the schools for you.</div>' +
-      '<div class="srf-promise">Searches only our independent directory of all ' + schoolCount() + ' international schools in Portugal. <b>No school pays to appear in results.</b></div>' +
+      '<div class="srf-title">Ask our AI.</div>' +
+      '<div class="srf-promise">Only schools we’ve checked. <b>Nobody pays for results.</b></div>' +
       entryHTML(prefix) +
       '<button type="button" class="srf-link" data-guided>Or answer a few quick questions →</button>';
   }
