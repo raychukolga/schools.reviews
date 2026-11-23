@@ -77,8 +77,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .vt-promo { order:3; flex:1 1 100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:24px; }
 }
 @media(max-width:640px){
-  .vt-title { font-size:38px; }
-  .vt-sub { font-size:16px; }
+  /* на телефоне заголовок промо скрыт: видео ниже говорят сами за себя */
+  .vt-title { display:none; }
+  .vt-sub { font-size:16px; margin-top:0; }
   /* счётчик одной строкой под заголовком: правое выравнивание без колонок теряет смысл */
   .hero-meta { flex:1 1 100%; text-align:left; }
   .hero-meta strong { display:inline; font-size:12px; }
