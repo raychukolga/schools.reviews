@@ -45,8 +45,12 @@ window.srTileUrl = function () {
       '._nm_link{display:block;padding:10px 0;font-size:14px;color:#1a1814;' +
         'text-decoration:none;border-bottom:1px solid #e8e3de}' +
       '._nm_link:last-child{border-bottom:none}' +
+      '.beta-short{display:none}' +
       '@media(max-width:768px){' +
         '.nav-hide-mobile{display:none!important}' +
+        '.beta-full{display:none}' +
+        '.beta-short{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+        '.beta-bar{flex-wrap:nowrap!important;padding:8px 16px!important}' +
         '#_nav_hamburger{display:flex!important}' +
         '#_nav_menu{top:56px}' +
       '}';
@@ -56,8 +60,9 @@ window.srTileUrl = function () {
   var html =
     '<div class="beta-bar">' +
       '<span class="beta-dot"></span>' +
-      ' <strong>We’re building something new.</strong>' +
-      ' School data is being added and verified — some profiles are still incomplete.' +
+      '<span class="beta-full"> <strong>We’re building something new.</strong>' +
+      ' School data is being added and verified — some profiles are still incomplete.</span>' +
+      '<span class="beta-short">We’re still adding and verifying schools</span>' +
     '</div>\n' +
     '<nav>\n' +
     '  <a href="/international-private-schools-portugal.html" class="logo">' +
