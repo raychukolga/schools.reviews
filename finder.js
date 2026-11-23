@@ -118,7 +118,7 @@
     '#srf-panel{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100%;z-index:2500;background:#FAF8F5;border-left:1px solid #e8e3de;box-shadow:-12px 0 40px rgba(0,0,0,.12);display:none;flex-direction:column}' +
     '#srf-panel.open{display:flex}' +
     '.srf-head{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 18px;background:#fff;border-bottom:1px solid #e8e3de}' +
-    '.srf-indep{font-size:11px;color:#2E7D32;background:#EAF3DE;padding:7px 18px;line-height:1.4}' +
+    '.srf-indep{font-size:11px;color:#2E7D32;background:#EAF3DE;padding:7px 18px;line-height:1.4}#srf-panel.intro .srf-indep{display:none}' +
     '.srf-body{flex:1;overflow-y:auto;padding:16px 18px;-webkit-overflow-scrolling:touch}' +
     '.srf-foot{padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #e8e3de}' +
     '.srf-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}' +
@@ -207,8 +207,8 @@
     return 'Only schools we’ve checked · Nobody pays for results';
   }
   // Intro shown in the pop-up and at the top of the panel: the promise first, then the input
-  function introHTML(prefix) {
-    return '<div class="srf-label">AI School Finder</div>' +
+  function introHTML(prefix, noLabel) {
+    return (noLabel ? '' : '<div class="srf-label">AI School Finder</div>') +
       '<div class="srf-title">Ask our AI.</div>' +
       '<div class="srf-promise">Only schools we’ve checked. <b>Nobody pays for results.</b></div>' +
       entryHTML(prefix) +
@@ -250,12 +250,14 @@
 
   function renderIntro() {
     document.getElementById('srf-body').innerHTML =
-      introHTML('srf-p');
+      introHTML('srf-p', true);
+    panel.classList.add('intro');   // the intro already carries the promise — hide the trust line until the chat starts
     document.getElementById('srf-foot').innerHTML = '';
     document.getElementById('srf-foot').style.display = 'none';
   }
 
   function startChat() {
+    panel.classList.remove('intro');
     document.getElementById('srf-foot').style.display = '';
     document.getElementById('srf-foot').innerHTML = entryHTML('srf-c').replace('>Find schools<', '>Send<');
   }
