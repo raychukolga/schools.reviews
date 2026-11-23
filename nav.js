@@ -30,6 +30,12 @@ window.srTileUrl = function () {
       '.nav-compare-btn.has-items{background:#0C447C;border-color:#0C447C;color:#fff;}' +
       '.nav-compare-btn:hover{background:#0C447C;border-color:#0C447C;color:#fff;}' +
       '._nav_count{font-size:11px;opacity:.8;}' +
+      // Guides dropdown: an invisible bridge over the gap under "Guides" keeps the menu open while
+      // the mouse moves down to it; the nav sits above the map controls (z-index 1000)
+      'nav{z-index:1001}' +
+      '.nav-dropdown{position:relative}' +
+      '.nav-dropdown-menu::before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}' +
+      '.nav-dropdown.open .nav-dropdown-menu{display:block}' +
       '#_nav_menu{display:none;position:fixed;top:68px;left:0;right:0;background:#fff;' +
         'border-bottom:1px solid #e8e3de;padding:12px 16px;z-index:900;box-shadow:0 4px 20px rgba(0,0,0,.1)}' +
       '#_nav_menu.open{display:block}' +
@@ -160,7 +166,19 @@ window.srTileUrl = function () {
     });
   }
 
+  // "Guides" also opens on click (touch screens have no hover)
+  var dropdown = document.querySelector('nav .nav-dropdown');
+  if (dropdown) {
+    dropdown.firstElementChild.addEventListener('click', function (e) {
+      e.preventDefault();
+      dropdown.classList.toggle('open');
+    });
+  }
+
   document.addEventListener('click', function (e) {
+    if (dropdown && e.target.closest && !e.target.closest('.nav-dropdown')) {
+      dropdown.classList.remove('open');
+    }
     if (menu && e.target.closest &&
         !e.target.closest('#_nav_hamburger') &&
         !e.target.closest('#_nav_menu')) {
