@@ -19,6 +19,7 @@ REGIONS = [  # id, title, loc fragments (checked in this order)
     ('lisbon', 'Lisbon city', ['lisbon', 'lisboa', 'parque das nações']),
     ('greater', 'Greater Lisbon &amp; Setúbal', ['queluz', 'setúbal', 'almada', 'seixal', 'palmela', 'amadora',
                                                  'azeitão', 'loures', 'odivelas', 'barreiro', 'montijo']),
+    ('alentejo', 'Alentejo', ['alentejo', 'évora', 'beja', 'portalegre']),
     ('madeira', 'Madeira', ['madeira']),
     ('centre', 'Central Portugal', ['']),  # everything else
 ]
@@ -58,7 +59,7 @@ def fees(s):
 def main():
     ss = schools()
     key = lambda s: re.sub(r'^the ', '', s['name'].lower())
-    order = ['lisbon', 'cascais', 'oeiras', 'sintra', 'greater', 'porto', 'centre', 'algarve', 'madeira']
+    order = ['lisbon', 'cascais', 'oeiras', 'sintra', 'greater', 'porto', 'centre', 'alentejo', 'algarve', 'madeira']
     regs = sorted(REGIONS, key=lambda r: order.index(r[0]))
     groups = [(r, [s for s in sorted(ss, key=key) if region(s) == r[0]]) for r in regs]
     groups = [(r, g) for r, g in groups if g]
