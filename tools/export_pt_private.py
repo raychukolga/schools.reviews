@@ -86,7 +86,8 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Colégio da Imaculada Conceição - Viseu': ('Skipped', '23 Nov 2026', 'Former contrato de associação school; no website or current information found'),
     'Escola Jean Piaget': ('Skipped', '23 Nov 2026', 'Escola Básica e Secundária Jean Piaget, Viseu: no website or fees found'),
     'Colégio Dinis de Melo': ('Skipped', '23 Nov 2026', 'In Amor (Leiria), not Castelo Branco — a contrato de associação area in 2026/27 (AGSE notice)'),
-    'Colégio do Alto': ('Skipped', '23 Nov 2026', 'Colégio Nossa Senhora do Alto, Faro (Rua de Berlim): real and well ranked, but no website or fees found'),
+    'Colégio do Alto': ('New page', '23 Nov 2026', 'Added as Colégio de Nossa Senhora do Alto (editor\'s decision) — no website, no information'),
+    'Colégio de Nossa Senhora do Alto': ('New page', '23 Nov 2026', '⚠ NO INFORMATION AT ALL — no website; fees, grades, hours and contacts must be requested from the school'),
     'Colégio Internacional de Faro': ('Skipped', '23 Nov 2026', 'No school of this name found'),
     'Colégio Laura Vicunha': ('Skipped', '23 Nov 2026', 'Fee-paying school in Vendas Novas, but no website or fees found'),
     'Externato António Sérgio': ('Skipped', '23 Nov 2026', 'No school of this name found in Beringel'),
@@ -94,6 +95,10 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Externato Nossa Senhora do Rosário': ('New page', '18 Nov 2026', 'Website in your file is dead — the school is ensr.salesianas.pt; Grades 5–12 only; fees 2026/27 (monthly)'),
     'Colégio Quinta do Lago': ('New page', '18 Nov 2026', 'Fees not published online; nursery to Grade 9'),
 }
+
+
+# schools added without any information: their rows are highlighted in the report
+NO_INFO = {'Colégio de Nossa Senhora do Alto'}
 
 
 def main(out):
@@ -131,6 +136,9 @@ def main(out):
         for c in row:
             c.alignment = Alignment(wrap_text=True, vertical='top')
         row[9].hyperlink = row[9].value
+        if row[0].value in NO_INFO:
+            for c in row:
+                c.fill = PatternFill('solid', fgColor='FF0000'); c.font = Font(bold=True, color='FFFFFF')
     ws.freeze_panes = 'B2'
     wb.save(os.path.expanduser(out))
     print(len(rows), 'schools ->', out)
