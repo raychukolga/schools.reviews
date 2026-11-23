@@ -107,6 +107,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 /* EXPANDED FILTERS */
 .filter-expanded { max-height:0; overflow:hidden; transition:max-height .35s ease; border-top:0 solid var(--border); background:var(--cream); }
 .filter-expanded.open { max-height:min(640px, calc(100vh - 260px)); border-top:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column; }
+/* Leaflet's panes and controls (z-index 400–1000) stay inside the map, so the sticky filter
+   panel (z-index 400) is never painted under a map scrolling beneath it */
+.leaflet-container { isolation:isolate; }
 .filter-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; padding:20px 40px; overflow-y:auto; flex:1; }
 .fg-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--gray); margin-bottom:10px; }
 .fg-opts { display:flex; flex-direction:column; gap:7px; }
@@ -281,6 +284,10 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
   .filter-bar { padding:0 16px; }
   .filter-grid { grid-template-columns:1fr 1fr; padding:16px; gap:14px; }
   .filter-footer { padding:10px 16px; }
+  /* the panel is sticky, so its footer must fit the visible screen: 100dvh, not Safari's taller 100vh */
+  .filter-expanded.open { max-height:calc(100vh - var(--sr-head-h,183px) - 8px); max-height:calc(100dvh - var(--sr-head-h,183px) - 8px); }
+  /* the floating "Find a school" button would sit on top of Apply filters */
+  body:has(#filterExpanded.open) #srf-fab { display:none; }
   .split { display:block; height:auto; }
   .list-panel { height:auto; overflow-y:visible; }
   .map-panel { display:none !important; }
