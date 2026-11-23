@@ -60,7 +60,7 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Colégio da Rainha Santa Isabel': ('Duplicate', '23 Nov 2026', 'Same school as Colégio Rainha Santa Isabel'),
     'Colégio de São José (Coimbra)': ('New page', '23 Nov 2026', 'Your file says Dominican sisters — the Coimbra school is Schoenstatt-based (Colégio São José, Lda.); Portuguese track to Grade 9 + US Clonlara programme Grades 1–12; tuition not published'),
     'Colégio Bissaya Barreto': ('New page', '23 Nov 2026', 'Grades 1–9 only (no pre-school); Bissaya Barreto Foundation, since 2003; real site cbb.fbb.pt; tuition not published'),
-    'Colégio São Teotónio': ('Skipped', '23 Nov 2026', 'Site says it is part of the state network, funded for Grades 5–9; other levels paid but fees not published — waiting for your decision'),
+    'Colégio São Teotónio': ('Skipped', '23 Nov 2026', 'Site says it is part of the state network, funded for Grades 5–9; other levels paid but fees not published — not added (editor’s decision)'),
     'Colégio de São Pedro': ('Skipped', '23 Nov 2026', 'No school of this name found in Coimbra (Colégio de São Pedro is a University of Coimbra building)'),
     'Instituto Educativo de Lordemão': ('Skipped', '23 Nov 2026', 'Former contrato de associação school; no website or current information found'),
     'Colégio de Quiaios': ('Skipped', '23 Nov 2026', 'Former contrato de associação school; no website found'),
