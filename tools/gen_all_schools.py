@@ -18,7 +18,8 @@ REGIONS = [  # id, title, loc fragments (checked in this order)
     ('sintra', 'Sintra', ['sintra']),
     ('lisbon', 'Lisbon city', ['lisbon', 'lisboa', 'parque das nações']),
     ('greater', 'Greater Lisbon &amp; Setúbal', ['queluz', 'setúbal', 'almada', 'seixal', 'palmela', 'amadora',
-                                                 'azeitão', 'loures', 'odivelas', 'barreiro', 'montijo']),
+                                                 'azeitão', 'loures', 'odivelas', 'barreiro', 'montijo',
+                                                 'alcochete', 'mafra']),
     ('alentejo', 'Alentejo', ['alentejo', 'évora', 'beja', 'portalegre']),
     ('madeira', 'Madeira', ['madeira']),
     ('centre', 'Central Portugal', ['']),  # everything else
