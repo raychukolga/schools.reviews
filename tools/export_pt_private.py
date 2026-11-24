@@ -93,6 +93,7 @@ NOTES = {  # what changed versus the editor's source file / earlier page
     'Real Colégio de Portugal': ('New page', '23 Nov 2026', 'Not in your file (your second list). Paço do Lumiar, Lisbon, nursery–Grade 12; 2026/27 €476–554 × 11; US Dual Diploma'),
     'Academia de Música de Santa Cecília': ('New page', '23 Nov 2026', 'Not in your file (your second list). Ameixoeira, Lisbon, age 3–Grade 12, integrated music; 2026/27 €574–673 × 10'),
     'Externato das Escravas do Sagrado Coração de Jesus': ('New page', '23 Nov 2026', 'Not in your file (your second list). Porto, pre-school–Grade 9; fees not published; contratos simples/desenvolvimento'),
+    'Escola Raiz': ('New page', '24 Nov 2026', 'Not in your file (your request). Restelo, Lisbon, age 3–Grade 6, bilingual PT/EN, HighScope; fees not published; founded 1998 (HighScope profile); shown under both International and National private'),
     'Colégio de Nossa Senhora do Alto': ('New page', '23 Nov 2026', '⚠ NO INFORMATION AT ALL — no website; fees, grades, hours and contacts must be requested from the school'),
     'Colégio Internacional de Faro': ('Skipped', '23 Nov 2026', 'No school of this name found'),
     'Colégio Laura Vicunha': ('Skipped', '23 Nov 2026', 'Fee-paying school in Vendas Novas, but no website or fees found'),
