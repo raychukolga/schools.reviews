@@ -153,6 +153,9 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .p-gray { background:#f0ede8; color:var(--gray); }
 .card-price { font-size:12px; font-weight:700; color:var(--terra); }
 .card-cmp { margin-left:auto; margin-right:6px; font-size:11px; font-weight:600; color:#0C447C; background:#E6F1FB; border:1.5px solid #B5D4F4; border-radius:6px; padding:3px 9px; cursor:pointer; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+.card-fav { flex-shrink:0; width:32px; height:32px; margin:-4px -6px 0 0; align-self:flex-start; border:none; background:none; border-radius:50%; font-size:20px; line-height:1; color:var(--gray); cursor:pointer; }
+.card-fav:hover { color:var(--terra); background:var(--terra-light); }
+.card-fav.on { color:var(--terra); }
 .card-cmp.added { background:#0C447C; color:#fff; border-color:#0C447C; }
 .card-price span { font-size:10px; font-weight:400; color:var(--gray); }
 .empty-state { padding:48px 24px; text-align:center; color:var(--gray); font-size:13px; }
@@ -2895,7 +2898,7 @@ function render(){
   });
   if(filtered.length === 0){
     document.getElementById('schoolsList').innerHTML = state.savedOnly
-      ? `<div class="empty-state">You haven't saved any schools yet.<br><small>Tap ♡ Save school on a school's page to add it here.</small></div>`
+      ? `<div class="empty-state">You haven't saved any schools yet.<br><small>Tap ♡ on a school card or a school's page to add it here.</small></div>`
       : `<div class="empty-state">No schools match your filters.<br><small>Try adjusting the criteria above.</small></div>`;
     return;
   }
@@ -2919,6 +2922,7 @@ function render(){
           ${s.reviewed ? '<span class="rev-badge">★ Visited by us</span>' : ''}
           ${s.verified ? `<span class="ver-badge">✓ ${s.verDate||'Apr 2026'}</span>` : ''}
         </div>
+        ${schoolPages[s.id] ? `<button class="card-fav ${isSaved(s.id)?'on':''}" data-fav="${s.id}" onclick="event.stopPropagation();toggleCardFav(${s.id})" title="${isSaved(s.id)?'Remove from saved':'Save school'}" aria-label="${isSaved(s.id)?'Remove from saved':'Save school'}">${isSaved(s.id)?'♥':'♡'}</button>` : ''}
       </div>
       <div class="pills">
         <span class="pill ${progPill(s.prog)}">${s.prog||'—'}</span>
@@ -2928,8 +2932,7 @@ function render(){
       </div>
       ${state.picks ? whyHTML(s.id) : ''}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
-        ${state.savedOnly ? `<button onclick="event.stopPropagation();unsaveSchool(${s.id})" title="Remove from saved" style="font-size:11px;font-weight:600;color:var(--gray);background:none;border:none;padding:4px 6px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">♥ Remove</button>` : ''}
-        <div class="card-price" style="${state.savedOnly ? 'flex:1;' : ''}">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
+        <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
         ${showCmp && schoolPages[s.id] ? `<button class="card-cmp ${compareList.has(s.id)?'added':''}" data-cmp="${s.id}" onclick="event.stopPropagation();toggleCmp(${s.id})">${compareList.has(s.id)?'✓ Compare':'+ Compare'}</button>` : ''}
         ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
@@ -3466,10 +3469,19 @@ function toggleFav(id){
   else { list.push({name:s.name,url}); btn.textContent='♥ Saved'; }
   setSaved(list);
   if(state.savedOnly) render();
+  else document.querySelectorAll(`.card-fav[data-fav="${id}"]`).forEach(b=>{ const on=isSaved(id); b.textContent=on?'♥':'♡'; b.classList.toggle('on',on); });
 }
-function unsaveSchool(id){
-  setSaved(getSaved().filter(x=>x.url!==schoolPages[id]));
-  render();
+// ♡ на карточке списка — тот же список избранного, что и в модалке и на страницах школ
+function toggleCardFav(id){
+  const s=schools.find(x=>x.id===id), url=schoolPages[id];
+  if(!s||!url) return;
+  const on=!isSaved(id);
+  setSaved(on ? getSaved().concat([{name:s.name,url}]) : getSaved().filter(x=>x.url!==url));
+  if(state.savedOnly){ render(); return; }
+  document.querySelectorAll(`.card-fav[data-fav="${id}"]`).forEach(b=>{
+    b.textContent=on?'♥':'♡'; b.classList.toggle('on',on);
+    b.title=on?'Remove from saved':'Save school'; b.setAttribute('aria-label',b.title);
+  });
 }
 // «Saved» в шапке ведёт сюда с #saved — показываем только избранное
 function applySavedHash(){
