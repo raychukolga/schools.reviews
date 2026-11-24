@@ -3491,7 +3491,10 @@ function applySavedHash(){
 }
 function scrollToList(smooth){
   const lp=document.querySelector('.list-panel');
-  if(lp) window.scrollTo({top: lp.getBoundingClientRect().top + window.scrollY - 70, behavior: smooth ? 'smooth' : 'auto'});
+  // отступ = низ залипающих полос (nav, поиск, фильтры), иначе первые карточки уходят под них
+  const fb=document.querySelector('.filter-bar');
+  const off=fb ? (parseFloat(getComputedStyle(fb).top)||0) + fb.offsetHeight + 8 : 70;
+  if(lp) window.scrollTo({top: lp.getBoundingClientRect().top + window.scrollY - off, behavior: smooth ? 'smooth' : 'auto'});
 }
 function showAllSchools(){
   history.replaceState(null,'',location.pathname+location.search);

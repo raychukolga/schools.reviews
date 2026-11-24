@@ -181,6 +181,16 @@ window.srTileUrl = function () {
   }
 
   document.addEventListener('click', function (e) {
+    // Saved / Compare link to the listing itself: close the menu, and re-open the view
+    // even when the hash is already #saved (the browser fires no hashchange then)
+    var link = e.target.closest && e.target.closest('nav a[href*="#"], #_nav_menu a[href*="#"]');
+    if (link && link.pathname === location.pathname && link.hash) {
+      if (menu) menu.classList.remove('open');
+      if (link.hash === location.hash) {
+        e.preventDefault();
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
+      }
+    }
     if (dropdown && e.target.closest && !e.target.closest('.nav-dropdown')) {
       dropdown.classList.remove('open');
     }
