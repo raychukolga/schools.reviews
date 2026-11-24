@@ -107,6 +107,15 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .search-input:focus { border-color:var(--ink); }
 .search-bar-top { background:var(--white); border-bottom:1px solid var(--border); padding:10px 40px; position:sticky; top:var(--sr-nav-h,68px); z-index:401; }
 .search-bar-top input { width:100%; padding:10px 18px 10px 40px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:'DM Sans',sans-serif; outline:none; background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 14px center; background-size:16px; color:var(--ink); transition:border-color .15s; }
+.search-wrap { position:relative; }
+.search-suggest { display:none; position:absolute; left:0; right:0; top:calc(100% + 4px); background:var(--white); border:1px solid var(--border); border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.12); overflow:hidden; z-index:1100; max-height:min(60vh,420px); overflow-y:auto; }
+.search-suggest.open { display:block; }
+.sg-item { display:flex; align-items:baseline; gap:10px; padding:10px 16px; cursor:pointer; font-size:13px; border-bottom:1px solid var(--border); }
+.sg-item:last-child { border-bottom:none; }
+.sg-item.active, .sg-item:hover { background:var(--cream); }
+.sg-name { font-weight:600; color:var(--ink); }
+.sg-name b { color:var(--terra); }
+.sg-loc { font-size:11px; color:var(--gray); margin-left:auto; white-space:nowrap; }
 .search-bar-top input:focus { border-color:var(--ink); background-color:var(--white); }
 
 /* EXPANDED FILTERS */
@@ -1088,7 +1097,10 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 
 <!-- SEARCH BAR -->
 <div class="search-bar-top">
-  <input id="searchInput" type="text" placeholder="Search by school name or location…" oninput="state.search=this.value.toLowerCase();render()">
+  <div class="search-wrap">
+    <input id="searchInput" type="text" placeholder="Search by school name or location…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="searchSuggest" aria-expanded="false" oninput="state.search=normText(this.value);render();suggestSchools()" onkeydown="suggestKey(event)" onfocus="suggestSchools()" onblur="setTimeout(hideSuggest,150)">
+    <div id="searchSuggest" class="search-suggest" role="listbox"></div>
+  </div>
 </div>
 
 <!-- FILTER BAR -->
@@ -2886,7 +2898,7 @@ function getFiltered(){
     if(state.boutique && !s.boutique) return false;
     if(state.largeCampus && !s.largeCampus) return false;
     if(state.bilingualPt && !s.bilingualPt) return false;
-    if(state.search && !s.name.toLowerCase().includes(state.search) && !s.loc.toLowerCase().includes(state.search)) return false;
+    if(state.search && !normText(s.name).includes(state.search) && !normText(s.loc).includes(state.search)) return false;
     // Ages come from the school's own range (ageFrom–ageTo), not from which fees are listed
     if(state.childAge !== null && !(s.ageFrom <= state.childAge && state.childAge <= s.ageTo)) return false;
     if(state.goesUpTo.length && !state.goesUpTo.some(g => g === '18' ? s.ageTo >= 17 : g === 'mid' ? s.ageTo >= 13 && s.ageTo <= 16 : s.ageTo <= 12)) return false;
@@ -3103,6 +3115,41 @@ function resetAll(){
   Object.assign(state,{maxPrice:40000,boarding:null,area:[],classSize:'all',schoolAge:'all',lang:[],childAge:null,goesUpTo:[],boutique:false,largeCampus:false,bilingualPt:false,schoolType:[],prog:[]});
   syncProgUI();
   setPr('all');
+}
+
+// ── Подсказки в поиске: названия школ по мере ввода (без учёта регистра и диакритики: colegio = Colégio)
+function normText(v){ return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+let sgItems=[], sgActive=-1;
+function suggestSchools(){
+  const box=document.getElementById('searchSuggest'), inp=document.getElementById('searchInput');
+  const q=normText(inp.value);
+  if(q.length<2){ hideSuggest(); return; }
+  const starts=[], inside=[];
+  schools.forEach(s=>{ const n=normText(s.name), i=n.indexOf(q);
+    if(i<0) return;
+    (i===0 || n[i-1]===' ' ? starts : inside).push({s,i}); });
+  sgItems=starts.concat(inside).slice(0,8);
+  sgActive=-1;
+  if(!sgItems.length){ hideSuggest(); return; }
+  box.innerHTML=sgItems.map(({s,i},k)=>`<div class="sg-item" role="option" data-k="${k}" onmousedown="event.preventDefault();pickSuggest(${k})"><span class="sg-name">${escHTML(s.name.slice(0,i))}<b>${escHTML(s.name.slice(i,i+q.length))}</b>${escHTML(s.name.slice(i+q.length))}</span><span class="sg-loc">${escHTML(s.loc)}</span></div>`).join('');
+  box.classList.add('open'); inp.setAttribute('aria-expanded','true');
+}
+function hideSuggest(){ const box=document.getElementById('searchSuggest'); if(box) box.classList.remove('open'); sgActive=-1; document.getElementById('searchInput')?.setAttribute('aria-expanded','false'); }
+function pickSuggest(k){
+  const it=sgItems[k]; if(!it) return;
+  hideSuggest();
+  if(schoolPages[it.s.id]) location.href=schoolPages[it.s.id];
+  else openModal(it.s.id);
+}
+function suggestKey(e){
+  const box=document.getElementById('searchSuggest');
+  if(!box.classList.contains('open')) return;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    sgActive=(sgActive+(e.key==='ArrowDown'?1:-1)+sgItems.length)%sgItems.length;
+    box.querySelectorAll('.sg-item').forEach((el,k)=>el.classList.toggle('active',k===sgActive));
+  } else if(e.key==='Enter' && sgActive>=0){ e.preventDefault(); pickSuggest(sgActive); }
+  else if(e.key==='Escape') hideSuggest();
 }
 
 function focusSchool(id){
