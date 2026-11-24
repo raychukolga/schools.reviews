@@ -2908,8 +2908,6 @@ function render(){
     const bHasPage = schoolPages[b.id] ? 1 : 0;
     return bHasPage - aHasPage;
   });
-  // Список сужен фильтрами, поиском помощника или избранным — сразу даём «Compare» на карточках
-  const showCmp = !!state.picks || state.savedOnly || filtered.length < schools.length;
   document.getElementById('schoolsList').innerHTML = `<div class="cards-wrap">` + sorted.map(s=>`
     <div class="school-card ${s.verified?'verified-card':''}" id="card-${s.id}" onclick="focusSchool(${s.id})" style="cursor:pointer;">
       <div class="card-top">
@@ -2933,7 +2931,7 @@ function render(){
       ${state.picks ? whyHTML(s.id) : ''}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
         <div class="card-price">${s.price ? '€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString() : 'Price on request'} <span>/yr</span></div>
-        ${showCmp && schoolPages[s.id] ? `<button class="card-cmp ${compareList.has(s.id)?'added':''}" data-cmp="${s.id}" onclick="event.stopPropagation();toggleCmp(${s.id})">${compareList.has(s.id)?'✓ Compare':'+ Compare'}</button>` : ''}
+        ${schoolPages[s.id] ? `<button class="card-cmp ${compareList.has(s.id)?'added':''}" data-cmp="${s.id}" onclick="event.stopPropagation();toggleCmp(${s.id})">${compareList.has(s.id)?'✓ Compare':'+ Compare'}</button>` : ''}
         ${schoolPages[s.id] ? `<a href="${schoolPages[s.id]}" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;">More info →</a>` : `<button onclick="event.stopPropagation();openModal(${s.id})" style="font-size:11px;font-weight:600;color:var(--terra);background:var(--terra-light);border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">More info →</button>`}
       </div>
     </div>
