@@ -3701,7 +3701,8 @@ function initMap(){
     m.on('click',()=>{
       document.querySelectorAll('.school-card').forEach(c=>c.classList.remove('highlighted'));
       const card=document.getElementById('card-'+s.id);
-      if(card){card.classList.add('highlighted');card.scrollIntoView({behavior:'smooth',block:'nearest'});}
+      // список не прокручиваем: клик по метке показывает мини-карточку прямо на карте (с More info)
+      if(card) card.classList.add('highlighted');
     });
     markers[s.id]=m;
     baseIcons[s.id]=icon;
