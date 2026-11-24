@@ -110,12 +110,14 @@ nav { background:var(--white); border-bottom:1px solid var(--border); height:68p
 .search-wrap { position:relative; }
 .search-suggest { display:none; position:absolute; left:0; right:0; top:calc(100% + 4px); background:var(--white); border:1px solid var(--border); border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.12); overflow:hidden; z-index:1100; max-height:min(60vh,420px); overflow-y:auto; }
 .search-suggest.open { display:block; }
-.sg-item { display:flex; align-items:baseline; gap:10px; padding:10px 16px; cursor:pointer; font-size:13px; border-bottom:1px solid var(--border); }
+.sg-item { display:flex; align-items:center; gap:10px; padding:10px 16px; cursor:pointer; font-size:13px; border-bottom:1px solid var(--border); }
 .sg-item:last-child { border-bottom:none; }
 .sg-item.active, .sg-item:hover { background:var(--cream); }
 .sg-name { font-weight:600; color:var(--ink); }
 .sg-name b { color:var(--terra); }
-.sg-loc { font-size:11px; color:var(--gray); margin-left:auto; white-space:nowrap; }
+.sg-text { flex:1; min-width:0; }
+.sg-loc { font-size:11px; color:var(--gray); margin-top:2px; }
+.sg-show { flex-shrink:0; font-size:11px; font-weight:600; color:var(--terra); background:var(--terra-light); border-radius:6px; padding:5px 10px; white-space:nowrap; }
 .search-bar-top input:focus { border-color:var(--ink); background-color:var(--white); }
 
 /* EXPANDED FILTERS */
@@ -3131,15 +3133,19 @@ function suggestSchools(){
   sgItems=starts.concat(inside).slice(0,8);
   sgActive=-1;
   if(!sgItems.length){ hideSuggest(); return; }
-  box.innerHTML=sgItems.map(({s,i},k)=>`<div class="sg-item" role="option" data-k="${k}" onmousedown="event.preventDefault();pickSuggest(${k})"><span class="sg-name">${escHTML(s.name.slice(0,i))}<b>${escHTML(s.name.slice(i,i+q.length))}</b>${escHTML(s.name.slice(i+q.length))}</span><span class="sg-loc">${escHTML(s.loc)}</span></div>`).join('');
+  box.innerHTML=sgItems.map(({s,i},k)=>`<div class="sg-item" role="option" data-k="${k}" onmousedown="event.preventDefault();pickSuggest(${k})"><div class="sg-text"><div class="sg-name">${escHTML(s.name.slice(0,i))}<b>${escHTML(s.name.slice(i,i+q.length))}</b>${escHTML(s.name.slice(i+q.length))}</div><div class="sg-loc">📍 ${escHTML(s.loc)}</div></div><span class="sg-show">Show the school</span></div>`).join('');
   box.classList.add('open'); inp.setAttribute('aria-expanded','true');
 }
 function hideSuggest(){ const box=document.getElementById('searchSuggest'); if(box) box.classList.remove('open'); sgActive=-1; document.getElementById('searchInput')?.setAttribute('aria-expanded','false'); }
+// Выбор подсказки: список сужаем до этой школы, на карте — её метка с мини-карточкой (страницу школы не открываем)
 function pickSuggest(k){
   const it=sgItems[k]; if(!it) return;
   hideSuggest();
-  if(schoolPages[it.s.id]) location.href=schoolPages[it.s.id];
-  else openModal(it.s.id);
+  const inp=document.getElementById('searchInput');
+  inp.value=it.s.name; inp.blur();
+  state.search=normText(it.s.name);
+  render();
+  focusSchool(it.s.id);
 }
 function suggestKey(e){
   const box=document.getElementById('searchSuggest');
@@ -3161,8 +3167,15 @@ function focusSchool(id){
   if(s.lat&&s.lng&&map){
     map.setView([s.lat,s.lng],13,{animate:true});
     if(markers[s.id]) markers[s.id].openPopup();
-    const mapEl = document.getElementById('map');
-    if(mapEl) mapEl.scrollIntoView({behavior:'smooth', block:'center'});
+    if(window.innerWidth <= 768){
+      // телефон: карта над списком — ставим её сразу под залипающие полосы, карточка школы видна ниже
+      const mb=document.getElementById('mobileMapBlock'), fb=document.querySelector('.filter-bar');
+      const off=fb ? (parseFloat(getComputedStyle(fb).top)||0) + fb.offsetHeight : 0;
+      if(mb) window.scrollTo({top: mb.getBoundingClientRect().top + window.scrollY - off, behavior:'smooth'});
+    } else {
+      const mapEl=document.getElementById('map');
+      if(mapEl) mapEl.scrollIntoView({behavior:'smooth', block:'center'});
+    }
   }
 }
 
