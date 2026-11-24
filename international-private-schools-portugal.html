@@ -1481,7 +1481,7 @@ const schools = [
     earlyPrice:"12,390–13,230", primaryPrice:"14,700–16,065", middlePrice:"18,270", secondaryPrice:"23,100–25,200",
     appFee:330, enrollFee:"3,800", annualEnrollFee:"1,200",
     lunchIncluded:false, lunchPrice:"1,400–1,900", schoolBus:true,
-    reviewed:false, verified:true, verDate:"Nov 2026", boarding:true, boardingFrom:"Sep 2027",
+    reviewed:false, verified:true, verDate:"Nov 2026", boarding:true, boardingFrom:"Sep 2027", classSize:22,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7639, lng:-9.0954,
     ibAvg:32, students:640, ageFrom:3, ageTo:18,
     founded:2021,
@@ -1606,7 +1606,7 @@ const schools = [
     address:"R. Antero de Quental 7, 2730-013 Oeiras", loc:"Oeiras", prog:"Full IB",
     price:13980, priceMax:22406,
     lunchIncluded:false,
-    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false,
+    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false, classSize:18,
     ageFrom:6, ageTo:18,
     bg:"#EAF3DE", color:"#2E7D32", lat:38.7262294, lng:-9.2771806,
     ibAvg:36,
@@ -1818,7 +1818,7 @@ const schools = [
   { id:40, name:"Oporto British School (OBS)", short:"OB",
     address:"Rua da Cerca 338, 4150-201 Porto", loc:"Porto", prog:"British / IB Diploma",
     price:9530, priceMax:17570,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, classSize:16,
     ageFrom:3, ageTo:18,
     bg:"#E1F5EE", color:"#085041", lat:41.1533, lng:-8.6741,
     founded:1894,
@@ -1829,7 +1829,7 @@ const schools = [
     earlyPrice:"9,450", primaryPrice:"10,500", middlePrice:"13,020", secondaryPrice:"14,800–16,070",
     appFee:"150", enrollFee:"750", annualEnrollFee:"500",
     lunchIncluded:false,
-    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false,
+    reviewed:false, verified:true, verDate:"Nov 2026", boarding:false, classSize:20,
     ageFrom:3, ageTo:18,
     bg:"#E1F5EE", color:"#085041", lat:41.1733, lng:-8.6710,
     founded:1990,
@@ -1837,7 +1837,7 @@ const schools = [
   { id:42, name:"CJD International School", short:"CJ",
     address:"R. do Porto Feliz, 4350-016 Porto", loc:"Porto", prog:"Cambridge",
     price:9295, priceMax:10670,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, classSize:20,
     ageFrom:5, ageTo:18,
     bg:"#EEEDFE", color:"#3C3489", lat:41.1748, lng:-8.5830,
     founded:1934,
@@ -1845,7 +1845,7 @@ const schools = [
   { id:44, name:"Deutsche Schule Porto", short:"DP",
     address:"Rua Guerra Junqueiro 162, 4150-386 Porto", loc:"Porto", prog:"German",
     price:4860, priceMax:5910,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, classSize:24,
     ageFrom:3, ageTo:18,
     bg:"#F1EFE8", color:"#444", lat:41.1540, lng:-8.6374,
     founded:1901, website:"https://www.dsporto.pt" },
@@ -1888,7 +1888,7 @@ const schools = [
   { id:52, name:"Algarve International School (AIS)", short:"AI",
     address:"Rua Manuel Teixeira Gomes, 8135-106 Almancil, Algarve", loc:"Almancil, Algarve", prog:"British / Cambridge / A-Level",
     price:7055, priceMax:14995,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, classSize:12,
     ageFrom:3, ageTo:18,
     bg:"#E1F5EE", color:"#085041", lat:37.0871, lng:-8.0298,
     founded:2019 },
@@ -1958,7 +1958,7 @@ const schools = [
   { id:61, name:"Colégio Santiago Internacional", short:"CS",
     address:"Tavira, Algarve", loc:"Tavira, E. Algarve", prog:"British / Portuguese",
     price:5500, priceMax:9000,
-    reviewed:false, verified:true, boarding:false,
+    reviewed:false, verified:true, boarding:false, classSize:18,
     ageFrom:3, ageTo:18,
     bg:"#E1F5EE", color:"#085041", lat:37.1262, lng:-7.6499,
     founded:2012, website:"https://www.colegiointernacionaltavira.pt" },
@@ -2414,7 +2414,7 @@ const schools = [
     address:"Rua Parque Natural do Alvão 26, 2855-620 Corroios", loc:"Corroios, Seixal (Setúbal)", prog:"Portuguese / Cambridge",
     price:null, priceMax:null,
     lunchIncluded:false, schoolBus:false,
-    reviewed:false, verified:false, boarding:false, ptPrivate:true, ageFrom:3, ageTo:18,
+    reviewed:false, verified:false, boarding:false, ptPrivate:true, ageFrom:3, ageTo:18, classSize:25,
     bg:"#EAF3DE", color:"#27500A", lat:38.5858818, lng:-9.1593257,
     founded:2000,
     description:"Private Portuguese school in Corroios, Seixal, since 2000: Portuguese national curriculum or a dual Portuguese–Cambridge track with the AICE Diploma, pre-school to Grade 12.",
@@ -3771,7 +3771,7 @@ function initMap(){
           ${ageLabel?`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Ages</span><span style="font-size:11px;font-weight:700;color:#1a1814;">${ageLabel}</span></div>`:''}
           ${academicsScore?`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">IB avg score</span><span style="font-size:11px;font-weight:700;color:${academicsColor};">${academicsScore}</span></div>`:''}
           ${facilitiesLevel?`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Facilities</span><span style="font-size:11px;font-weight:700;color:${facilitiesColor};">${facilitiesLevel}</span></div>`:''}
-          ${classSizeLabel?`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Class size</span><span style="font-size:11px;font-weight:700;color:${classSizeColor};">${classSizeLabel} · ${s.classSize}</span></div>`:''}
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Class size</span><span style="font-size:11px;font-weight:700;color:${classSizeColor};">${classSizeLabel ? classSizeLabel+' · max '+s.classSize : '—'}</span></div>
           ${foundedLabel?`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e8e3de;"><span style="font-size:11px;color:#888;">Founded</span><span style="font-size:11px;font-weight:600;color:#1a1814;">${foundedLabel}</span></div>`:''}
           <div style="display:flex;justify-content:space-between;padding:5px 0;"><span style="font-size:11px;color:#888;">Tuition</span><span style="font-size:11px;font-weight:700;color:#C4633A;">${s.price?'€'+s.price.toLocaleString()+' – €'+s.priceMax.toLocaleString()+' /yr':'To be added'}</span></div>
         </div>
