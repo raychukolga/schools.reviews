@@ -2066,7 +2066,7 @@ const schools = [
     enrollFee:"1,986–3,198", annualEnrollFee:"993–1,599",
     lunchIncluded:true, schoolBus:false,
     lessonsStart:"8:30", lessonsEnd:"16:00",
-    reviewed:false, verified:false, boarding:false, bilingualPt:true,
+    reviewed:false, verified:false, boarding:false, bilingualPt:true, bothTypes:true,
     bg:"#E6F1FB", color:"#0C447C", lat:38.7210252, lng:-9.4371615,
     founded:2007, ageFrom:3, ageTo:18, classSize:22,
     description:"Active-learning school on the green edge of Cascais, below the Sintra hills. Portuguese curriculum taught bilingually to Grade 4, then Cambridge in English: IGCSE, A Levels and AICE Diploma. Organic meals included.",
@@ -2862,7 +2862,8 @@ function getFiltered(){
     if(state.schoolAge === 'new' && (!s.founded || s.founded <= 2023)) return false;
     if(state.lang.length && s.prog && !state.lang.some(l => s.prog.toLowerCase().includes(l.toLowerCase()))) return false;
     // School type: Portuguese private schools carry ptPrivate; ticking both boxes = no filter
-    if(state.schoolType.length === 1 && (state.schoolType[0] === 'nat') !== !!s.ptPrivate) return false;
+    // bothTypes: Portuguese curriculum in primary, international (Cambridge) later — matches either type
+    if(state.schoolType.length === 1 && !s.bothTypes && (state.schoolType[0] === 'nat') !== !!s.ptPrivate) return false;
     if(state.boutique && !s.boutique) return false;
     if(state.largeCampus && !s.largeCampus) return false;
     if(state.bilingualPt && !s.bilingualPt) return false;
